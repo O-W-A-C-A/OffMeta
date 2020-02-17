@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
-
+import Popup from "reactjs-popup";
 
 export default class Profile extends Component{
     render(){
@@ -31,7 +31,26 @@ export default class Profile extends Component{
                 <form>
                     <div className="profile-inner-bar">   
                         <h3 className="profile-title">Profile</h3>
-                    </div>             
+                    </div>
+                    <div className="edit-profile">
+                        <Popup modal trigger={<button className="btn-edit-profile"type="button">Edit Profile</button>}>
+                            <div className="content">
+                                <h3 className="edit-title">
+                                    Edit Profile
+                                </h3>
+                                <div className="profile-control">
+                                    <input type="username" className="profile-form1" placeholder="username" />
+                                    <input type="email" className="profile-form2" placeholder="email" />
+                                    <input type="password" className="profile-form1" placeholder="password" />
+                                   
+                                    <div className="delete">
+                                    <button type="submit" className="save">Save</button>
+                                    <button type="submit" className="btn-delete">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </Popup>
+                    </div>
                     <div className="profile-picture">
                         <button type="upload" className="btn-profile-upload-img"></button>
                     </div>
@@ -40,7 +59,7 @@ export default class Profile extends Component{
                         <input type="email" className="profile-form2" placeholder="email" />
                         <input type="email" className="profile-form1" placeholder="password" />
                     </div>
-                    <button type="submit" className="save">Save</button>
+                   
                     <button type="submit" className="logoff">Logoff</button>
                     </form>
             </div>

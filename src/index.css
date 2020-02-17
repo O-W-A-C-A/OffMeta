@@ -364,7 +364,7 @@ Profile Page CSS
   border-radius: 50px;
   margin-bottom: 25px;
   border: none;
-  margin-left: -25%;
+  margin-top: 10%;
 }
 
 .profile-form2{
@@ -388,6 +388,11 @@ Profile Page CSS
   color: #fff;
   height: 35px;
   width: 100px;
+  margin-left: 100px;
+}
+
+.content{
+  background-color: #283245;
 }
 
 .logoff{
@@ -398,6 +403,17 @@ Profile Page CSS
   color: #fff;
   height: 35px;
   width: 100px;
+}
+
+.btn-delete{
+  float: right;
+  background-color: red;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  height: 35px;
+  width: 100px;
+  margin-right: 100px;
 }
 
 .profile-title{
@@ -418,6 +434,10 @@ Profile Page CSS
   height: 35px;
   width: 100px;
   
+}
+
+.edit-profile{
+  float: right;
 }
 
 .btn-edit-profile:hover{

@@ -85,7 +85,7 @@ router.route('/login').post((req, res) => {
     .then(user => {
         if(user) {
             if(bcrypt.compareSync(req.body.password, user.password)) {
-                const paylod = {
+                const payload = {
                     _id: user._id,
                     username: user.username,
                     password: user.password,

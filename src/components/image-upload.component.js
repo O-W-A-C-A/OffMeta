@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
 import DefaultImg from './assets/default-img.jpg';
 
 // base api url being used

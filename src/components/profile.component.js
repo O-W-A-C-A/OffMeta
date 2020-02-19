@@ -1,8 +1,18 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
-import Popup from "reactjs-popup";
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import {Button, Modal} from 'react-bootstrap'
 export default class Profile extends Component{
+    constructor(){
+        super()
+            this.state={
+                show:false
+            }
+    }
+
+    handleModal(){
+        this.setState({show:!this.state.show})
+    }
     render(){
         return(
             <div className ="homePage">
@@ -33,34 +43,34 @@ export default class Profile extends Component{
                         <h3 className="profile-title">Profile</h3>
                     </div>
                     <div className="edit-profile">
-                        <Popup modal trigger={<button className="btn-edit-profile"type="button">Edit Profile</button>}>
-                            <div className="content">
-                                <h3 className="edit-title">
-                                    Edit Profile
-                                </h3>
-                                <div className="profile-control">
-                                    <input type="username" className="profile-form1" placeholder="username" />
-                                    <input type="email" className="profile-form2" placeholder="email" />
-                                    <input type="password" className="profile-form1" placeholder="password" />
-                                   
-                                    <div className="delete">
-                                    <button type="submit" className="save">Save</button>
-                                    <button type="submit" className="btn-delete">Cancel</button>
-                                    </div>
+                        <button onClick={()=>this.handleModal()} className="btn-edit-profile" type="button">Edit Profile</button>
+                        <Modal className="edit-profile-modal" show={this.state.show} onHide={()=>this.handleModal()}>
+                           <div className="modal-content"> <div className="edit-modal-header">
+                                <h3 className="edit-profile-title">Edit Profile</h3>
+                            </div>
+                            <div className="edit-modal-body">
+                                <div className="modal-profile-control">
+                                    <input type="username" className="modal-profile-form1" placeholder="username" />
+                                    <input type="email" className="modal-profile-form2" placeholder="email" />
+                                    <input type="password" className="modal-profile-form1" placeholder="password" />
                                 </div>
                             </div>
-                        </Popup>
+                            <div className="edit-modal-footer">
+                                <button type="submit"className="save" onClick={()=>this.handleModal()}>Save</button>
+                                <button type="submit" onClick={()=>this.handleModal()} className="cancel">Cancel</button>
+                            </div>
+                            </div>
+                        </Modal>
                     </div>
                     <div className="profile-picture">
                         <button type="upload" className="btn-profile-upload-img"></button>
                     </div>
                     <div className="profile-control">
-                        <input type="email" className="profile-form1" placeholder="username" />
+                        <input type="username" className="profile-form1" placeholder="username" />
                         <input type="email" className="profile-form2" placeholder="email" />
-                        <input type="email" className="profile-form1" placeholder="password" />
                     </div>
                    
-                    <button type="submit" className="logoff">Logoff</button>
+                        <button type="submit" className="logoff">Logoff</button>
                     </form>
             </div>
         </div>

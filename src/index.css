@@ -388,12 +388,26 @@ Profile Page CSS
   color: #fff;
   height: 35px;
   width: 100px;
+  margin-bottom: 10px;
   margin-left: 100px;
 }
 
 .content{
   background-color: #283245;
 }
+
+.cancel{
+  float: right;
+  background-color: red;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  height: 35px;
+  width: 100px;
+  margin-right: 100px;
+  margin-bottom: 10px;
+}
+
 
 .logoff{
   float: right;
@@ -627,4 +641,63 @@ input[type="radio"] {
 }
 
 /*
-Profile Modal CSS*/
+Profile Modal CSS
+*/
+.modal-content{
+  -webkit-border-radius: 25px !important;
+  -moz-border-radius: 25px !important;
+  border-radius: 25px !important; 
+  background-color: #283245 !important;
+}
+
+.edit-modal-header {
+  background-color: #283245;
+  border-top-left-radius: 25px !important; 
+  border-top-right-radius: 25px !important; 
+}
+
+.edit-modal-footer {
+  background-color: #283245;
+  text-align: center;
+  border-bottom-left-radius: 25px !important; 
+  border-bottom-right-radius: 25px !important; 
+}
+
+.edit-modal-body{
+  background-color: #283245;
+}
+
+.edit-profile-title{
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 20px;
+}
+
+.modal-profile-control{
+  padding-bottom: 25px;
+  text-align: center;
+}
+.modal-profile-form1{
+  height: 45px;
+  width: 300px;
+  background-color: #384661;
+  margin-bottom: 20px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color:grey;
+  padding-left: 10px;
+}
+
+.modal-profile-form2{
+ 
+  height: 45px;
+  width: 300px;
+  background-color: #384661;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color:grey;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}

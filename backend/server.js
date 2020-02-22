@@ -1,14 +1,31 @@
-const express = require('express')
+  
+const express = require('express');
+const cors = require ('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
-const port = process.env.PORT
-const userRouter = require('./Routes/User')
-require('./db/db')
 
-const app = express()
+const app = express();
+const port = process.env.PORT || 5000;
 
-app.use(express.json())
-app.use(userRouter)
+app.use(cors());
+app.use(express.json());
+
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true,useUnifiedTopology: true}
+    );
+const connection = mongoose.connection;
+ connection.once('open', () => {
+     console.log("MongoDB databse connection established successfully");
+ })
+
+ const userRouter = require('./Routes/User');
+ const playerRouter= require('./Routes/Players');
+ const leagueRouter=require('./Routes/League');
+
+ app.use('/User',userRouter );
+ app.use('/Players',playerRouter );
+ app.use('/League',leagueRouter);
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
-})
+    console.log('Server is running on port : ',port);
+});

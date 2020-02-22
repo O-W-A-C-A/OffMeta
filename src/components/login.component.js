@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {ReCaptcha} from 'react-recaptcha-google'
 export default class  extends Component 
 {
-    constructor() {
-        super()
+    constructor(props, context){
+        super(props, context);
+        this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+        this.verifyCallback = this.verifyCallback.bind(this);
         this.state = {
+            username: '',
             email: '',
             password: '',
         }
@@ -21,16 +24,30 @@ export default class  extends Component
         e.preventDefault()
 
         const User = {
+            user: this.state.username,
             email: this.state.email,
             password: this.state.password
         }
-
-        login(user).then(res => {
-            if(res) {
-                this.props.history.push('/profile')
-            }
-        })
     }
+    componentDidMount(){
+    if (this.captchaDemo) {
+        console.log("started, just a second...")
+        this.captchaDemo.reset();
+        this.captchaDemo.execute();
+        }
+    }
+
+    onLoadRecaptcha() {
+        if (this.captchaDemo) {
+            this.captchaDemo.reset();
+            this.captchaDemo.execute();
+        }
+    }
+
+    verifyCallback(recaptchaToken) {
+        // Here you will get the final recaptchaToken!!!  
+        console.log(recaptchaToken, "6LejgdkUAAAAAJMgutul8FsAuNug0JbTYyAToDpo")
+      }
 
     render() {
         return (
@@ -72,6 +89,8 @@ export default class  extends Component
                         </p>
                         </form>
                 </div>
+
+                <ReCaptcha ref={(el) => {this.captchaDemo = el;}} size="invisible" render="explicit" sitekey="6LejgdkUAAAAAFQLhhZuls1spcCuTNp6U0f3wm_s" onloadCallback={this.onLoadRecaptcha} verifyCallback={this.verifyCallback}/>
             </div>
         );
     }

@@ -42,6 +42,15 @@ body, html, .App, #root, .auth-wrapper {
   transition: all .3s;
 }
 
+.auth-inner-landing {
+  width: 450px;
+  margin: auto;
+  background: none;
+  padding: 40px 55px 10px 55px;
+  border-radius: 15px;
+  transition: all .3s;
+}
+
 .auth-wrapper .form-control:focus {
   border-color: #167bff;
   box-shadow: none;
@@ -107,7 +116,7 @@ Landing Page CSS
 }
 
 .get-started{
-  padding-top: 25px;
+
   font-family: 'Fira Sans', sans-serif;
 }
 
@@ -127,50 +136,68 @@ Landing Page CSS
   background-image: linear-gradient(to right, #43DEC2 0%, #23D1E2 51%, #0BC7FB 100%);
   border:1px solid #4CE2A7;
   color: #022047;
-  width: 150px;
-  height: 45px;
+  width: 340px;
+  height: 38px;
   border-radius: 30px;
   font-size: 19px;
   font-weight: bold;
-  margin-left: -150px;
+  margin: center;
+
+}
+
+.btn-login-started{
+  background-color:#18202F;
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
+  width: 340px;
+  height: 38px;
+  border-radius: 30px;
+  font-size: 19px;
+  font-weight: bold;
+  margin-left: center;
+  margin-bottom: 3%;
+}
+
+.btn-login-started:hover{
+  background-color:rgb(29, 39, 58);
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
 }
 
 /*
-Side Bar Navigation CSS
+Homepage Navigation CSS
 */
 
 .homePage{
-  margin-left: 14%;
-  margin-right: 14%;
+  margin-left: 13%;
+  margin-right: 13%;
 }
 
 .main-content{
-  background-color: #283245;
-  padding-top: 100px;
-  display: inline-block; 
-  width: 57%;
-  margin-top: 55px;
-  border-radius: 15px;
-  padding-left: 10px;
-  padding-top: 100%;
+  float:left;  
+  background:#283245; 
+  width:60%; 
+  margin-top: 5%;
+  height:800px;
+  border-radius: 25px; 
+
 }
 
 .side-chat{
-  background-color: #283245;
-  float: right; 
-  width: 30%; 
-  border-radius: 15px;
-  margin-top: 55px;
-  padding-top: 100%;
-  padding-left: 10px;
-
+  float:right; 
+  background:white; 
+  width:25%; 
+  height:800px; 
+  padding-left: 5px;
+  border-radius: 25px;
+  margin-top: 5%;
 }
 
-.sideBar{
-  padding-top: 100px;
-  float: left; 
-  width: 12%;
-  background-color: #18202F;
+.sideBar{  
+  float:left;  
+  width:15%; 
+  height:280px; 
+  margin-top: 6%;
 }
 
 .sideBar-list{
@@ -267,6 +294,45 @@ Side Bar Navigation CSS
   text-decoration: none;
 }
 
+ /* Style the tab */
+ .tab {
+  overflow: hidden;
+  background-color: #283245;
+  color: white;
+  border-radius: 25px;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  width: 175px;
+  transition: 0.3s;
+  color: white;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #1DA1F2;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+} 
+
 /*
 Forgot Password CSS
 */
@@ -308,7 +374,7 @@ Profile Page CSS
  
 }
 .profile-form1{
-  pointer-events:none;
+
   height: 45px;
   width: 300px;
   background-color: #384661;
@@ -320,8 +386,18 @@ Profile Page CSS
   padding-left: 10px;
 }
 
+.btn-profile-upload-img{
+  background-color: #384661;
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+  margin-bottom: 25px;
+  border: none;
+  margin-top: 10%;
+}
+
 .profile-form2{
-  pointer-events:none;
+ 
   height: 45px;
   width: 300px;
   background-color: #384661;
@@ -330,6 +406,7 @@ Profile Page CSS
   border-right: none;
   color:grey;
   padding-left: 10px;
+  margin-bottom: 20px;
 }
 
 .save{
@@ -339,8 +416,27 @@ Profile Page CSS
   border-radius: 25px;
   color: #fff;
   height: 35px;
-  width: 100px;;
+  width: 100px;
+  margin-bottom: 10px;
+  margin-left: 100px;
 }
+
+.content{
+  background-color: #283245;
+}
+
+.cancel{
+  float: right;
+  background-color: red;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  height: 35px;
+  width: 100px;
+  margin-right: 100px;
+  margin-bottom: 10px;
+}
+
 
 .logoff{
   float: right;
@@ -349,21 +445,47 @@ Profile Page CSS
   border-radius: 25px;
   color: #fff;
   height: 35px;
-  width: 100px;;
+  width: 100px;
+}
+
+.btn-delete{
+  float: right;
+  background-color: red;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  height: 35px;
+  width: 100px;
+  margin-right: 100px;
 }
 
 .profile-title{
-  padding-right: 220px;
+  float: left;
+  margin-bottom: 10px;
 }
 
-.profile-picture{
-  background-color: #384661;
-  height: 100px;
+
+.profile-inner-header{
+  display: inline-block;
+}
+
+.btn-edit-profile{
+  background-color: #283245;
+  border: solid #1DA1F2 2px;
+  border-radius: 25px;
+  color: #fff;
+  height: 35px;
   width: 100px;
-  border-radius: 50px;
-  margin-bottom: 25px;
-  margin-left: 120px;
-  border-color: #fff;
+  
+}
+
+.edit-profile{
+  float: right;
+}
+
+.btn-edit-profile:hover{
+  background-color: #1DA1F2;
+  border:none;
 }
 
 /*
@@ -546,4 +668,49 @@ input[type="radio"] {
   -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
   transform: scale(1.5);
 }
+
+/*
+Profile Modal CSS
+*/
+.modal-content{
+  -webkit-border-radius: 25px !important;
+  -moz-border-radius: 25px !important;
+  border-radius: 25px !important; 
+  background-color: #283245 !important;
+}
+
+.edit-modal-header {
+  background-color: #283245;
+  border-top-left-radius: 25px !important; 
+  border-top-right-radius: 25px !important; 
+}
+
+.edit-modal-footer {
+  background-color: #283245;
+  text-align: center;
+  border-bottom-left-radius: 25px !important; 
+  border-bottom-right-radius: 25px !important; 
+}
+
+.edit-modal-body{
+  background-color: #283245;
+}
+
+.edit-profile-title{
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 20px;
+}
+
+.modal-profile-control{
+  padding-bottom: 25px;
+  text-align: center;
+}
+.modal-profile-form1{
+  height: 38px;
+  width: 340px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
 

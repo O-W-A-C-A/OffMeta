@@ -1,24 +1,34 @@
-const router = require('express').Router();
-let User = require('../models/User.model');
+const express = require('express')
+const User = require('../models/User.model')
+const auth = require('../middleware/auth')
+require('dotenv').config();
+const router = express.Router()
 
-router.route('/').get((req,res)=>{
-    User.find()
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json('Error: ' + err));
+router.post('/users/add', async (req, res) => {
+    // Create a new user
+    try {
+        const user = new User(req.body)
+        await user.save()
+        const token = await user.generateAuthToken()
+        res.status(201).send({ user, token })
+    } catch (error) {
+        res.status(400).send(error)
+    }
 });
 
-router.route('/')
-router.route('/add').post((req,res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const email = req.body.email;
-    //const ProfileImage = req.body.ProfileImage;
-    //const Date = Date.parse(req.body.Date);
-   // const firstname = req.body.firstname;
-   // const lastname = req.body.lastname;
-    
-    const newUser = new User({username,
-        password,email});
+router.post('/users/login', async(req, res) => {
+    //Login a registered user
+    try {
+        const { email, password } = req.body
+        const user = await User.findByCredentials(email, password)
+        if (!user) {
+            return res.status(401).send({error: 'Login failed! Check authentication credentials'})
+        }
+        const token = await user.generateAuthToken()
+        res.send({ user, token })
+    } catch (error) {
+        res.status(400).send(error)
+    }
 
     newUser.save()
     .then(() => res.json('User Added!'))
@@ -60,23 +70,29 @@ router.route('/:id').delete((req, res) => {
     .catch(err => res.status(400).json('Error: ' +err));
 })
 
-router.route('/update/:id').post((req, res) =>{
-    User.findById(req.params.id)
-   .then(user => {
-   user.username = req.body.username;
-   user.password = req.body.password;
-   user.email = req.body.email;
-   //User.ProfileImage = req.body.ProfileImage;
-    //User.Date = Date.parse(req.body.Date);
-    //User.firstname = req.body.firstname;
-   // User.lastname = req.body.lastname;
+router.post('/users/me/logout', auth, async (req, res) => {
+    // Log user out of the application
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token != req.token
+        })
+        await req.user.save()
+        res.send()
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
-    user.save()
-    .then(() => res.json('User Updated'))
-    .catch(err => res.status(400).json('Error: ' +err));
-    })
-    .catch(err => res.status(400).json('Error: ' +err));
-});
+router.post('/users/me/logoutall', auth, async(req, res) => {
+    // Log user out of all devices
+    try {
+        req.user.tokens.splice(0, req.user.tokens.length)
+        await req.user.save()
+        res.send()
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 router.route('/login').post((req, res) => {
     User.findOne({

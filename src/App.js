@@ -35,7 +35,6 @@ function App() {
             <Route path="/home" component={HomePage} />
             <Route path="/profile" component={Profile} />
             <Route path ="/create" component={CreateLeague}/>
-            <Route path="/image" component={ImageUpload}/>
           </Switch>
     </div></Router>
   );

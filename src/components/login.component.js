@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import {ReCaptcha} from 'react-recaptcha-google'
 export default class  extends Component 
 {
-    constructor() {
-        super()
+    constructor(props, context){
+        super(props, context);
+        this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+        this.verifyCallback = this.verifyCallback.bind(this);
         this.state = {
+            username: '',
             email: '',
             password: '',
         }
@@ -20,24 +24,10 @@ export default class  extends Component
         e.preventDefault()
 
         const User = {
+            user: this.state.username,
             email: this.state.email,
             password: this.state.password
         }
-
-        login(user).then(res => {
-            if(res) {
-                this.props.history.push('/profile')
-            }
-        })
-    }
-
-import {ReCaptcha} from 'react-recaptcha-google'
-
-export default class  extends Component {
-    constructor(props, context){
-        super(props, context);
-        this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
-        this.verifyCallback = this.verifyCallback.bind(this);
     }
     componentDidMount(){
     if (this.captchaDemo) {

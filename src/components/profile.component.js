@@ -1,17 +1,21 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Button, Modal} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap'
 export default class Profile extends Component{
     constructor(){
         super()
             this.state={
-                show:false
+                show:false,
+                showDelete:false
             }
     }
 
     handleModal(){
         this.setState({show:!this.state.show})
+    }
+    handleDeleteModal(){
+        this.setState({showDelete:!this.state.showDelete})
     }
     render(){
         return(
@@ -50,9 +54,9 @@ export default class Profile extends Component{
                             </div>
                             <div className="edit-modal-body">
                                 <div className="modal-profile-control">
-                                    <input type="username" className="modal-profile-form1" placeholder="username" />
-                                    <input type="email" className="modal-profile-form2" placeholder="email" />
-                                    <input type="password" className="modal-profile-form1" placeholder="password" />
+                                    <input type="username" className="modal-profile-form1" placeholder="Username" />
+                                    <input type="email" className="modal-profile-form1" placeholder="Email" />
+                                    <input type="password" className="modal-profile-form1" placeholder="Password" />
                                 </div>
                             </div>
                             <div className="edit-modal-footer">

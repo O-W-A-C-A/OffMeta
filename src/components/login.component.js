@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {ReCaptcha} from 'react-recaptcha-google'
 
@@ -38,12 +37,12 @@ export default class  extends Component {
 
                         <div className="form-group">
                             <label>Email address</label>
-                            <input type="email" className="form-control" placeholder="Enter email" />
+                            <input type="email" className="form-control" placeholder="Email" />
                         </div>
 
                         <div className="form-group">
                             <label>Password</label>
-                            <input type="password" className="form-control" placeholder="Enter password" />
+                            <input type="password" className="form-control" placeholder="Password" />
                         </div>
 
                         <div className="form-group">

@@ -42,6 +42,15 @@ body, html, .App, #root, .auth-wrapper {
   transition: all .3s;
 }
 
+.auth-inner-landing {
+  width: 450px;
+  margin: auto;
+  background: none;
+  padding: 40px 55px 10px 55px;
+  border-radius: 15px;
+  transition: all .3s;
+}
+
 .auth-wrapper .form-control:focus {
   border-color: #167bff;
   box-shadow: none;
@@ -107,7 +116,7 @@ Landing Page CSS
 }
 
 .get-started{
-  padding-top: 25px;
+
   font-family: 'Fira Sans', sans-serif;
 }
 
@@ -127,12 +136,32 @@ Landing Page CSS
   background-image: linear-gradient(to right, #43DEC2 0%, #23D1E2 51%, #0BC7FB 100%);
   border:1px solid #4CE2A7;
   color: #022047;
-  width: 150px;
-  height: 45px;
+  width: 340px;
+  height: 38px;
   border-radius: 30px;
   font-size: 19px;
   font-weight: bold;
-  margin-left: -150px;
+  margin: center;
+
+}
+
+.btn-login-started{
+  background-color:#18202F;
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
+  width: 340px;
+  height: 38px;
+  border-radius: 30px;
+  font-size: 19px;
+  font-weight: bold;
+  margin-left: center;
+  margin-bottom: 3%;
+}
+
+.btn-login-started:hover{
+  background-color:rgb(29, 39, 58);
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
 }
 
 /*
@@ -678,26 +707,10 @@ Profile Modal CSS
   text-align: center;
 }
 .modal-profile-form1{
-  height: 45px;
-  width: 300px;
-  background-color: #384661;
+  height: 38px;
+  width: 340px;
   margin-bottom: 20px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  color:grey;
   padding-left: 10px;
 }
 
-.modal-profile-form2{
- 
-  height: 45px;
-  width: 300px;
-  background-color: #384661;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  color:grey;
-  padding-left: 10px;
-  margin-bottom: 20px;
-}
+

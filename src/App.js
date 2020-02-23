@@ -9,6 +9,7 @@ import HomePage from "./components/homepage.component";
 import ForgotPassword from './components/forgotpassword.component';
 import Profile from './components/profile.component';
 import CreateLeague from './components/create-league.component';
+//import ImageUpload from './components/image-upload.component';
 
 function App() {
   return (

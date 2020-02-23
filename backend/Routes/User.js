@@ -4,7 +4,8 @@ const auth = require('../middleware/auth')
 require('dotenv').config();
 const router = express.Router()
 
-router.post('/users/add', async (req, res) => {
+//router.route.post('/users/add', async (req, res) => {
+router.post('/users/add', async (req, res) =>{
     // Create a new user
     try {
         const user = new User(req.body)
@@ -30,11 +31,49 @@ router.post('/users/login', async(req, res) => {
         res.status(400).send(error)
     }
 
-})
+    newUser.save()
+    .then(() => res.json('User Added!'))
+    .catch(err => res.status(400).json('Error: '+ err));
+
+    User.findOne({
+        email: req.body.email
+    })
+        .then(user => {
+            if(!user) {
+                bcrypt.hash(req.body.password, 10, (err, hash) =>{
+                    userData.password = hash
+                    User.create(userData)
+                        .then(user => {
+                            res.json({ status: user.email + ' registered!' })
+                        })
+                        .catch(err => {
+                            res.send('error: ' + err)
+                        })
+                })
+            } else {
+                res.json({ error: 'User already exists' })
+            }
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
+
+});
 
 router.get('/users/me', auth, async(req, res) => {
     // View logged in user profile
     res.send(req.user)
+})
+
+router.route('/:id').get((req, res)=> {
+    User.findById(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+router.route('/:id').delete((req, res) => {
+    User.findByIdAndDelete(req.params.id)
+    .then((user) => res.json('User has been succesfully deleted.'))
+    .catch(err => res.status(400).json('Error: ' +err));
 })
 
 router.post('/users/me/logout', auth, async (req, res) => {
@@ -61,4 +100,33 @@ router.post('/users/me/logoutall', auth, async(req, res) => {
     }
 })
 
-module.exports = router
+router.route('/login').post((req, res) => {
+    User.findOne({
+        email: req.body.email
+    })
+    .then(user => {
+        if(user) {
+            if(bcrypt.compareSync(req.body.password, user.password)) {
+                const payload = {
+                    _id: user._id,
+                    username: user.username,
+                    password: user.password,
+                    email: user.email
+                }
+                let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                    expiresIn: 1440
+                })
+                res.send(token)
+            }else{
+                res.json({error: "User does not exist"})
+            }
+        }else{
+            res.json({error: "User does not exist"})
+        }
+    })
+    .catch(err => {
+        res.send('error: ' + err)
+    })
+})
+
+module.exports = router;

@@ -1,12 +1,33 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {ReCaptcha} from 'react-recaptcha-google'
-
-export default class  extends Component {
+export default class  extends Component 
+{
     constructor(props, context){
         super(props, context);
         this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
         this.verifyCallback = this.verifyCallback.bind(this);
+        this.state = {
+            username: '',
+            email: '',
+            password: '',
+        }
+        this.onChange = this.onChange.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onChange(e){
+        this.setState({[e.target.name]: e.target.value})
+    }
+
+    onSubmit(e){
+        e.preventDefault()
+
+        const User = {
+            user: this.state.username,
+            email: this.state.email,
+            password: this.state.password
+        }
     }
     componentDidMount(){
     if (this.captchaDemo) {
@@ -37,12 +58,22 @@ export default class  extends Component {
 
                         <div className="form-group">
                             <label>Email address</label>
-                            <input type="email" className="form-control" placeholder="Email" />
+                            <input type="email" 
+                            className="form-control" 
+                            name="password"
+                            placeholder="Enter email" 
+                            value={this.state.email}
+                            onChange={this.onChange} />
                         </div>
 
                         <div className="form-group">
                             <label>Password</label>
-                            <input type="password" className="form-control" placeholder="Password" />
+                            <input type="password" 
+                            className="form-control" 
+                            name="password"
+                            placeholder="Enter password" 
+                            value={this.state.password}
+                            onChange={this.onChange}/>
                         </div>
 
                         <div className="form-group">

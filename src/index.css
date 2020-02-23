@@ -222,8 +222,8 @@ Homepage Navigation CSS
 .main-content{
   float:left;  
   background:#283245; 
-  width:45%; 
-  height:100%;
+  width:601.25px; 
+  height:728.183px;
   padding-bottom: 50.6%;
   display: flex; 
   border-left: 2.5px solid grey;
@@ -232,8 +232,8 @@ Homepage Navigation CSS
 
 .side-chat{
   background:#283245; 
-  width:25%; 
-  height:100%; 
+  width:334.083px; 
+  height:728.183px; 
   padding-left: 10px;
   padding-bottom: 54.5%;
   display: flex; 
@@ -241,7 +241,7 @@ Homepage Navigation CSS
 
 .sideBar{  
   float:left;  
-  width:9%; 
+  width:120.267px; 
   height:280px; 
 
 }

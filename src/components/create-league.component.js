@@ -6,25 +6,15 @@ export default class CreateLeague extends Component{
         return(
             
             <div className="homePage">
+                <div className="home-wrapper">
                 <NavBar></NavBar>
                 <div className="sideBar">
-                    <ul className="sideBar-list">
-                        <div className="firstSide">
-                             <li><Link className="home" to={"/home"}>Home</Link></li>
-                        </div>
-                        <div className="secondSide">
-                            <li><Link className="inbox" to={"/inbox"}>Inbox</Link></li>
-                        </div>
-                        <div className="thirdSide">
-                            <li><Link className="league" to={"/create"}>League</Link></li>
-                        </div>
-                        <div className="fourthSide">
-                            <li><Link className="profile" to={"/profile"}>Profile</Link></li>
-                        </div>
-                        <div className="fifthSide">
-                            <li><Link className="more" to={"/more"}>...More</Link></li>
-                        </div>
-                    </ul>
+                    <div class="tab-side">
+                        <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>
+                        <Link to={"/create"}><button class="tablinks-side" >League</button></Link>
+                        <Link to={"/profile"}><button class="tablinks-side" >Profile</button></Link>
+                        <Link to={"/inbox"}><button class="tablinks-side">Inbox</button></Link>                    
+                    </div>
                 </div>
                 <div className="clContainer">
                     <div className="clWrapper">
@@ -70,7 +60,7 @@ export default class CreateLeague extends Component{
                         <button type="submit" className="btn-createLeague">Finish</button>
                     </div>
                 </div>
-
+                </div>
             </div>
         );
     }

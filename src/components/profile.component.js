@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Modal} from 'react-bootstrap'
+import NavBar from './navbar.component'
+
 export default class Profile extends Component{
     constructor(){
         super()
@@ -20,6 +22,7 @@ export default class Profile extends Component{
     render(){
         return(
             <div className ="homePage">
+                <NavBar></NavBar>
                 <div className="sideBar">
                     <ul className="sideBar-list">
                         <div className="firstSide">

@@ -4,6 +4,7 @@ import {Modal} from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import {ReCaptcha} from 'react-recaptcha-google'
+import NavBarLanding from './navbar-landing.component'
 export default class Landing extends Component {
     constructor(props){
         super(props);
@@ -68,34 +69,20 @@ export default class Landing extends Component {
     render() {
     
         return (
+
             <div className="landing">
-                <h1>Start a fantasy league today</h1>
-                <h6 style={{color: '#819091'}}>Create a free fantasy esports league in just 60 seconds</h6>
-               
+                <div className="navbar">
+                    <NavBarLanding></NavBarLanding>
+                </div>
+                <div className="landing-title">
+                    <h1>Start a fantasy league today</h1>
+                    <h6 style={{color: '#819091'}}>Create a free fantasy esports league in just 60 seconds</h6>
+                </div>
                 <div className="login-link">
-                <div className="auth-wrapper">
-                <div className="auth-inner-landing">
-                    <form >
-                        <div className="form-group">
-                           
-                            <input type="email" className="form-control" placeholder="Email" />
-                        </div>
-
-                        <div className="form-group">
+                    <div className="auth-wrapper">
+                        <div className="auth-inner-landing">
                             
-                            <input type="password" className="form-control" placeholder="Password" />
-                        </div>
-
-                        <div className="form-group">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                <div className="custom-control custom-checkbox">
-                                    <p className="forgot-password text-right">
-                                        <Link to={"/forgotpassword"}>Forgot password?</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <form >
 
                         <Link to={"/login"}>
                          <button className="btn-login-started">Login</button>

@@ -1,11 +1,12 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
-
+import NavBar from './navbar.component'
 export default class HomePage extends Component{
   
     render(){
         return(
             <div className ="homePage">
+                <NavBar></NavBar>
                 <div className="sideBar">
                     <ul className="sideBar-list">
                         <div className="firstSide">

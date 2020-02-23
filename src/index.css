@@ -26,6 +26,11 @@ body, html, .App, #root, .auth-wrapper {
   background-color: #18202F;
 }
 
+.navbar-title, .navbar-title:hover{
+  text-decoration: none;
+  font-size: 25px;
+}
+
 .auth-wrapper {
   display: flex;
   justify-content: center;
@@ -46,7 +51,7 @@ body, html, .App, #root, .auth-wrapper {
   width: 450px;
   margin: auto;
   background: none;
-  padding: 40px 55px 10px 55px;
+  padding: 20px 55px 10px 55px;
   border-radius: 15px;
   transition: all .3s;
 }
@@ -67,7 +72,6 @@ body, html, .App, #root, .auth-wrapper {
   font-weight: 400;
 }
 
-.forgot-password,
 .forgot-password a {
   text-align: right;
   font-size: 13px;
@@ -113,6 +117,38 @@ Landing Page CSS
   text-align:inline;
   font-family: 'Fira Sans', sans-serif;
   font-weight: 500;
+}
+
+.landing-form-control{
+  background-color: rgb(31, 41, 59);
+  height: 40px;
+  margin-right: 10px;
+  border-top:none;
+  border-left: none;
+  border-right:none;
+  padding-left: 10px;
+  color:white;
+}
+
+.landing-form-control:focus {
+  border-color: #0BC7FB;
+}
+
+.landing-btn{
+  border-radius: 25px;
+  width: 100px;
+  height: 40px;
+  background-color:#18202F;
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.landing-btn:hover{
+  background-color:rgb(29, 39, 58);
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
 }
 
 .get-started{
@@ -162,6 +198,10 @@ Landing Page CSS
   background-color:rgb(29, 39, 58);
   border:1px solid #4CE2A7;
   color: #0BC7FB;
+}
+
+.landing-title{
+  text-align: center;
 }
 
 /*

@@ -216,6 +216,7 @@ Homepage Navigation CSS
   background-color: none;
   border: solid 1px red;
   justify-content: center;
+  display: flex;
 }
 
 .main-content{

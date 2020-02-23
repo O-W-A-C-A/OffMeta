@@ -216,27 +216,24 @@ Homepage Navigation CSS
   justify-content: center;
   display: flex;
   width: 80vw;
-  height: 100vh;
+  height: 60vh;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .main-content{
-  float:left;  
   background:#283245; 
-  width:46.3%; 
-  height:100vh;
+  width:46.3%;
   padding-bottom: 50.6%;
   display: flex; 
   border-left: 2.5px solid grey;
   border-right: 2.5px solid grey;
   border: solid 1px red;
-
 }
 
 .side-chat{
   background:#283245; 
   width:20%; 
-  height:100vh;
   padding-left: 10px;
   padding-bottom: 54.5%;
   display: flex; 
@@ -245,7 +242,6 @@ Homepage Navigation CSS
 }
 
 .sideBar{  
-  float:left;  
   width:4.8vw; 
   height:100%; 
   display: flex; 

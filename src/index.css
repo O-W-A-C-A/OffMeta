@@ -208,40 +208,45 @@ Homepage Navigation CSS
 */
 
 .homePage{
-  margin-left: 20%;
-  margin-right: 20%;
-  margin-top: 6vh;
+  text-align: center;
+  margin-top: 4%;
 }
 
 .home-wrapper{
   background-color: none;
-  padding-left: 13%;
+  border: solid 1px red;
+  justify-content: center;
 }
 
 .main-content{
   float:left;  
   background:#283245; 
-  width:57vh; 
-  height:69vh;
+  width:46.3%; 
+  height:100%;
   padding-bottom: 50.6%;
   display: flex; 
   border-left: 2.5px solid grey;
   border-right: 2.5px solid grey;
+  border: solid 1px red;
+
 }
 
 .side-chat{
   background:#283245; 
-  width:26vh; 
-  height:69vh;
+  width:20%; 
+  height:100%;
   padding-left: 10px;
   padding-bottom: 54.5%;
   display: flex; 
+  border: solid 1px red;
+
 }
 
 .sideBar{  
   float:left;  
-  width:11vh; 
-  height:10vh; 
+  width:9%; 
+  height:20%; 
+  border: solid 1px red;
 
 }
 

@@ -4,10 +4,9 @@
 }
 body {
   background: #18202F !important;
-  min-height:100%;
+  height:100%; 
   display: flex;
   font-weight: 400;
-
 }
 
 h1,h2,h3,h4,h5,h6,label,span {
@@ -208,7 +207,6 @@ Homepage Navigation CSS
 */
 
 .homePage{
-  text-align: center;
   margin-top: 4%;
 }
 
@@ -217,13 +215,16 @@ Homepage Navigation CSS
   border: solid 1px red;
   justify-content: center;
   display: flex;
+  width: 80vw;
+  margin: 0 auto;
+
 }
 
 .main-content{
   float:left;  
   background:#283245; 
   width:46.3%; 
-  height:100%;
+  height:100vh;
   padding-bottom: 50.6%;
   display: flex; 
   border-left: 2.5px solid grey;
@@ -246,9 +247,8 @@ Homepage Navigation CSS
 .sideBar{  
   float:left;  
   width:9%; 
-  height:20%; 
+  height:100%; 
   border: solid 1px red;
-
 }
 
  /* Style the tab */

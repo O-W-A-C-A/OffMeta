@@ -4,8 +4,8 @@ const auth = require('../middleware/auth')
 require('dotenv').config();
 const router = express.Router()
 
-//router.route.post('/add', async (req, res) => {
-router.post('/add',async(req,res)=>{
+//router.route.post('/users/add', async (req, res) => {
+router.post('/users/add', async (req, res) =>{
     // Create a new user
     try {
         const user = new User(req.body)
@@ -17,7 +17,7 @@ router.post('/add',async(req,res)=>{
     }
 });
 
-router.post('/login', async(req, res) => {
+router.post('/users/login', async(req, res) => {
     //Login a registered user
     try {
         const { email, password } = req.body
@@ -59,6 +59,11 @@ router.post('/login', async(req, res) => {
         })
 
 });
+
+router.get('/users/me', auth, async(req, res) => {
+    // View logged in user profile
+    res.send(req.user)
+})
 
 router.route('/:id').get((req, res)=> {
     User.findById(req.params.id)

@@ -210,7 +210,7 @@ Homepage Navigation CSS
 .homePage{
   margin-left: 20%;
   margin-right: 20%;
-  margin-top: 3%;
+  margin-top: 6vh;
 }
 
 .home-wrapper{
@@ -221,8 +221,8 @@ Homepage Navigation CSS
 .main-content{
   float:left;  
   background:#283245; 
-  width:601.25px; 
-  height:728.183px;
+  width:57vh; 
+  height:69vh;
   padding-bottom: 50.6%;
   display: flex; 
   border-left: 2.5px solid grey;
@@ -231,8 +231,8 @@ Homepage Navigation CSS
 
 .side-chat{
   background:#283245; 
-  width:334.083px; 
-  height:728.183px; 
+  width:26vh; 
+  height:69vh;
   padding-left: 10px;
   padding-bottom: 54.5%;
   display: flex; 
@@ -240,8 +240,8 @@ Homepage Navigation CSS
 
 .sideBar{  
   float:left;  
-  width:120.267px; 
-  height:280px; 
+  width:11vh; 
+  height:10vh; 
 
 }
 

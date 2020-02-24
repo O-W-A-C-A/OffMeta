@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import axios from 'axios';
 import DefaultImg from './assets/default-img.jpg';
 
@@ -68,7 +68,7 @@ export default class Image extends Component
                 </div>
             </div>
         );
-        */
+        
        return (
            <body>
                <div class="container">
@@ -89,3 +89,4 @@ export default class Image extends Component
        );
     }
 }
+*/

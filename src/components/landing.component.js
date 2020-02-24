@@ -4,17 +4,19 @@ import {Modal} from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import {ReCaptcha} from 'react-recaptcha-google'
+
+
 export default class Landing extends Component {
     constructor(props){
         super(props);
         this.onSubmit= this.onSubmit.bind(this);
 
-        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangename = this.onChangename.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
 
         this.state = {
-            username: '',
+            name: '',
             email: '',
             password: '',
             show: false
@@ -25,27 +27,29 @@ export default class Landing extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const user = {
-            username: this.state.username,
+        const users = {
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
+            show:false
         }
 
-        console.log(user);
+        console.log(users);
 
-        axios.post('http://localhost:5000/User/add', user)
+        axios.post('http://localhost:5000/users/add', users)
             .then(res => console.log(res.data));
 
         this.setState({ 
-            username: '',
+            name: '',
             email: '',
-            password: ''
+            password: '',
+            show:false
         })
     }
 
-    onChangeUsername(e) {
+    onChangename(e) {
         this.setState({
-          username: e.target.value
+          name: e.target.value
         })
     }
 
@@ -111,7 +115,7 @@ export default class Landing extends Component {
 
                                             <div className="form-group">
                                                 <label>Username</label>
-                                                    <input type="text" className="form-control" placeholder="Enter Username" value={this.state.username} onChange={this.onChangeUsername}/>
+                                                    <input type="text" className="form-control" placeholder="Enter Username" value={this.state.name} onChange={this.onChangename}/>
                                                 </div>
 
 

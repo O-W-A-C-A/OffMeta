@@ -6,7 +6,7 @@ import {Modal} from 'react-bootstrap'
 export default class Profile extends Component{
     constructor(){
         super()
-        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangename = this.onChangename.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
@@ -16,9 +16,9 @@ export default class Profile extends Component{
             }
     }
 
-    onChangeUsername(e) {
+    onChangename(e) {
         this.setState({
-          username: e.target.value
+          name: e.target.value
         })
     }
 
@@ -37,14 +37,14 @@ export default class Profile extends Component{
         e.preventDefault();
 
         const user = {
-            username: this.state.username,
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
         }
 
         console.log(user);
 
-        axios.post('http://localhost:5000/User/profile/'+this.props.match.params.id, user)
+        axios.post('http://localhost:5000/User/add'+this.props.match.params.id, user)
             .then(res => console.log(res.data));
     }
     handleModal(){
@@ -91,8 +91,8 @@ export default class Profile extends Component{
                             </div>
                             <div className="edit-modal-body">
                                 <div className="modal-profile-control">
-                                    <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.username}
-              onChange={this.onChangeUsername}/>
+                                    <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.name}
+              onChange={this.onChangename}/>
                                     <input type="email" className="modal-profile-form1" placeholder="Email" value={this.state.email}
               onChange={this.onChangeEmail} />
                                     <input type="password" className="modal-profile-form1" placeholder="Password" value={this.state.password}

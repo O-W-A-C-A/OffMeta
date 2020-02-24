@@ -8,7 +8,7 @@ export default class  extends Component
         this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
         this.verifyCallback = this.verifyCallback.bind(this);
         this.state = {
-            username: '',
+            name: '',
             email: '',
             password: '',
         }
@@ -23,8 +23,8 @@ export default class  extends Component
     onSubmit(e){
         e.preventDefault()
 
-        const User = {
-            user: this.state.username,
+        const user = {
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password
         }

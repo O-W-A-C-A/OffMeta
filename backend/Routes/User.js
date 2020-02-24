@@ -66,12 +66,12 @@ router.get('/users/me', auth, async(req, res) => {
 })
 
 router.route('/:id').get((req, res)=> {
-    User.findById(req.params.id)
+    user.findById(req.params.id)
     .then(user => res.json(user))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 router.route('/:id').delete((req, res) => {
-    User.findByIdAndDelete(req.params.id)
+    user.findByIdAndDelete(req.params.id)
     .then((user) => res.json('User has been succesfully deleted.'))
     .catch(err => res.status(400).json('Error: ' +err));
 })
@@ -101,7 +101,7 @@ router.post('/users/me/logoutall', auth, async(req, res) => {
 })
 
 router.route('/login').post((req, res) => {
-    User.findOne({
+    user.findOne({
         email: req.body.email
     })
     .then(user => {

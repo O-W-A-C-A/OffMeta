@@ -2,32 +2,19 @@ import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import Landing from "./components/landing.component";
 import Login from "./components/login.component";
 import HomePage from "./components/homepage.component";
 import ForgotPassword from './components/forgotpassword.component';
 import Profile from './components/profile.component';
 import CreateLeague from './components/create-league.component';
-import ImageUpload from './components/image-upload.component';
+import Inbox from './components/inbox.component';
+//import ImageUpload from './components/image-upload.component';
 
 function App() {
-  return (<Router>
-    <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/"} style={{color: '#fff'}}>OffMeta</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/login"} style={{color: '#fff'}}>Login</Link>
-              </li>
-
-            </ul>
-          </div>
-        </div>
-      </nav>
-     
+  return (
+  <Router>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/login" component={Login} />
@@ -35,9 +22,11 @@ function App() {
             <Route path="/home" component={HomePage} />
             <Route path="/profile" component={Profile} />
             <Route path ="/create" component={CreateLeague}/>
-            <Route path="/upload" component={ImageUpload}/>
+            <Route path ="/inbox" component={Inbox}/>
+
           </Switch>
-    </div></Router>
+   
+    </Router>
   );
 }
 export default App;

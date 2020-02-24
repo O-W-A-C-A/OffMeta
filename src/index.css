@@ -1,32 +1,69 @@
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 
 * {
   box-sizing: border-box;
 }
 body {
   background: #18202F !important;
-  min-height: 100vh;
+  height:100%; 
   display: flex;
   font-weight: 400;
-  font-family: 'Fira Sans', sans-serif;
 }
 
-h1,h2,h3,h4,h5,h6,label,span {
+h2,h3,h4,h5,h6,label,span {
   color: #ffffff;
   font-weight: 500;
-  font-family: 'Fira Sans', sans-serif;
 }
 
-body, html, .App, #root, .auth-wrapper {
+html, .App, #root, .auth-wrapper {
   width: 100%;
   height: 100%;
 }
 
 .navbar-light {
   background-color: #18202F;
+  border: 1px solid #18202F;
+  padding: 10px;
+  box-shadow: 1px 5px 10px rgb(17, 22, 32);
+  
+}
+
+
+.navbar-land {
+  background-color: none;
+  padding: 10px;
+}
+
+.navbar-title, .navbar-title:hover{
+  text-decoration: none;
+  font-size: 25px;
+}
+
+.navbar-title-landing, .navbar-title-landing:hover{
+  text-decoration: none;
+  font-size: 25px;
+  margin-left: -5%;
 }
 
 .auth-wrapper {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+
+.auth-wrapper-form {
+  margin-top: 4%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+
+.auth-wrapper-landing {
+  margin-top: 1%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -35,10 +72,9 @@ body, html, .App, #root, .auth-wrapper {
 
 .auth-inner {
   width: 450px;
-  margin: auto;
+  margin: 0 auto;
   background: #283245;
   padding: 40px 55px 45px 55px;
-  border-radius: 15px;
   transition: all .3s;
 }
 
@@ -46,7 +82,7 @@ body, html, .App, #root, .auth-wrapper {
   width: 450px;
   margin: auto;
   background: none;
-  padding: 40px 55px 10px 55px;
+  padding: 0px 55px 10px 55px;
   border-radius: 15px;
   transition: all .3s;
 }
@@ -67,7 +103,6 @@ body, html, .App, #root, .auth-wrapper {
   font-weight: 400;
 }
 
-.forgot-password,
 .forgot-password a {
   text-align: right;
   font-size: 13px;
@@ -111,13 +146,61 @@ Landing Page CSS
   margin: auto;
   padding-top: 180px;
   text-align:inline;
-  font-family: 'Fira Sans', sans-serif;
   font-weight: 500;
+  height: 100%;
+}
+.landing-right-content{
+  margin-top: 5%;
+
+  float: right;
+  width: 50%;
+}
+
+.landing-left-content{
+
+  float: left;
+  width: 30%;
+  margin-left: 10%;
+  margin-top: -5%;
+}
+
+.landing-img{
+  width:500px;
+}
+
+.landing-form-control{
+  background-color: rgb(31, 41, 59);
+  height: 40px;
+  margin-right: 10px;
+  border-top:none;
+  border-left: none;
+  border-right:none;
+  padding-left: 10px;
+  color:white;
+}
+
+.landing-form-control:focus {
+  border-color: #0BC7FB;
+}
+
+.landing-btn{
+  border-radius: 25px;
+  width: 100px;
+  height: 40px;
+  background-color:#18202F;
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.landing-btn:hover{
+  background-color:rgb(29, 39, 58);
+  border:1px solid #4CE2A7;
+  color: #0BC7FB;
 }
 
 .get-started{
-
-  font-family: 'Fira Sans', sans-serif;
 }
 
 .email-get-started{
@@ -142,6 +225,7 @@ Landing Page CSS
   font-size: 19px;
   font-weight: bold;
   margin: center;
+  margin-bottom: 3%;
 
 }
 
@@ -155,7 +239,6 @@ Landing Page CSS
   font-size: 19px;
   font-weight: bold;
   margin-left: center;
-  margin-bottom: 3%;
 }
 
 .btn-login-started:hover{
@@ -164,142 +247,63 @@ Landing Page CSS
   color: #0BC7FB;
 }
 
+.landing-title{
+  text-align: center;
+}
+
 /*
 Homepage Navigation CSS
 */
 
 .homePage{
-  margin-left: 13%;
-  margin-right: 13%;
+  margin-top: 8vh;
+}
+
+.home-wrapper{
+  background-color: none;
+  justify-content: center;
+  display: flex;
+  width: 80vw;
+  height: 80vh;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .main-content{
-  float:left;  
   background:#283245; 
-  width:60%; 
-  margin-top: 5%;
-  height:800px;
-  border-radius: 25px; 
-
+  width:46.3%;
+  display: flex; 
+  border-left: 2.5px solid grey;
+  border-right: 2.5px solid grey;
 }
 
 .side-chat{
-  float:right; 
-  background:white; 
-  width:25%; 
-  height:800px; 
-  padding-left: 5px;
-  border-radius: 25px;
-  margin-top: 5%;
+  background:#283245; 
+  width:20%; 
+  padding-left: 10px;
+  padding-bottom: 54.5%;
+  display: flex; 
+}
+
+.bar{
+  background:none; 
+  width:20%; 
+  padding-left: 10px;
+  padding-bottom: 54.5%;
+  display: flex; 
 }
 
 .sideBar{  
-  float:left;  
-  width:15%; 
-  height:280px; 
-  margin-top: 6%;
-}
-
-.sideBar-list{
-  list-style: none;
- text-align: left;
- padding-left: 0;
-}
-
-.firstSide{
-  padding-bottom: 25px;
-}
-
-.secondSide{
-  padding-bottom: 25px;
-}
-
-.thirdSide{
-  padding-bottom: 25px;
-}
-
-.fourthSide{
-  padding-bottom: 25px;
-}
-
-.home{
-  border-radius: 25px;
-  font-size: 20px;
-  color: white;
-  padding: 10px 30px 10px 30px;
-}
-
-.home:hover{
-  background-color: #162D3F;
-  color: aqua;
-  text-decoration: none;
-
-}
-
-.inbox{
-  border-radius: 25px;
-  text-align: center;
-  font-size: 20px;
-  color: white;
-  padding: 10px 30px 10px 30px;
-}
-
-.inbox:hover{
-  background-color: #162D3F;
-  color: #23D1DB;
-  text-decoration: none;
-
-}
-
-.profile{
-  border-radius: 25px;
-  text-align: center;
-  font-size: 20px;
-  color: white;
-  padding: 10px 30px 10px 30px;
-}
-
-.profile:hover{
-  background-color: #162D3F;
-  color: #23D1DB;
-  text-decoration: none;
-
-}
-
-.league{
-  border-radius: 25px;
-  font-size: 20px;
-  color: white;
-  padding: 10px 30px 10px 30px;
-}
-
-.league:hover{
-  background-color: #162D3F;
-  color: #23D1DB;
-  text-decoration: none;
-
-}
-
-.more{
-  border-radius: 25px;
-  text-align: center;
-  font-size: 20px;
-  color: white;
-  padding: 10px 30px 10px 30px;
-}
-
-.more:hover{
-  background-color: #162D3F;
-  color: #23D1DB;
-  text-decoration: none;
+  width:9.5%; 
+  height:100%; 
+  display: flex; 
 }
 
  /* Style the tab */
  .tab {
-  overflow: hidden;
   background-color: #283245;
   color: white;
-  border-radius: 25px;
+  width: 100%;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -310,19 +314,22 @@ Homepage Navigation CSS
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
-  width: 175px;
+  width: 25%;
   transition: 0.3s;
   color: white;
+ 
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #1DA1F2;
+
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #ccc;
+
 }
 
 /* Style the tab content */
@@ -331,7 +338,38 @@ Homepage Navigation CSS
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+  
 } 
+ /* Style the tab */
+ .tab-side {
+  overflow: hidden;
+  color: white;
+  font-size: 20px;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab-side button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  width: 100%;
+  transition: 0.3s;
+  color: white;
+ 
+}
+
+/* Change background color of buttons on hover */
+.tab-side button:hover {
+  background-color: #1DA1F2;
+}
+
+/* Create an active/current tablink class */
+.tab-side button.active {
+  background-color: #ccc;
+}
 
 /*
 Forgot Password CSS
@@ -340,39 +378,36 @@ Forgot Password CSS
 /*
 Profile Page CSS
 */
+.home-wrapper-profile{
+  background-color: none;
+  justify-content: center;
+  display: flex;
+  width: 80vw;
+  height: 60vh;
+  margin: 0 auto;
+  overflow: hidden;
+}
 
 .profile-wrapper {
-  justify-content: center;
-  flex-direction: column;
-  padding-top: 100px;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
-  border: none;
+  background:#283245; 
+  width:46.3%;
+  display: flex; 
+  border-left: 2.5px solid grey;
+  border-right: 2.5px solid grey;
 }
 
 .profile-inner{
-  width: 450px;
-  margin: auto;
   background: #283245;
-  padding: 40px 55px 45px 55px;
-  border-radius: 15px;
-  transition: all .3s;
+  padding: 40px 55px 45px 55px;  transition: all .3s;
   border: none;
+ margin: 0 auto;
 }
 
-.profile-wrapper .profile-control:focus {
-  border-color: #167bff;
-  box-shadow: none;
+.profile-fields{
+  text-align: center;
+  
 }
 
-.profile-control{
-  padding-bottom: 25px;
- 
-}
 .profile-form1{
 
   height: 45px;
@@ -448,15 +483,19 @@ Profile Page CSS
   width: 100px;
 }
 
+.delete-profile{
+  margin: auto;
+}
+
 .btn-delete{
   float: right;
-  background-color: red;
-  border: none;
+  background-color: #283245;
+  border: 1px solid red;
   border-radius: 25px;
-  color: #fff;
+  color: red;
   height: 35px;
-  width: 100px;
-  margin-right: 100px;
+  width: 120px;
+  margin-top: 100%;
 }
 
 .profile-title{
@@ -491,33 +530,31 @@ Profile Page CSS
 /*
 Create League CSS 
 */
-.clContainer{
-  padding: 100px;
-}
 
 .clWrapper{
-    width: 850px;
-    height: 450px;
-    margin: auto;
+    width: 46.3%;
     background: #283245;
     padding: 20px;
-    border-radius: 15px;
-    transition: all .3s;
     color: white;
-    text-align: left;
     overflow: hidden;
+    display: flex;
+    border-left: 2.5px solid grey;
+    border-right: 2.5px solid grey;
+}
+
+.clContent{
+  margin:0 auto;
 }
 
 .btn-createLeague{
-  border-radius: 25px;
   color: white;
   background-color: #1DA1F2;
   border: none;
   height: 50px;
   width: 200px;
   font-size: 20px;
-  margin-left: 75%;
-  margin-top: 17%;
+  float: right;
+  margin-top: -10%;
 }
 
 .btn-createLeague:hover{
@@ -526,11 +563,6 @@ Create League CSS
 
 .league-name{
   padding-bottom: 10px;
-}
-
-.league-logo{
-  margin-top: -45%;
-  margin-left: 75%;
 }
 
 .teams{
@@ -543,7 +575,6 @@ Create League CSS
 
 .btn-upload-img{
   border: none;
-  border-radius: 5px;
   background-color: #A3BBD3;
   height: 120px;
   width: 120px;
@@ -673,9 +704,6 @@ input[type="radio"] {
 Profile Modal CSS
 */
 .modal-content{
-  -webkit-border-radius: 25px !important;
-  -moz-border-radius: 25px !important;
-  border-radius: 25px !important; 
   background-color: #283245 !important;
 }
 
@@ -688,8 +716,6 @@ Profile Modal CSS
 .edit-modal-footer {
   background-color: #283245;
   text-align: center;
-  border-bottom-left-radius: 25px !important; 
-  border-bottom-right-radius: 25px !important; 
 }
 
 .edit-modal-body{
@@ -711,6 +737,34 @@ Profile Modal CSS
   width: 340px;
   margin-bottom: 20px;
   padding-left: 10px;
+}
+
+/*
+Inbox CSS
+*/
+
+.message-selection{
+  background:#283245; 
+  width:20%; 
+  padding-left: 10px;
+  padding-bottom: 54.5%;
+  display: flex; 
+  border-left: 2.5px solid grey;
+}
+
+.message-box{
+  background:#283245; 
+  width:46.3%;
+  display: flex; 
+  border-left: 2.5px solid grey;
+}
+
+/*
+League Chat CSS
+*/
+
+.side-chat-header{
+  padding-top: 14px;
 }
 
 

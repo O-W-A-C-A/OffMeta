@@ -3,6 +3,10 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Modal} from 'react-bootstrap'
+import NavBar from './navbar.component'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 export default class Profile extends Component{
     constructor(){
         super()
@@ -53,31 +57,41 @@ export default class Profile extends Component{
     handleDeleteModal(){
         this.setState({showDelete:!this.state.showDelete})
     }
+
+    delete = () => {
+        confirmAlert({
+          title: 'Delete Account',
+          message: 'You are about to delete your account, it was nice knowing you :(',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => alert('Click Yes')
+            },
+            {
+              label: 'No',
+              onClick: () => alert('Click No')
+            }
+          ]
+        });
+      };
+
     render(){
         return(
             <div className ="homePage">
+                <NavBar></NavBar>
+                <div className="home-wrapper-profile">
                 <div className="sideBar">
-                    <ul className="sideBar-list">
-                        <div className="firstSide">
-                             <li><Link className="home" to={"/home"}>Home</Link></li>
-                        </div>
-                        <div className="secondSide">
-                            <li><Link className="inbox" to={"/inbox"}>Inbox</Link></li>
-                        </div>
-                        <div className="thirdSide">
-                            <li><Link className="league" to={"/create"}>League</Link></li>
-                        </div>
-                        <div className="fourthSide">
-                            <li><Link className="profile" to={"/profile"}>Profile</Link></li>
-                        </div>
-                        <div className="fifthSide">
-                            <li><Link className="more" to={"/more"}>...More</Link></li>
-                        </div>
-                    </ul>
+                    <div class="tab-side">
+                        <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>
+                        <Link to={"/create"}><button class="tablinks-side" >Leagues</button></Link>
+                        <Link to={"/profile"}><button class="tablinks-side" >Profile</button></Link>
+                        <Link to={"/inbox"}><button class="tablinks-side">Inbox</button></Link>                    
+                    </div>
                 </div>
 
             <div className="profile-wrapper">
             <div className="profile-inner">
+                <div className="profile-fields">
                 <form>
                     <div className="profile-inner-bar">   
                         <h3 className="profile-title">Profile</h3>
@@ -112,12 +126,21 @@ export default class Profile extends Component{
                     </div>
                     <div className="profile-control">
                         <input type="username" className="profile-form1" placeholder="username" />
-                        <input type="email" className="profile-form2" placeholder="email" />
+                        <br/><input type="email" className="profile-form2" placeholder="email" />
                     </div>
                    
                         <button type="submit" className="logoff">Logoff</button>
                     </form>
+
+                    </div>
+                    <div className='delete-profile'>
+                        <button className="btn-delete" onClick={this.delete}>Delete Profile</button>
+                </div>
             </div>
+        </div>
+        
+        <div className="bar"></div>
+        
         </div>
         </div>
         );

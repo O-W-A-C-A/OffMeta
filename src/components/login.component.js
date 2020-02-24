@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {ReCaptcha} from 'react-recaptcha-google'
+import NavBar from './navbar.component'
 export default class  extends Component 
 {
     constructor(props, context){
@@ -51,7 +52,8 @@ export default class  extends Component
 
     render() {
         return (
-            <div className="auth-wrapper">
+            <div className="auth-wrapper-form">
+                <NavBar></NavBar>
                 <div className="auth-inner">
                     <form >
                         <h3>Login</h3>

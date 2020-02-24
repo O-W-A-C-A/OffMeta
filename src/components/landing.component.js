@@ -4,8 +4,8 @@ import {Modal} from 'react-bootstrap'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import {ReCaptcha} from 'react-recaptcha-google'
-
-
+import NavBarLanding from './navbar-landing.component'
+import Image from './filler_picture.png'
 export default class Landing extends Component {
     constructor(props){
         super(props);
@@ -72,39 +72,20 @@ export default class Landing extends Component {
     render() {
     
         return (
-            <div className="landing">
-                <h1>Start a fantasy league today</h1>
-                <h6 style={{color: '#819091'}}>Create a free fantasy esports league in just 60 seconds</h6>
-               
+            
+            <div className="landing" style={{background: 'linear-gradient(90deg, #1B95DF 50%, #18202F 50%)'}}>
+                <div className="landing-right-content">
+                <div className="navbar">
+                    <NavBarLanding></NavBarLanding>
+                </div>
+                <div className="landing-title">
+                    <h2>Start a fantasy league today</h2>
+                    <h6 style={{color: '#819091'}}>Create a free fantasy esports league in just 60 seconds</h6>
+                </div>
                 <div className="login-link">
-                <div className="auth-wrapper">
-                <div className="auth-inner-landing">
-                    <form >
-                        <div className="form-group">
-                           
-                            <input type="email" className="form-control" placeholder="Email" />
-                        </div>
-
-                        <div className="form-group">
-                            
-                            <input type="password" className="form-control" placeholder="Password" />
-                        </div>
-
-                        <div className="form-group">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                <div className="custom-control custom-checkbox">
-                                    <p className="forgot-password text-right">
-                                        <Link to={"/forgotpassword"}>Forgot password?</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <Link to={"/login"}>
-                         <button className="btn-login-started">Login</button>
-                         </Link> 
-                         <form onSubmit={this.onSubmit}>
+                    <div className="auth-wrapper-landing">
+                        <div className="auth-inner-landing">
+                    <form onSubmit={this.onSubmit}>
                     <div className="get-started">
                         <button type="button" onClick={()=>this.handleModal()} className="btn-get-started">Sign Up</button>
                             <Modal  className="signup-modal" show={this.state.show} onHide={()=>this.handleModal()}>
@@ -138,15 +119,26 @@ export default class Landing extends Component {
                                     </div>
                             </Modal>
                     </div>
+                    
+                    <Link to={"/login"}>
+                         <button className="btn-login-started">Login</button>
+                    </Link> 
                 </form>
-                        </form>
+                    
                 </div>
 
                 <ReCaptcha ref={(el) => {this.captchaDemo = el;}} size="invisible" render="explicit" sitekey="6LejgdkUAAAAAFQLhhZuls1spcCuTNp6U0f3wm_s" onloadCallback={this.onLoadRecaptcha} verifyCallback={this.verifyCallback}/>
              </div>
-                    
+
                 </div>
-               
+                
+                </div>
+                <div className="landing-left-content">
+                <img className="landing-img" src={Image} alt="landing-image"/>  
+                 <h2 style={{textAlign: 'center'}}> Esports is better with friends</h2>
+                 <h6 style={{textAlign: 'center'}}>OffMeta is a fantasy esports league and chat all in one platform 
+                    Have fun and enjoy esports with your closest friends</h6>
+             </div>
             </div>
         );
     }

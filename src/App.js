@@ -9,7 +9,7 @@ import HomePage from "./components/homepage.component";
 import ForgotPassword from './components/forgotpassword.component';
 import Profile from './components/profile.component';
 import CreateLeague from './components/create-league.component';
-//import ImageUpload from './components/image-upload.component';
+import ImageUpload from './components/image-upload.component';
 
 function App() {
   return (<Router>
@@ -35,6 +35,7 @@ function App() {
             <Route path="/home" component={HomePage} />
             <Route path="/profile" component={Profile} />
             <Route path ="/create" component={CreateLeague}/>
+            <Route path="/upload" component={ImageUpload}/>
           </Switch>
     </div></Router>
   );

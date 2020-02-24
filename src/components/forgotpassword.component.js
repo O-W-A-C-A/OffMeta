@@ -4,7 +4,7 @@ import NavBar from './navbar.component'
 export default class ForgotPassword extends Component{
     render(){
         return(
-            <div className="auth-wrapper">
+            <div className="auth-wrapper-form">
             <NavBar></NavBar>
             <div className="auth-inner">
                 <form >

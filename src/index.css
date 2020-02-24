@@ -52,6 +52,16 @@ html, .App, #root, .auth-wrapper {
   text-align: left;
 }
 
+
+.auth-wrapper-form {
+  margin-top: 4%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+
 .auth-wrapper-landing {
   margin-top: 1%;
   display: flex;
@@ -62,10 +72,9 @@ html, .App, #root, .auth-wrapper {
 
 .auth-inner {
   width: 450px;
-  margin: auto;
+  margin: 0 auto;
   background: #283245;
   padding: 40px 55px 45px 55px;
-  border-radius: 15px;
   transition: all .3s;
 }
 

@@ -11,7 +11,7 @@ export default class HomePage extends Component{
                 <div className="sideBar">
                     <div class="tab-side">
                         <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>
-                        <Link to={"/create"}><button class="tablinks" >League</button></Link>
+                        <Link to={"/create"}><button class="tablinks" >Leagues</button></Link>
                         <Link to={"/profile"}><button class="tablinks" >Profile</button></Link>
                         <Link to={"/inbox"}><button class="tablinks">Inbox</button></Link>                    
                     </div>

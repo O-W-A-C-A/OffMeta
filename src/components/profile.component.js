@@ -59,11 +59,11 @@ export default class Profile extends Component{
         return(
             <div className ="homePage">
                 <NavBar></NavBar>
-                <div className="home-wrapper">
+                <div className="home-wrapper-profile">
                 <div className="sideBar">
                     <div class="tab-side">
                         <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>
-                        <Link to={"/create"}><button class="tablinks-side" >League</button></Link>
+                        <Link to={"/create"}><button class="tablinks-side" >Leagues</button></Link>
                         <Link to={"/profile"}><button class="tablinks-side" >Profile</button></Link>
                         <Link to={"/inbox"}><button class="tablinks-side">Inbox</button></Link>                    
                     </div>
@@ -71,6 +71,7 @@ export default class Profile extends Component{
 
             <div className="profile-wrapper">
             <div className="profile-inner">
+                <div className="profile-fields">
                 <form>
                     <div className="profile-inner-bar">   
                         <h3 className="profile-title">Profile</h3>
@@ -105,13 +106,15 @@ export default class Profile extends Component{
                     </div>
                     <div className="profile-control">
                         <input type="username" className="profile-form1" placeholder="username" />
-                        <input type="email" className="profile-form2" placeholder="email" />
+                        <br/><input type="email" className="profile-form2" placeholder="email" />
                     </div>
                    
                         <button type="submit" className="logoff">Logoff</button>
                     </form>
+                    </div>
             </div>
         </div>
+        <div className="bar"></div>
         </div>
         </div>
         );

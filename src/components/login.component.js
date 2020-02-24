@@ -62,7 +62,7 @@ export default class  extends Component
                             <label>Email address</label>
                             <input type="email" 
                             className="form-control" 
-                            name="password"
+                            name="email"
                             placeholder="Enter email" 
                             value={this.state.email}
                             onChange={this.onChange} />

@@ -2,6 +2,10 @@
 const express = require('express');
 const cors = require ('cors');
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const Chatkit= require('@pusher/chatkit-server');
+
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT;
@@ -9,6 +13,10 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
+const chatkit = new Chatkit.default({
+    instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
+    key: process.env.CHATKIT_SUPER_DUPER_SECRET_KEY,
+});
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,

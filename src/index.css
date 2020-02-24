@@ -24,6 +24,13 @@ html, .App, #root, .auth-wrapper {
   border: 1px solid #18202F;
   padding: 10px;
   box-shadow: 1px 5px 10px rgb(17, 22, 32);
+  
+}
+
+
+.navbar-land {
+  background-color: none;
+  padding: 10px;
 }
 
 .navbar-title, .navbar-title:hover{
@@ -31,8 +38,22 @@ html, .App, #root, .auth-wrapper {
   font-size: 25px;
 }
 
+.navbar-title-landing, .navbar-title-landing:hover{
+  text-decoration: none;
+  font-size: 25px;
+  margin-left: -5%;
+}
+
 .auth-wrapper {
   margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.auth-wrapper-landing {
+  margin-top: 1%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -52,7 +73,7 @@ html, .App, #root, .auth-wrapper {
   width: 450px;
   margin: auto;
   background: none;
-  padding: 20px 55px 10px 55px;
+  padding: 0px 55px 10px 55px;
   border-radius: 15px;
   transition: all .3s;
 }
@@ -117,6 +138,25 @@ Landing Page CSS
   padding-top: 180px;
   text-align:inline;
   font-weight: 500;
+  height: 100%;
+}
+.landing-right-content{
+  margin-top: 5%;
+
+  float: right;
+  width: 50%;
+}
+
+.landing-left-content{
+
+  float: left;
+  width: 30%;
+  margin-left: 10%;
+  margin-top: -5%;
+}
+
+.landing-img{
+  width:500px;
 }
 
 .landing-form-control{
@@ -176,6 +216,7 @@ Landing Page CSS
   font-size: 19px;
   font-weight: bold;
   margin: center;
+  margin-bottom: 3%;
 
 }
 
@@ -189,7 +230,6 @@ Landing Page CSS
   font-size: 19px;
   font-weight: bold;
   margin-left: center;
-  margin-bottom: 3%;
 }
 
 .btn-login-started:hover{

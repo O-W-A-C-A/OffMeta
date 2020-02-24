@@ -7,6 +7,7 @@ import NavBar from './navbar.component'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
+
 export default class Profile extends Component{
     constructor(){
         super()
@@ -15,9 +16,25 @@ export default class Profile extends Component{
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
             this.state={
+                name: '',
+                email: '',
+                password: '',
                 show:false,
                 showDelete:false
             }
+    }
+    componentDidMount(){
+        axios.get('http://localhost:5000/users/5e5357be5bc25a2b5438b28e')
+        .then(response =>{
+            this.setState({
+                name:response.data.name,
+                password:response.data.password,
+                email:response.data.email
+            })
+        })
+        .catch(function(error){
+            console.log(error);
+        })
     }
 
     onChangename(e) {
@@ -39,7 +56,6 @@ export default class Profile extends Component{
     }
     onSubmit(e) {
         e.preventDefault();
-
         const user = {
             name: this.state.name,
             email: this.state.email,
@@ -48,8 +64,13 @@ export default class Profile extends Component{
 
         console.log(user);
 
-        axios.post('http://localhost:5000/User/add'+this.props.match.params.id, user)
+        axios.post('http://localhost:5000/users/update/5e5357be5bc25a2b5438b28e', user)
             .then(res => console.log(res.data));
+    }
+    ondelete() {
+            axios.delete('http://localhost:5000/users/delete/5e5357be5bc25a2b5438b28e')
+            .then(res => console.log(res.data));
+    
     }
     handleModal(){
         this.setState({show:!this.state.show})
@@ -65,7 +86,7 @@ export default class Profile extends Component{
           buttons: [
             {
               label: 'Yes',
-              onClick: () => alert('Click Yes')
+              onClick: () => this.ondelete()
             },
             {
               label: 'No',
@@ -101,6 +122,7 @@ export default class Profile extends Component{
                         <button onClick={()=>this.handleModal()} className="btn-edit-profile" type="button">Edit Profile</button>
                         <Modal className="edit-profile-modal" show={this.state.show} onHide={()=>this.handleModal()}>
                            <div className="modal-content"> <div className="edit-modal-header">
+                            
                                 <h3 className="edit-profile-title">Edit Profile</h3>
                             </div>
                             <div className="edit-modal-body">
@@ -114,7 +136,7 @@ export default class Profile extends Component{
                                 </div>
                             </div>
                             <div className="edit-modal-footer">
-                                <button type="submit"className="save" onClick={()=>this.handleModal()}>Save</button>
+                                <button type="submit"className="save" onClick={()=>this.handleModal(),this.onSubmit}>Save</button>
                                 <button type="submit" onClick={()=>this.handleModal()} className="cancel">Cancel</button>
                             </div>
                             </div>

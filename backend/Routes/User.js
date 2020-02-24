@@ -65,16 +65,29 @@ router.get('/users/me', auth, async(req, res) => {
     res.send(req.user)
 })
 
-router.route('/:id').get((req, res)=> {
-    user.findById(req.params.id)
+router.route('/users/:id').get((req, res)=> {
+    User.findById(req.params.id)
     .then(user => res.json(user))
     .catch(err => res.status(400).json('Error: ' + err));
 });
-router.route('/:id').delete((req, res) => {
-    user.findByIdAndDelete(req.params.id)
+router.route('/users/delete/:id').delete((req, res) => {
+    User.findByIdAndDelete(req.params.id)
     .then((user) => res.json('User has been succesfully deleted.'))
     .catch(err => res.status(400).json('Error: ' +err));
 })
+router.route('/users/update/:id').post((req,res) => {
+    User.findById(req.params.id)
+    .then (user => {
+        user.name = req.body.name;
+        user.email= req.body.email;
+        user.password = req.body.password;
+
+        user.save()
+            .then(() => res.json('User updated'))
+            .catch(err => res.status(400).json('Error: ' +err));
+    })
+    .catch(err => res.status(400).json('Error: '+ err));
+});
 
 router.post('/users/me/logout', auth, async (req, res) => {
     // Log user out of the application

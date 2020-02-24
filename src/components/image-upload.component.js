@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import axios from 'axios';
 import DefaultImg from './assets/default-img.jpg';
 
@@ -54,6 +54,7 @@ export default class Image extends Component
 
     render()
     {
+        /* Old version, trying new version
         return(
             <div className="main-container">
                 <h3 className="main-heading">Image Upload</h3>
@@ -67,5 +68,25 @@ export default class Image extends Component
                 </div>
             </div>
         );
+        
+       return (
+           <body>
+               <div class="container">
+                   <div class="row">
+                       <div class="col-md-6 m-auto">
+                           <h1 class="text-center display-4 my-4">Image Upload</h1>
+                           <form action="/upload" method="POST" enctype="multipart/form-data">
+                               <div class="custom-file mb-3">
+                                   <input type="file" name="file" id="file" class="custom-file-input"/>
+                                   <label for="file" class="custom-file-label">Choose Image</label>
+                               </div>
+                               <input type="submit" value="Submit" class="btn btn-primary btn-block"/>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </body>
+       );
     }
 }
+*/

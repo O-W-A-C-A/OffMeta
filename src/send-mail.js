@@ -11,8 +11,8 @@ var transporter = nodemailer.createTransport({
 var mailOptions = {
     from: 'owacatm@gmail.com',
     to: 'chrismasferrer@yahoo.com',
-    subject: 'Mailing test',
-    text: `Test to see if the Offmeta mailing system is functioning correctly.`
+    subject: 'Offmeta account registration',
+    text: `Verify your email and get started with Offmeta today.`
 };
 
 transporter.sendMail(mailOptions, function(error, info){

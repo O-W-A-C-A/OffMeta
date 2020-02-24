@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Modal} from 'react-bootstrap'
 import NavBar from './navbar.component'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 export default class Profile extends Component{
     constructor(){
@@ -55,6 +57,24 @@ export default class Profile extends Component{
     handleDeleteModal(){
         this.setState({showDelete:!this.state.showDelete})
     }
+
+    delete = () => {
+        confirmAlert({
+          title: 'Delete Account',
+          message: 'You are about to delete your account, it was nice knowing you :(',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: () => alert('Click Yes')
+            },
+            {
+              label: 'No',
+              onClick: () => alert('Click No')
+            }
+          ]
+        });
+      };
+
     render(){
         return(
             <div className ="homePage">
@@ -111,10 +131,16 @@ export default class Profile extends Component{
                    
                         <button type="submit" className="logoff">Logoff</button>
                     </form>
+
                     </div>
+                    <div className='delete-profile'>
+                        <button className="btn-delete" onClick={this.delete}>Delete Profile</button>
+                </div>
             </div>
         </div>
+        
         <div className="bar"></div>
+        
         </div>
         </div>
         );

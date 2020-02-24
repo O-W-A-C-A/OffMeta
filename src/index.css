@@ -9,7 +9,7 @@ body {
   font-weight: 400;
 }
 
-h1,h2,h3,h4,h5,h6,label,span {
+h2,h3,h4,h5,h6,label,span {
   color: #ffffff;
   font-weight: 500;
 }
@@ -483,15 +483,19 @@ Profile Page CSS
   width: 100px;
 }
 
+.delete-profile{
+  margin: auto;
+}
+
 .btn-delete{
   float: right;
-  background-color: red;
-  border: none;
+  background-color: #283245;
+  border: 1px solid red;
   border-radius: 25px;
-  color: #fff;
+  color: red;
   height: 35px;
-  width: 100px;
-  margin-right: 100px;
+  width: 120px;
+  margin-top: 100%;
 }
 
 .profile-title{
@@ -754,4 +758,13 @@ Inbox CSS
   display: flex; 
   border-left: 2.5px solid grey;
 }
+
+/*
+League Chat CSS
+*/
+
+.side-chat-header{
+  padding-top: 14px;
+}
+
 

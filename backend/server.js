@@ -27,16 +27,18 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
 const connection = mongoose.connection;
  connection.once('open', () => {
-     console.log("MongoDB databse connection established successfully");
+     console.log("MongoDB database connection established successfully");
  })
 
  const userRouter = require('./Routes/User');
  const playerRouter= require('./Routes/Players');
  const leagueRouter=require('./Routes/League');
+ const imageRouter=require('./Routes/image');
 
  app.use(userRouter );
  app.use(playerRouter );
  app.use(leagueRouter);
+ app.use(imageRouter);
 
 app.listen(port, () => {
     console.log('Server is running on port : ',port);

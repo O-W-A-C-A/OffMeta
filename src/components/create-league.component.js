@@ -37,7 +37,6 @@ export default class CreateLeague extends Component{
                             <button className="btn-group-teams-sel">4 Teams</button>
                             <button className="btn-group-teams-sel">6 Teams</button>
                             <button className="btn-group-teams-sel">8 Teams</button>
-                            <button className="btn-group-teams-sel">10 Teams</button>
                             </div>
                         </div>
                         <div className="scoringFormat">
@@ -47,7 +46,7 @@ export default class CreateLeague extends Component{
                             <br></br>
                             <input className="radio-scoring" type="radio" value="PPA" name="scoring-format"/> PPA
                             <br></br>
-                            <input className="radio-scoring" type="radio" value="0.5 PPA" name="scoring-format"/> PPA
+                            <input className="radio-scoring" type="radio" value="0.5 PPA" name="scoring-format"/> 0.5 PPA
                         </div>
                         <div className="allow-draft-trade">
                             <label>Allow Draft Picking Trading</label>

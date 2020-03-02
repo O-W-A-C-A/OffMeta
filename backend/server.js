@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require ('cors');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const Chatkit= require('@pusher/chatkit-server');
 
 require('dotenv').config();
@@ -23,7 +22,7 @@ const chatkit = new Chatkit.default({
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: true
+    useUnifiedTopology: true
 })
 const connection = mongoose.connection;
  connection.once('open', () => {

@@ -256,7 +256,7 @@ Homepage Navigation CSS
 */
 
 .homePage{
-  margin-top: 8vh;
+  margin:  8vh auto; 
   
 }
 
@@ -266,6 +266,8 @@ Homepage Navigation CSS
   display: flex;
   width: 70%;
   margin: 0 auto;
+  height: 80vh;
+  
 }
 
 .main-content{
@@ -289,7 +291,6 @@ Homepage Navigation CSS
   background:#283245; 
   width:20%; 
   padding-left: 10px;
-  padding-bottom: 54.5%;
   display: flex; 
 }
 
@@ -303,7 +304,6 @@ Homepage Navigation CSS
 
 .sideBar{  
   width:9.5%; 
-  height:100%; 
   display: flex; 
 }
 
@@ -313,7 +313,6 @@ Homepage Navigation CSS
   color: white;
   width: 100%;
   height: 55px;
-  
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -769,14 +768,6 @@ Inbox CSS
 }
 
 /*
-League Chat CSS
-*/
-
-.side-chat-header{
-  padding-top: 14px;
-}
-
-/*
 Matchup Panel CSS
 */
 
@@ -1177,4 +1168,51 @@ Win Chance Bar
 
 .right-container{
   float: right;
+}
+
+/*
+Chat App CSS
+*/
+
+.chat-container{
+  width: 100%;
+  height: 100%;
+}
+.chat-header{
+  font-size: 20px;
+  color: white;
+  margin-top: 1px;
+  height: 5%;
+  border: black 1px solid;
+}
+
+.chat-body{
+  height: 90%;
+  width: 100%;
+  position: relative; 
+}
+
+.chat-messages{
+  height: 90%;
+  border: black 1px solid;
+  margin-top: 2%;
+  padding-bottom: 5px;
+  margin-right: 8px;
+}
+
+.chat-footer{
+  height: 10%;
+  width: 100%;
+  padding-right: 5px;
+  border-radius: 25px;
+  bottom: 1px;
+  position: absolute; 
+  padding-top: 30px;
+}
+
+.chat-input{
+  width: 100%;
+  border-radius: 25px;
+  padding-left: 10px;
+  border: black 1px solid;
 }

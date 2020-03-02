@@ -5,6 +5,7 @@ import MyTeam from './myteam.component';
 import LeagueSettings from './league-settings.component';
 import MyLeague from './myleague.component';
 import MatchUp from "./matchup.component";
+import ChatApp from "./ChatApp.component"
 
 export default class HomePage extends Component{
     constructor(props){
@@ -32,9 +33,9 @@ export default class HomePage extends Component{
             }
         }
         return(
-            <div className ="homePage">
+            <div className ="homePage" >
                 <NavBar></NavBar>
-                <div className="home-wrapper">
+                <div className="home-wrapper" >
                     <div className="sideBar">
                         <div class="tab-side">
                         <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>
@@ -59,8 +60,9 @@ export default class HomePage extends Component{
 
                 </div>
 
-                <div className="side-chat">
-                </div>
+                    <div className="side-chat">
+                        <ChatApp/>
+                    </div>
                 </div>
             </div>
         );

@@ -50,11 +50,12 @@ export default class HomePage extends Component{
                         <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={1}>Matchup</button>
                         <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={2}>My Team</button>
                         <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={3}>League</button>
-                        <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={4}>Settings</button>         
-                        <div className="main-content-body">
-                            {renderComponent()}
-                        </div>           
+                        <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={4}>Settings</button>                   
                     </div>
+
+                    <div className="main-content-body">
+                            {renderComponent()}
+                    </div> 
 
                 </div>
 

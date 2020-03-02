@@ -257,24 +257,32 @@ Homepage Navigation CSS
 
 .homePage{
   margin-top: 8vh;
+  
 }
 
 .home-wrapper{
   background-color: none;
   justify-content: center;
   display: flex;
-  width: 80vw;
-  height: 80vh;
+  width: 70%;
   margin: 0 auto;
-  overflow: hidden;
 }
 
 .main-content{
   background:#283245; 
-  width:46.3%;
-  display: flex; 
+  width:46.3%; 
   border-left: 2.5px solid grey;
   border-right: 2.5px solid grey;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.main-content-body{
+  color: white;
+  width: 100%;
+  overflow-y:scroll;
+  position: absolute;
+  height: 100%;
 }
 
 .side-chat{
@@ -304,6 +312,8 @@ Homepage Navigation CSS
   background-color: #283245;
   color: white;
   width: 100%;
+  height: 55px;
+  
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -766,4 +776,405 @@ League Chat CSS
   padding-top: 14px;
 }
 
+/*
+Matchup Panel CSS
+*/
 
+
+/*
+Users CSS
+*/
+.matchup-panel{
+  padding-top: 5%;
+  
+}
+
+.renew-matchup-header{
+  height: 40px;
+}
+
+.matchup-header{
+  height: 135px;
+}
+
+.matchup-row{
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.matchup-owner{
+  background-color: #394354;
+  width: 48%;
+  height: 60%;
+  display: flex;
+  float: left;
+}
+.matchup-owner-flip{
+  background-color: #394354;
+  width: 48%;
+  height: 60%;
+  display: flex;
+  float: right;
+}
+
+.label{
+  height: 50%;
+  width: 1%;
+  background-color: #283245;
+  border-radius: 25px;
+  color: #9FA9B3;
+  font-weight: bold;
+  margin: auto;
+  margin-top: 3%;
+  text-align: center;
+  display: inline-block;
+}
+
+.avatar{
+  height: 40px;
+  width: 40px;
+  background-color: black;
+  border-radius: 25px;
+  padding-bottom: 20px;
+}
+
+.name{
+  padding-top: 5px;
+  height: 30px;
+  width: 125px;
+ font-size: 100%;
+  padding-left: 5px;
+}
+
+.score{
+  padding-top: 5px;
+  padding-right: 5px;
+  width: 52px;
+  height: 24px;
+  font-size: 90%;
+  font-weight: bold;
+}
+
+.avatar-flip{
+  height: 40px;
+  width: 40px;
+  background-color: black;
+  border-radius: 25px;
+}
+
+.name-flip{
+  padding-top: 5px;
+  height: 30px;
+  width: 125px;
+  font-size: 100%;
+  padding-right: 5px;
+  float: right;
+  text-align: right;
+
+}
+
+.score-flip{
+  padding-top: 5px;
+  padding-left: 5px;
+  width: 52px;
+  height: 24px;
+  font-size: 90%;
+  font-weight: bold;
+}
+.left-matchup{
+  width: 90%;
+  height: 100%;
+  float: left;
+}
+
+.right-matchup{
+  width: 90%;
+  height: 100%;
+  float: right;
+}
+.score-and-projections{
+  height: 100%;
+  width: 13%;
+  float: right;
+  padding-top: 5px;
+}
+
+.team-name{
+  font-size: 80%;
+  height: 13px;
+  width: 125px;
+  padding-left: 5px;
+}
+
+.projection{
+  font-size: 70%;
+  width: 35px;
+  height: 17px;
+}
+
+.description{
+  height: 13px;
+  width: 145px;
+  font-size: 12px;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.score-and-projections-flip{
+  height: 100%;
+  width: 13%;
+  float: left;
+  padding-top: 5px;
+}
+
+.team-name-flip{
+  font-size: 80%;
+  height: 13px;
+  width: 125px;
+  padding-right: 5px;
+  float: right;
+  text-align: right;
+}
+
+.projection-flip{
+  font-size: 70%;
+  width: 35px;
+  height: 17px;
+  padding-left: 11px;
+
+}
+
+.description-flip{
+  height: 13px;
+  width: 145px;
+  font-size: 12px;
+  padding-right: 5px;
+  padding-top: 5px;
+  float: right;
+  text-align: right;
+}
+
+/*
+Win Chance Bar
+*/
+
+.win-chance-bar{
+  height: 23px;
+}
+
+.remaining-players-container{
+  height: 28px;
+}
+
+.starters-section{
+  height: 100%;
+}
+
+.start-header-wrapper{
+  height: 48px;
+}
+/* Starters CSS*/
+.starter-header{
+  height: 18px;
+  width: 70%;
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.text{
+  float: right;
+  height: 18px;
+  font-size: 18px;
+  color: #677897;
+}
+
+.starter-container{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.starter-container2{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.starter-container3{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.starter-container4{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.starter-container5{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.starter-container6{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.left-start{
+  width: 48%;
+  height: 100%;
+}
+
+.middle-start{
+  
+}
+
+.right-start{
+  width: 48%;
+  background-color: #394354;
+}
+
+/* Bench CSS*/
+.bootstrap-drop{
+  height: 18px;
+}
+
+.bench-section{
+  height: 100%;
+}
+
+.bench-header-wrapper{
+  height: 48px;
+}
+
+.bench-header{
+  height: 48px;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+
+.bench-container{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+
+.bench-container2{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  height: 80px;
+  border-bottom: 1px solid black;
+}
+
+.bench-container3{
+  border:none;
+  height: 80px;
+
+}
+
+/*
+  Percentage CSS
+*/
+
+.middle-div{
+  height: 100px;
+  width: 100%;
+}
+
+.win-chance-bar{
+  height: 10%;
+  width: 95%;
+  margin-left: 2.5%;
+  border: 1px  #283245 solid;
+  margin-bottom: 5px;
+}
+
+.left-bar{
+  width: 50%;
+  float: left;
+  background-color: green;
+  height: 100%;
+}
+
+.right-bar{
+  width: 50%;
+  float: right;
+  background-color: red;
+  height: 100%;
+}
+
+.above-chance:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.left-chance{
+  float:left;
+  width: 10%;
+  padding-left: 15px;
+}
+
+.middle-chance{
+  float:left;
+  width: 80%;
+  text-align: center;
+}
+
+.right-chance{
+  float:left;
+  width: 10%;
+}
+
+.remaining-players-container{
+  height: 33%;
+  width: 100%;
+}
+
+.left-remaining{
+  width: 50%;
+  float: left;
+  font-size: 75%;
+  padding-left: 5%;
+}
+
+.left-container{
+  float: left;
+  
+}
+
+.right-remaining{
+  width: 50%;
+  float: right;
+  font-size: 75%;
+  padding-right: 5%;
+}
+
+.right-container{
+  float: right;
+}

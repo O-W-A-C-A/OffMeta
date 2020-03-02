@@ -2,40 +2,43 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {ReCaptcha} from 'react-recaptcha-google'
 import NavBar from './navbar.component'
+import Axios from "axios";
+
 export default class  extends Component 
 {
-    constructor(props, context){
-        super(props, context);
+    constructor(props){
+        super(props);
         this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
         this.verifyCallback = this.verifyCallback.bind(this);
         this.state = {
-            name: '',
             email: '',
             password: '',
+            loginErrors: ''
         }
+        //this.handleChange = this.handleChange.bind(this);
         this.onChange = this.onChange.bind(this)
+        //this.handleSubmit = this.handleSubmit.bind(this);
         this.onSubmit = this.onSubmit.bind(this)
+
     }
 
     onChange(e){
-        this.setState({[e.target.name]: e.target.value})
+        this.setState({[e.target.name]: e.target.value});
     }
 
     onSubmit(e){
-        e.preventDefault()
+        e.preventDefault();
 
-        const user = {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password
-        }
+        const userData = {
+          email: this.state.email,
+          password: this.state.password
+        
     }
     componentDidMount(){
-    if (this.captchaDemo) {
-        console.log("started, just a second...")
-        this.captchaDemo.reset();
-        this.captchaDemo.execute();
-        }
+     // If logged in and user navigates to Login page, should redirect them to dashboard
+     if (this.props.auth.isAuthenticated) {
+        this.props.history.push("/dashboard");
+      }
     }
 
     onLoadRecaptcha() {

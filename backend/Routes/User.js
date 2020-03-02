@@ -3,6 +3,8 @@ const User = require('../models/User.model')
 const auth = require('../middleware/auth')
 require('dotenv').config();
 const router = express.Router()
+const randomstring = require('randomstring')
+const mailer = require('../middleware/send-mail')
 
 //router.route.post('/users/add', async (req, res) => {
 router.post('/users/add', async (req, res) =>{
@@ -11,8 +13,48 @@ router.post('/users/add', async (req, res) =>{
         const user = new User(req.body)
         await user.save()
         const token = await user.generateAuthToken()
+
+        //create user authentication code
+        const confirmCode = randomstring.generate(12);
+        //save user authentication code to db
+        user.confirmCode = confirmCode;
+        //flag account as unverified
+        user.verified = false;
+
+        //compose email
+        const html = `Hello,
+        <br/>
+        Thanks for registering with Offmeta.
+        <br/><br/>
+        To verify your account please use the following code:
+        <br/>
+        Verification Code: <b>${confirmCode}</b>
+        <br/>
+        Through this link to activate your account:
+        <a href="http://localhost:3000/verify">http://localhost:3000/verify</a>`
+        //send email
+        await mailer.sendEmail('owacatm@gmail.com', user.email, 'Offmeta account verification', html);
+
         res.status(201).send({ user, token })
     } catch (error) {
+        res.status(400).send(error)
+    }
+});
+
+//verify user confirmCode to activate their account
+router.post('/users/verify', async(req, res) => {
+    try{
+        const user = await User.findByCredentials(confirmCode)
+        if(!user) {
+            return res.status(401).send({error: 'Verification Failed! Wrong confirmation code.'})
+        }
+
+        user.verified = true;
+        user.confirmCode = '';
+        await user.save();
+        
+        req.flash('success', 'Account activated. You may now sign in.');
+    } catch(error) {
         res.status(400).send(error)
     }
 });

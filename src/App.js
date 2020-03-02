@@ -11,6 +11,7 @@ import Profile from './components/profile.component';
 import CreateLeague from './components/create-league.component';
 import Inbox from './components/inbox.component';
 //import ImageUpload from './components/image-upload.component';
+import Verify from './components/verify.component';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path ="/create" component={CreateLeague}/>
             <Route path ="/inbox" component={Inbox}/>
-
+            <Route path ="/verify" component={Verify}/>
           </Switch>
    
     </Router>

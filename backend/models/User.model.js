@@ -25,6 +25,8 @@ const userSchema = mongoose.Schema({
         required: true,
         minLength: 7
     },
+    confirmCode: String,
+    verified: Boolean,
     tokens: [{
         token: {
             type: String,

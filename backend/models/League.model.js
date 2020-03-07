@@ -9,13 +9,7 @@ const LeagueSchema= new Schema({
         trim:true,
         minlength: 3
     },
-    id:{
-        type: String,
-        required:true,
-        trim:true,
-        minlength: 3
-    },
-    Size:{
+    size:{
         type: Number,
         required:true
     },
@@ -27,9 +21,12 @@ const LeagueSchema= new Schema({
     },
     logo:{
         type: String,
-        required:true,
         trim:true,
         minlength: 3
+    },
+    allowDraftTrading:{
+        type: Boolean,
+        default: true
     }
 },
 {

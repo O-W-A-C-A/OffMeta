@@ -1,4 +1,5 @@
 const router = require('express').Router();
+var ObjectId = require('mongodb').ObjectID;
 let League = require('../models/League.model');
 
 router.route('/').get((req,res)=>{
@@ -8,43 +9,43 @@ router.route('/').get((req,res)=>{
 });
 
 router.route('/')
-router.route('/add').post((req,res) => {
+router.route('/league/create').post((req,res) => {
    const name = req.body.name;
-   const id = req.body.id;
-   const Size = Number(req.body.Size);
-   const scoringFormat = req.body.name;
+   const size = Number(req.body.size);
+   const scoringFormat = req.body.scoringFormat;
    const logo = req.body.logo;
+   //boolean values do not require double quotes
+   const allowDraftTrading = Boolean(req.body.allowDraftTrading);
     
     const newLeague = new League({
         name,
-        id,
-        Size,
+        size,
         scoringFormat,
-        logo});
+        allowDraftTrading});
 
     newLeague.save()
-    .then(() => res.json('League Added!'))
+    .then(() => res.json('League Created!'))
     .catch(err => res.status(400).json('Error: '+ err));
     
 });
-router.route('/:id').get((req, res) =>{
-    League.findById(req.params.id)
+router.route('/league/:id').get((req, res) =>{
+    League.findById(ObjectId(req.body.id))
         .then(league => res.json(league))
         .catch(err => res.status(400).json('Error:' + err));
 });
 
-router.route('/:id').delete((req,res)=> {
-    League.findByIdAndDelete(req.params.id)
+router.route('/league/:id').delete((req,res)=> {
+    League.findByIdAndDelete(ObjectId(req.body.id))
     .then(league => res.json('league deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) =>{
-    League.findById(req.params.id)
+router.route('/league/:id').post((req, res) =>{
+    League.findById(ObjectId(req.body.id))
     .then(league =>{
         league.name = req.body.name;
-        //league.Size = req.body.Size;
-        //league.scoringFormat = Number(req.body.scoringFormat);
+        league.size = req.body.size;
+        league.scoringFormat = req.body.scoringFormat;
 
         league.save()
         .then(() => res.json('league updated!'))

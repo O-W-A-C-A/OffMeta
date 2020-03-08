@@ -26,7 +26,7 @@ const LeagueSchema= new Schema({
     },
     allowDraftTrading:{
         type: Boolean,
-        default: true
+        default: false
     }
 },
 {

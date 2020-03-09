@@ -1,5 +1,4 @@
 const router = require('express').Router();
-var ObjectId = require('mongodb').ObjectID;
 let League = require('../models/League.model');
 
 router.route('/').get((req,res)=>{
@@ -8,43 +7,42 @@ router.route('/').get((req,res)=>{
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/')
-router.route('/league/create').post((req,res) => {
-   const name = req.body.name;
-   const size = Number(req.body.size);
+router.route('/create').post((req,res) => {
+   const leagueName = req.body.leagueName;
+   const leagueSize = Number(req.body.leagueSize);
    const scoringFormat = req.body.scoringFormat;
    const logo = req.body.logo;
    //boolean values do not require double quotes
-   const allowDraftTrading = Boolean(req.body.allowDraftTrading);
+   const draftPickTrading = Boolean(req.body.allowDraftTrading);
     
     const newLeague = new League({
-        name,
-        size,
+        leagueName,
+        leagueSize,
         scoringFormat,
-        allowDraftTrading});
+        draftPickTrading});
 
     newLeague.save()
     .then(() => res.json('League Created!'))
     .catch(err => res.status(400).json('Error: '+ err));
     
 });
-router.route('/league/:id').get((req, res) =>{
-    League.findById(ObjectId(req.body.id))
+router.route('/:id').get((req, res) =>{
+    League.findById(req.params.id)
         .then(league => res.json(league))
         .catch(err => res.status(400).json('Error:' + err));
 });
 
-router.route('/league/:id').delete((req,res)=> {
-    League.findByIdAndDelete(ObjectId(req.body.id))
+router.route('/:id').delete((req,res)=> {
+    League.findByIdAndDelete(req.params.id)
     .then(league => res.json('league deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/league/:id').post((req, res) =>{
-    League.findById(ObjectId(req.body.id))
+router.route('/update/:id').post((req, res) =>{
+    League.findById(req.params.id)
     .then(league =>{
-        league.name = req.body.name;
-        league.size = req.body.size;
+        league.leagueName = req.body.leagueName;
+        league.leagueSize = req.body.leagueSize;
         league.scoringFormat = req.body.scoringFormat;
 
         league.save()

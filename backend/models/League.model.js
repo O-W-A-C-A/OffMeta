@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const LeagueSchema= new Schema({
-    name:{
+    leagueName:{
         type: String,
         required:true,
         trim:true,
         minlength: 3
     },
-    size:{
+    leagueSize:{
         type: Number,
         required:true
     },
@@ -24,7 +24,7 @@ const LeagueSchema= new Schema({
         trim:true,
         minlength: 3
     },
-    allowDraftTrading:{
+    draftPickTrading:{
         type: Boolean,
         default: false
     }

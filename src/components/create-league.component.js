@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import NavBar from './navbar.component'
+import NavBar from './navbar.component';
 export default class CreateLeague extends Component{
     constructor(props){
         super(props);
         //onSubmit function delcaration will handle submitting of form to the server
         this.onSubmit = this.onSubmit.bind(this);
 
-        //functions for input fields that the user will modify
+        //function declaration for input fields that the user will modify
         this.onChangeLeagueName = this.onChangeLeagueName.bind(this);
         this.onChangeDraftPickTrading = this.onChangeDraftPickTrading.bind(this);
         this.onChangeScoringFormat = this.onChangeScoringFormat.bind(this);
@@ -17,62 +17,67 @@ export default class CreateLeague extends Component{
 
         //setting default state of all variables
         this.state = {
-            leaguename:' ',
+            leagueName:'',
             draftPickTrading: false,
             scoringFormat: 'STD',
-            leagueSize: '4',
-            logo: ' '
+            leagueSize: 4,
+            logo: ''
         };
     }
 
     onSubmit(e){
+        //prevents autoload of page
         e.preventDefault();
-
+        //creating a league object
         const league = {
-            leaguename: this.state.leaguename,
+            leagueName: this.state.leagueName,
             draftPickTrading: this.state.draftPickTrading,
             scoringFormat: this.state.scoringFormat,
             leagueSize: this.state.leagueSize,
             logo: this.state.logo
         }
-
+        //prints to console league information
         console.log(league);
-
+        //crud method post to database
         axios.post('http://localhost:5000/league/create', league)
             .then(res => console.log(res.data));
-
+        //sets the state back to its default values
         this.setState({ 
-            leaguename:' ',
+            leagueName:'',
             draftPickTrading: false,
             scoringFormat: 'STD',
-            leagueSize: '4',
+            leagueSize: 4,
+            logo:''
         })
     }
-
+    //handles the state for when user enters a league name
     onChangeLeagueName(e){
         this.setState({
-            leaguename: e.target.value
+            leagueName: e.target.value
         })
     }
-
+    //handles the state for when user toggles switch to allow draft pick trading
     onChangeDraftPickTrading(e){
         this.setState({
             draftPickTrading: e.target.value
         })
     }
-
+    //handles the state for when user clicks on a radio button to determine the
+    //scoring format
     onChangeScoringFormat(e){
         this.setState({
             scoringFormat: e.target.value
         })
     }
-
+    //handles the state for when user clicks on a button to determine the league
+    //size
     onChangeLeagueSize(e){
         this.setState({
             leagueSize: e.target.value
         })
     }
-
+    //handles the the state for when the user uploads a league image
+    //this image is optional
     onChangeLogo(e){
         this.setState({
             logo: e.target.value
@@ -93,14 +98,15 @@ export default class CreateLeague extends Component{
                         <Link to={"/inbox"}><button class="tablinks-side">Inbox</button></Link>                    
                     </div>
                 </div>
+                
                     <div className="clWrapper">
                        <div className="clContent"><h3>Create a new league</h3>
                         <p>Don't worry you all be to make changes later to all settings later</p>
-                        
+                        <form  onSubmit={this.onSubmit}>
                         <div className="league-name">
                             <label>League Name</label>
                             <br></br>
-                            <input type="text" className="league-name-text" placeholder="Enter the name of you league" value={this.state.leaguename} onChange={this.onChangeLeagueName}/>                        
+                            <input type="text" className="league-name-text" placeholder="Enter the name of your league" value={this.state.leagueName} onChange={this.onChangeLeagueName}/>                        
                         </div>
                         <div className="league-logo">
                             <label>Optional Logo</label>
@@ -118,11 +124,11 @@ export default class CreateLeague extends Component{
                         <div className="scoringFormat">
                             <label>Scoring Format</label>
                             <br></br>
-                            <input className="radio-scoring" type="radio" value="STD" name="scoring-format"/> STD
+                            <input className="radio-scoring" type="radio" value="STD" onChange = {this.onChangeScoringFormat} name="scoring-format"/> STD
                             <br></br>
-                            <input className="radio-scoring" type="radio" value="PPA" name="scoring-format"/> PPA
+                            <input className="radio-scoring" type="radio" value="PPA" onChange = {this.onChangeScoringFormat} name="scoring-format"/> PPA
                             <br></br>
-                            <input className="radio-scoring" type="radio" value="0.5 PPA" name="scoring-format"/> 0.5 PPA
+                            <input className="radio-scoring" type="radio" value="0.5 PPA" onChange = {this.onChangeScoringFormat} name="scoring-format"/> 0.5 PPA
                         </div>
                         <div className="allow-draft-trade">
                             <label>Allow Draft Picking Trading</label>
@@ -132,14 +138,16 @@ export default class CreateLeague extends Component{
                                 <span className="slider round"></span>
                             </label>
                         </div>
-                        <button type="submit" className="btn-createLeague" onSubmit={this.onSubmit}>Finish</button>
+                        <button type="submit" className="btn-createLeague">Finish</button>
                     </div>
+                    </form>
                     </div>
                 </div>
                 <div className="bar">
 
                 </div>
                 </div>
+                
             </div>
         );
     }

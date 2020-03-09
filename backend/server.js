@@ -35,8 +35,8 @@ const connection = mongoose.connection;
  const imageRouter=require('./Routes/image');
 
  app.use(userRouter );
- app.use(playerRouter );
- app.use(leagueRouter);
+ app.use('/player',playerRouter );
+ app.use('/league', leagueRouter);
  app.use(imageRouter);
 
 app.listen(port, () => {

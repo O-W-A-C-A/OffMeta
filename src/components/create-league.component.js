@@ -59,7 +59,7 @@ export default class CreateLeague extends Component{
     //handles the state for when user toggles switch to allow draft pick trading
     onChangeDraftPickTrading(e){
         this.setState({
-            draftPickTrading: e.target.value
+            draftPickTrading: !this.state.draftPickTrading
         })
     }
     //handles the state for when user clicks on a radio button to determine the
@@ -116,14 +116,15 @@ export default class CreateLeague extends Component{
                         <div className="teams">
                             <label>League Size</label>
                             <div className="btn-group-teams">
-                            <button className="btn-group-teams-sel">4 Teams</button>
-                            <button className="btn-group-teams-sel">6 Teams</button>
-                            <button className="btn-group-teams-sel">8 Teams</button>
+                            <button type="button" className="btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {4}>4 Teams</button>
+                            <button type="button" className="btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {6}>6 Teams</button>
+                            <button type="button" className="btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {8}>8 Teams</button>
                             </div>
                         </div>
                         <div className="scoringFormat">
                             <label>Scoring Format</label>
                             <br></br>
+                            {/* Radio Buttons that determine the scoring format depending on what the user selects */}
                             <input className="radio-scoring" type="radio" value="STD" onChange = {this.onChangeScoringFormat} name="scoring-format"/> STD
                             <br></br>
                             <input className="radio-scoring" type="radio" value="PPA" onChange = {this.onChangeScoringFormat} name="scoring-format"/> PPA
@@ -134,7 +135,7 @@ export default class CreateLeague extends Component{
                             <label>Allow Draft Picking Trading</label>
                             <br></br>
                             <label className="switch">
-                                <input type="checkbox"/>
+                                <input onChange = {this.onChangeDraftPickTrading} type="checkbox"/>
                                 <span className="slider round"></span>
                             </label>
                         </div>

@@ -49,6 +49,8 @@ export default class CreateLeague extends Component{
             leagueSize: 4,
             logo:''
         })
+        //
+        window.location = '/home';
     }
     //handles the state for when user enters a league name
     onChangeLeagueName(e){
@@ -58,9 +60,10 @@ export default class CreateLeague extends Component{
     }
     //handles the state for when user toggles switch to allow draft pick trading
     onChangeDraftPickTrading(e){
-        this.setState({
+        this.setState(prevState=>({
             draftPickTrading: !this.state.draftPickTrading
-        })
+        }))
+        console.log(!this.state.draftPickTrading);
     }
     //handles the state for when user clicks on a radio button to determine the
     //scoring format
@@ -135,7 +138,7 @@ export default class CreateLeague extends Component{
                             <label>Allow Draft Picking Trading</label>
                             <br></br>
                             <label className="switch">
-                                <input onChange = {this.onChangeDraftPickTrading} type="checkbox"/>
+                                <input value = {this.state.draftPickTrading} onChange = {this.onChangeDraftPickTrading} type="checkbox"/>
                                 <span className="slider round"></span>
                             </label>
                         </div>

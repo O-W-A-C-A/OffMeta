@@ -49,8 +49,8 @@ export default class CreateLeague extends Component{
             leagueSize: 4,
             logo:''
         })
-        //
-        window.location = '/home';
+        //after submission brings user to the home page
+       // window.location = '/home';
     }
     //handles the state for when user enters a league name
     onChangeLeagueName(e){
@@ -60,10 +60,11 @@ export default class CreateLeague extends Component{
     }
     //handles the state for when user toggles switch to allow draft pick trading
     onChangeDraftPickTrading(e){
-        this.setState(prevState=>({
+        this.setState({
             draftPickTrading: !this.state.draftPickTrading
-        }))
-        console.log(!this.state.draftPickTrading);
+        })
+        //for testing
+        //console.log(!this.state.draftPickTrading);
     }
     //handles the state for when user clicks on a radio button to determine the
     //scoring format
@@ -71,6 +72,8 @@ export default class CreateLeague extends Component{
         this.setState({
             scoringFormat: e.target.value
         })
+        //for testing
+        //console.log(e.target.value)
     }
     //handles the state for when user clicks on a button to determine the league
     //size
@@ -78,6 +81,8 @@ export default class CreateLeague extends Component{
         this.setState({
             leagueSize: e.target.value
         })
+        //for testing
+        //console.log(e.target.value)
     }
     //handles the the state for when the user uploads a league image
     //this image is optional
@@ -119,16 +124,27 @@ export default class CreateLeague extends Component{
                         <div className="teams">
                             <label>League Size</label>
                             <div className="btn-group-teams">
-                            <button type="button" className="btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {4}>4 Teams</button>
-                            <button type="button" className="btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {6}>6 Teams</button>
-                            <button type="button" className="btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {8}>8 Teams</button>
+                                <ul className="league-size">
+                                    <li>
+                                        <input type="radio" name = "btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {4} id="size4"/>
+                                        <label for="size4">4 Teams</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name = "btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {6} id="size6"/>
+                                        <label for="size6">6 Teams</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name = "btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {8} id="size8"/>
+                                        <label for="size8">8 Teams</label>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div className="scoringFormat">
                             <label>Scoring Format</label>
                             <br></br>
                             {/* Radio Buttons that determine the scoring format depending on what the user selects */}
-                            <input className="radio-scoring" type="radio" value="STD" onChange = {this.onChangeScoringFormat} name="scoring-format"/> STD
+                            <input className="radio-scoring" type="radio" value="STD" onChange = {this.onChangeScoringFormat} name="scoring-format" /> STD
                             <br></br>
                             <input className="radio-scoring" type="radio" value="PPA" onChange = {this.onChangeScoringFormat} name="scoring-format"/> PPA
                             <br></br>

@@ -11,7 +11,10 @@ export default class ChatApp extends Component{
                         
                     </div>
                     <div className="chat-footer">
-                        <input className="chat-input" placeholder="Start Chatting"></input>
+                        <textarea className="chat-input" placeholder="Send a message"></textarea >
+                        <div className="chat-btn">
+                            <button type="submit" className="chat-btn-submit">Chat</button>
+                        </div>
                     </div>
                 </div>
 

@@ -100,7 +100,8 @@ export default class Profile extends Component{
         return(
             <div className ="homePage">
                 <NavBar></NavBar>
-                <div className="home-wrapper-profile">
+                <div className="home-wrapper">
+
                 <div className="sideBar">
                     <div class="tab-side">
                         <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>

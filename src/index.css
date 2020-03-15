@@ -257,7 +257,6 @@ Homepage Navigation CSS
 
 .homePage{
   margin:  8vh auto; 
-  
 }
 
 .home-wrapper{
@@ -266,13 +265,12 @@ Homepage Navigation CSS
   display: flex;
   width: 70%;
   margin: 0 auto;
-  height: 80vh;
-  
+  height: 80vh; 
 }
 
 .main-content{
   background:#283245; 
-  width:46.3%; 
+  width:46.3%;
   border-left: 2.5px solid grey;
   border-right: 2.5px solid grey;
   position: relative;
@@ -282,9 +280,10 @@ Homepage Navigation CSS
 .main-content-body{
   color: white;
   width: 100%;
-  overflow-y:scroll;
+  overflow-y:auto;
+  overflow-x: hidden;
   position: absolute;
-  height: 100%;
+  height: 72vh;
 }
 
 .side-chat{
@@ -771,7 +770,6 @@ Inbox CSS
   background:#283245; 
   width:20%; 
   padding-left: 10px;
-  padding-bottom: 54.5%;
   display: flex; 
   border-left: 2.5px solid grey;
 }
@@ -792,8 +790,7 @@ Matchup Panel CSS
 Users CSS
 */
 .matchup-panel{
-  padding-top: 5%;
-  
+
 }
 
 .renew-matchup-header{
@@ -824,17 +821,30 @@ Users CSS
   float: right;
 }
 
-.label{
-  height: 50%;
-  width: 1%;
-  background-color: #283245;
-  border-radius: 25px;
+.vs-label{
+  width: 4%;
+  height: 60%;
   color: #9FA9B3;
   font-weight: bold;
-  margin: auto;
-  margin-top: 3%;
   text-align: center;
   display: inline-block;
+  /*center vertically*/
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* left side user information*/
+.left-matchup{
+  width: 90%;
+  height: 100%;
+  float: left;
+}
+
+.left-matchup-container{
+  position: relative;
+  width: 25%;
+  height: 100%;
 }
 
 .avatar{
@@ -854,12 +864,54 @@ Users CSS
 }
 
 .score{
-  padding-top: 5px;
-  padding-right: 5px;
-  width: 52px;
+  width: 100%;
   height: 24px;
   font-size: 90%;
   font-weight: bold;
+}
+
+.projection{
+  font-size: 70%;
+  width: 100%;
+  height: 17px;
+}
+
+.score-and-projections{
+  height: 100%;
+  width: 13%;
+  float: right;
+  padding-top: 5px;
+  position: relative;
+  text-align: middle;
+}
+
+.team-name{
+  font-size: 80%;
+  height: 13px;
+  width: 125px;
+  padding-left: 5px;
+}
+
+.description{
+  height: 13px;
+  width: 145px;
+  font-size: 12px;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+/* right side user information*/
+.right-matchup{
+  width: 90%;
+  height: 100%;
+  float: right;
+}
+
+.right-matchup-container{
+  position: relative;
+  width: 25%;
+  height: 100%;
+  float: right;
 }
 
 .avatar-flip{
@@ -881,50 +933,17 @@ Users CSS
 }
 
 .score-flip{
-  padding-top: 5px;
-  padding-left: 5px;
-  width: 52px;
+  width: 100%;
   height: 24px;
   font-size: 90%;
   font-weight: bold;
+  text-align: right;
 }
-.left-matchup{
-  width: 90%;
-  height: 100%;
-  float: left;
-}
-
-.right-matchup{
-  width: 90%;
-  height: 100%;
-  float: right;
-}
-.score-and-projections{
-  height: 100%;
-  width: 13%;
-  float: right;
-  padding-top: 5px;
-}
-
-.team-name{
-  font-size: 80%;
-  height: 13px;
-  width: 125px;
-  padding-left: 5px;
-}
-
-.projection{
+.projection-flip{
   font-size: 70%;
-  width: 35px;
+  width: 100%;
   height: 17px;
-}
-
-.description{
-  height: 13px;
-  width: 145px;
-  font-size: 12px;
-  padding-left: 5px;
-  padding-top: 5px;
+  text-align: right;
 }
 
 .score-and-projections-flip{
@@ -932,6 +951,8 @@ Users CSS
   width: 13%;
   float: left;
   padding-top: 5px;
+  position: relative;
+  text-align: middle;
 }
 
 .team-name-flip{
@@ -941,14 +962,6 @@ Users CSS
   padding-right: 5px;
   float: right;
   text-align: right;
-}
-
-.projection-flip{
-  font-size: 70%;
-  width: 35px;
-  height: 17px;
-  padding-left: 11px;
-
 }
 
 .description-flip{
@@ -1046,32 +1059,81 @@ Win Chance Bar
 }
 
 .left-start{
-  width: 48%;
+  width: 46%;
   height: 100%;
+  float: left;
+  display: flex;
 }
 
 .middle-start{
-  
+  border-radius: 5px;
+  display: inline-block;
+  width: 8%;
+  height: 50%;
+  /*center vertically*/
+  position: relative;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
+.middle-text{
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 5px;
+  font-weight: bold;
 }
 
 .right-start{
-  width: 48%;
-  background-color: #394354;
+  width: 46%;
+  height: 100%;
+  float: right;
+  display: flex;
 }
+
+.player-meta-left{
+  float: left;
+  padding: 5px 0px 0px 5px;
+  width: 30%;
+  text-align: left;
+}
+
+.player-score-container-left{
+  float: right;
+  width: 10%;
+  padding-top: 5px;
+}
+
+.player-space{
+  display: inline-block;
+  width: 50%;
+}
+
+.player-meta-right{
+  float: right;
+  padding: 5px 5px 0px 0px;
+  width: 30%;
+  text-align: right;
+}
+
+.player-score-container-right{
+  float: left;
+  width: 20%;
+  padding-top: 5px;
+  text-align: right;
+}
+
+.player-score{
+  font-weight: bold;
+}
+
+.player-name{
+  font-weight: bold;
+}
+
 
 /* Bench CSS*/
-.bootstrap-drop{
-  height: 18px;
-}
-
-.bench-section{
-  height: 100%;
-}
-
-.bench-header-wrapper{
-  height: 48px;
-}
-
 .bench-header{
   height: 48px;
   font-size: 20px;
@@ -1079,7 +1141,6 @@ Win Chance Bar
   padding-left: 10px;
   padding-top: 5px;
 }
-
 
 .bench-container{
   border-top: none;
@@ -1099,9 +1160,11 @@ Win Chance Bar
 }
 
 .bench-container3{
-  border:none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
   height: 80px;
-
+  border-bottom: 1px solid black;
 }
 
 /*
@@ -1143,19 +1206,20 @@ Win Chance Bar
 
 .left-chance{
   float:left;
-  width: 10%;
-  padding-left: 15px;
+  width: 5%;
+  padding-left: 2.5%;
 }
 
 .middle-chance{
   float:left;
-  width: 80%;
+  width: 90%;
   text-align: center;
 }
 
 .right-chance{
   float:left;
-  width: 10%;
+  width: 5%;
+  padding-right: 2.5%;
 }
 
 .remaining-players-container{
@@ -1191,58 +1255,44 @@ Chat App CSS
 */
 
 .chat-container{
-  width: 100%;
   height: 100%;
- 
+  weight: 100%;
 }
 .chat-header{
-  font-size: 20px;
-  color: white;
-  margin-top: 1px;
-  height: 5%;
-  width: 100%;
-  border-bottom: #808080 solid 1px;
-  padding-left: 5px;
+ color:white;
+ height: 10%;
+ padding-left: 5%;
+}
+
+.last-message{
+  font-size: 70%;
 }
 
 .chat-body{
-  height: 90%;
-  width: 100%;
-  position: relative; 
-}
-
-.chat-messages{
-  height: 90%;
-  margin-top: 2%;
-  padding-bottom: 5px;
-  margin-right: 8px;
-  padding-left: 5px;
+  height: 70%;
+  overflow-y: auto;
+  padding-left: 5%;
 }
 
 .chat-footer{
-  height: 10%;
-  width: 100%;
-  padding: 0 5px 0 5px;
-  border-radius: 25px;
-  bottom: 1px;
-  position: absolute; 
-  padding-top: 10px;
+  height: 20%;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .chat-input{
-  width: 100%;
-  padding-left: 20px;
-  height: 80px;
-  background-color: #415274;
-  border-radius: 5px;
-  padding-left: 10px;
-  border: none;
-  color: white;
   resize: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  border-radius: 5px;
+  border: none;
 }
 
 .chat-btn{
   float: right;
+  padding-right: 2.5%;
 }
 
 .chat-btn-submit{

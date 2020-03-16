@@ -1206,20 +1206,20 @@ Win Chance Bar
 
 .left-chance{
   float:left;
-  width: 5%;
+  width: 10%;
   padding-left: 2.5%;
 }
 
 .middle-chance{
   float:left;
-  width: 90%;
+  width: 80%;
   text-align: center;
 }
 
 .right-chance{
-  float:left;
-  width: 5%;
-  padding-right: 2.5%;
+  float:right;
+  width: 10%;
+  padding-left: 2.5%;
 }
 
 .remaining-players-container{
@@ -1256,7 +1256,8 @@ Chat App CSS
 
 .chat-container{
   height: 100%;
-  weight: 100%;
+  width: 100%;
+  overflow: auto;
 }
 .chat-header{
  color:white;
@@ -1277,7 +1278,6 @@ Chat App CSS
 .chat-footer{
   height: 20%;
   position: relative;
-  overflow-x: hidden;
 }
 
 .chat-input{
@@ -1286,6 +1286,7 @@ Chat App CSS
   margin-left: auto;
   margin-right: auto;
   width: 95%;
+  height: 60%;
   border-radius: 5px;
   border: none;
 }
@@ -1303,4 +1304,152 @@ Chat App CSS
   width: 60px;
   border-radius: 5px;
   color: white;
+}
+
+/*League Settings CSS*/
+.league-settings-panel{
+  overflow-y: auto;
+}
+
+.settings-header{
+  color: #929599;
+  border-bottom: 1px solid white;
+  margin: 0px 10px 0px 10px;
+  padding-top: 40px;
+}
+
+.coowner-button{
+  margin: 10px 0px 0px 10px;
+}
+
+.manage-owner-btn{
+  background-color: #58A7FF;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.right-edit{
+  float: right;
+  color: #58A7FF;
+}
+
+.right-edit:hover{
+  color: #55504E;
+}
+
+.grouping-header{
+  text-align: center;
+  font-weight: bold;
+  padding-top: 5%;
+}
+
+.setting-row-stack{
+  display: inline-block;
+}
+
+.settings-name{
+  margin: 10px 0px 0px 10px;
+  font-weight: bold;
+}
+
+.settings-value{
+  margin: 0px 0px 0px 10px;
+}
+
+.setting-row{
+  display:inline-block;
+}
+
+.settings-name2{
+  margin: 0px 0px 0px 10px;
+  float: left;
+}
+.settings-value2{
+  float: right;
+  margin: 0px 10px 0px 0px
+}
+
+/*View League CSS*/
+.my-league-panel{
+  overflow-y: auto;
+}
+
+.my-league-header{
+  color: #929599;
+  border-bottom: 1px solid white;
+  margin: 0px 10px 0px 10px;
+  padding-top: 40px;
+  font-weight: bold;
+}
+
+.my-league-points-for{
+  float: right;
+  width: 10%;
+}
+
+.my-league-points-allowed{
+  float: right;
+  width: 10%;
+}
+
+.my-league-waiver{
+  float: right;
+  width: 10%;
+}
+
+.my-league-div{
+
+}
+
+.league-standing-row{
+  margin: 0px 10px 0px 10px;
+  display: flex;
+}
+
+.rank{
+  width: 5%;
+}
+
+.team-container{
+  width: 65%;
+}
+
+.team-owner-name{
+}
+
+.team-owner-desc{
+  font-size: 11px;
+}
+
+.points-for{
+  width: 10%;
+}
+
+.points-allowed{
+  width: 10%;
+}
+
+.waiver{
+  width: 10%;
+  text-align: center;
+}
+
+.league-transaction-item{
+  margin: 0px 10px 0px 10px;
+  display: flex;
+}
+
+.team-owner-with-desc{
+  width: 40%;
+}
+
+.av{
+  width: 10%
+}
+
+.trans-timestamp, .player-pos{
+  font-size: 11px;
 }

@@ -1,25 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const gravatar = require('gravatar');
-const bcrypt = require('bcryptjs');
+const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-
 const { check, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
-//bring in the schema model of user
 const User = require('../../models/User');
-// @route   POST api/users
-// @desc    Register User
+// @route   POST api/auth
+// @desc    Authenticate user & get token
+// @access  Public
+router.get('/', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   POST api/auth
+// @desc    Authenticate user & get token
 // @access  Public
 router.post(
   '/',
   [
-    check('name', 'Name is required')
-      .not()
-      .isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Please enter a valid passweord').isLength({ min: 6 })
+    check('password', 'Password is required').exists()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -27,40 +35,25 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
       // See if User exists
       let user = await User.findOne({ email });
-
-      if (user) {
+      //if the user doesnt exits send error
+      if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'user already exists' }] });
+          .json({ errors: [{ msg: 'invalid credentials' }] });
       }
-      //Get users gravatars
-      const avatar = gravatar.url(email, {
-        s: '200',
-        d: 'mm'
-      });
-      //creating new instance of user if email not found
-      user = new User({
-        name,
-        email,
-        avatar,
-        password
-      });
-      //Encrypt the password
 
-      //creating our salt the higher the more secure but slower
-      const salt = await bcrypt.genSalt(10);
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      //creates the hashed password
-      user.password = await bcrypt.hash(password, salt);
-
-      //saves the new user
-      await user.save();
-
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'invalid credentials' }] });
+      }
       //Return jsonwebtoken
       //payload definition
       const payload = {

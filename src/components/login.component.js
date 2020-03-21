@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {ReCaptcha} from 'react-recaptcha-google'
 import NavBar from './navbar.component'
+import axios from 'axios';
 export default class  extends Component 
 {
     constructor(props, context){
@@ -29,6 +30,9 @@ export default class  extends Component
             email: this.state.email,
             password: this.state.password
         }
+
+        axios.post('http://localhost:5000/User/users/login', user)
+            .then(res => console.log(res.data));
     }
     componentDidMount(){
     if (this.captchaDemo) {
@@ -55,14 +59,14 @@ export default class  extends Component
             <div className="auth-wrapper-form">
                 <NavBar></NavBar>
                 <div className="auth-inner">
-                    <form >
+                    <form onSubmit={this.onSubmit}>
                         <h3>Login</h3>
 
                         <div className="form-group">
                             <label>Email address</label>
                             <input type="email" 
                             className="form-control" 
-                            name="password"
+                            name="email"
                             placeholder="Enter email" 
                             value={this.state.email}
                             onChange={this.onChange} />

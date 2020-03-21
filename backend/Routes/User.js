@@ -5,6 +5,8 @@ require('dotenv').config();
 const router = express.Router()
 const randomstring = require('randomstring')
 const mailer = require('../middleware/send-mail')
+const gravatar = require('gravatar')
+const jwt = require('jsonwebtoken')
 
 //router.route.post('/users/add', async (req, res) => {
 router.post('/users/add', async (req, res) =>{
@@ -41,6 +43,26 @@ router.post('/users/add', async (req, res) =>{
     }
 });
 
+//send an invite email
+router.post('/users/invite', async(req, res) => {
+    try{
+        const name = req.body
+        const user = await User.findByCredentials(name)
+        if(!user) {
+            return res.status(401).send({error: 'This user does not exist'})
+        }
+        const html = `Hello there,
+        <br/>
+        This is an Offmeta invitation
+        <br/>
+        Would you like to accept this invitation?`
+
+        await mailer.sendEmail('owacatm@gmail.com', 'chrismasferrer@yahoo.com', 'Offmeta Invitation', html);
+    } catch(error) {
+        res.status(400).send(error)
+    }
+});
+
 //verify user confirmCode to activate their account
 router.post('/users/verify', async(req, res) => {
     try{
@@ -59,6 +81,28 @@ router.post('/users/verify', async(req, res) => {
     }
 });
 
+//new user login (testing)
+router.post('/users/login', async(res, req) => {
+    //retrieve user email from login page
+    const user = users.find(user => user.email === req.body.email)
+    //check if the user exists
+    if(user == null) {
+        return res.status(400).send('Cannot find user')
+    }
+    //test the password input from login page and see if it matches
+    try{
+        if(await bcrypt.compare(req.body.password, user.password)) {
+            res.send('Success')
+        }
+        else {
+            res.send('Not Allowed')
+        }
+    } catch {
+        res.status(500).send()
+    }
+});
+//end of new user login
+/*
 router.post('/users/login', async(req, res) => {
     //Login a registered user
     try {
@@ -100,7 +144,7 @@ router.post('/users/login', async(req, res) => {
             res.send('error: ' + err)
         })
 
-});
+}); */
 
 router.get('/users/me', auth, async(req, res) => {
     // View logged in user profile

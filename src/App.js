@@ -12,6 +12,9 @@ import CreateLeague from './components/create-league.component';
 import Inbox from './components/inbox.component';
 //import ImageUpload from './components/image-upload.component';
 import Verify from './components/verify.component';
+import AboutUs from './components/about-us.component';
+import ContactUs from './components/contact-us.component';
+import Invite from './components/invite.component';
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
             <Route path ="/create" component={CreateLeague}/>
             <Route path ="/inbox" component={Inbox}/>
             <Route path ="/verify" component={Verify}/>
+            <Route path ="/about-us" component={AboutUs}/>
+            <Route path ="/contact-us" component={ContactUs}/>
+            <Route path ="/invite" component={Invite} />
           </Switch>
    
     </Router>

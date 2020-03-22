@@ -123,6 +123,10 @@ export default class Landing extends Component {
                     <Link to={"/login"}>
                          <button className="btn-login-started">Login</button>
                     </Link> 
+
+                    <Link to={"/about-us"}>
+                         <button className="btn-login-started">About Us</button>
+                    </Link> 
                 </form>
                     
                 </div>

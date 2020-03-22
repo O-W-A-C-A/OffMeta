@@ -106,7 +106,8 @@ export default class Profile extends Component{
                         <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>
                         <Link to={"/create"}><button class="tablinks-side" >Leagues</button></Link>
                         <Link to={"/profile"}><button class="tablinks-side" >Profile</button></Link>
-                        <Link to={"/inbox"}><button class="tablinks-side">Inbox</button></Link>                    
+                        <Link to={"/inbox"}><button class="tablinks-side">Inbox</button></Link> 
+                        <Link to={"/contact-us"}><button class="tablinks">Contact Us</button></Link>                     
                     </div>
                 </div>
 

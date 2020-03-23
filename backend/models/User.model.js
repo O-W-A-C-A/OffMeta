@@ -1,4 +1,29 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+//Create Schema
+const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password:{
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+module.exports = User = mongoose.model("users", UserSchema);
+
+/*const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -69,3 +94,4 @@ userSchema.statics.findByCredentials = async (email, password) => {
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
+*/

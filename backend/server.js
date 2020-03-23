@@ -1,34 +1,64 @@
   
+//for server
 const express = require('express');
-const cors = require ('cors');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
-const Chatkit= require('@pusher/chatkit-server');
+const passport = require("passport");
 
-require('dotenv').config();
+const users = require("./Routes/api/User");
+//for chatkit
+//const Chatkit= require('@pusher/chatkit-server');
+
 const app = express();
-const port = process.env.PORT;
 
+/*
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+*/
 
+//bodyparser middleware
+app.use(
+    bodyParser.urlencoded({
+        extended: false
+    })
+);
+app.use(bodyParser.json());
+
+//DB config
+const db = require("./config/keys").mongoURI;
+
+/*
+//for chatkut
 const chatkit = new Chatkit.default({
     instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
     key: process.env.CHATKIT_SUPER_DUPER_SECRET_KEY,
 });
+*/
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-})
-const connection = mongoose.connection;
- connection.once('open', () => {
-     console.log("MongoDB database connection established successfully");
- })
+//Connect to MongoDB
+mongoose
+    .connect(
+        db, 
+            {useNewUrlParser: true, useUnifiedTopology:true}
+            )
+            .then(() => console.log("MongoDB Successfully Connected"))
+            .catch(err => console.log(err));
 
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./config/passport")(passport);
+
+// Routes
+app.use("/api/Users", users);
+
+//process.env.port is Heroku's port if you choose to deploy the app there
+const port = process.env.PORT || 5000;
+
+/*
  const userRouter = require('./Routes/User');
  const playerRouter= require('./Routes/Players');
  const leagueRouter=require('./Routes/League');
@@ -38,7 +68,7 @@ const connection = mongoose.connection;
  app.use('/player',playerRouter );
  app.use('/league', leagueRouter);
  app.use(imageRouter);
+ */
 
-app.listen(port, () => {
-    console.log('Server is running on port : ',port);
-});
+app.listen(port, () => 
+    console.log(`Server up and running on port ${port} !`));

@@ -8,12 +8,12 @@ export default class ContactUs extends Component
         super(props);
         this.onSubmit= this.onSubmit.bind(this);
 
-        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeSubject = this.onChangeSubject.bind(this);
         this.onChangeMessage = this.onChangeMessage.bind(this);
 
         this.state = {
-            contactName: '',
+            contactEmail: '',
             contactSubject: '',
             contactMessage: ''
         };
@@ -24,26 +24,26 @@ export default class ContactUs extends Component
         e.preventDefault();
 
         const contact = {
-            contactName: this.state.contactName,
+            contactEmail: this.state.contactEmail,
             contactSubject: this.state.contactSubject,
             contactMessage: this.state.contactMessage,
         }
 
         console.log(contact);
 
-        axios.post('http://localhost:5000/Contact-us/contact', contact)
+        axios.post('http://localhost:5000/users/contact', contact)
             .then(res => console.log(res.data));
 
         this.setState({ 
-            contactName: '',
+            contactEmail: '',
             contactSubject: '',
             contactMessage: ''
         })
     }
 
-    onChangeName(e) {
+    onChangeEmail(e) {
         this.setState({
-          contactName: e.target.value
+          contactEmail: e.target.value
         })
     }
 
@@ -67,8 +67,8 @@ export default class ContactUs extends Component
                     <h3>Contact Us</h3>
 
                     <div className="form-group">
-                        <label>Name:</label>
-                        <input type="text" className="form-control" placeholder="Type your name" value={this.state.contactName} onChange={this.onChangeName}/>
+                        <label>Email:</label>
+                        <input type="email" className="form-control" placeholder="Type your email" value={this.state.contactEmail} onChange={this.onChangeEmail}/>
                     </div>
 
 

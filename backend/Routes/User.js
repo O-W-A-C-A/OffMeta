@@ -7,6 +7,7 @@ const randomstring = require('randomstring')
 const mailer = require('../middleware/send-mail')
 const gravatar = require('gravatar')
 const jwt = require('jsonwebtoken')
+const SchemaObject = require('node-schema-object')
 
 //router.route.post('/users/add', async (req, res) => {
 router.post('/users/add', async (req, res) =>{
@@ -39,6 +40,29 @@ router.post('/users/add', async (req, res) =>{
 
         res.status(201).send({ user, token })
     } catch (error) {
+        res.status(400).send(error)
+    }
+});
+
+router.post('/users/contact', async(req, res) => {
+    try
+    {
+        console.log('Data: ', req.body);
+        res.json({ message: 'Message received!' })
+
+        const tempSchema = new SchemaObject({
+            contactEmail: String,
+            contactSubject: String,
+            contactMessage: String
+        });
+
+        const contact = new tempSchema(req.body);
+        
+        const html = `${contact.contactMessage}`
+        await mailer.sendEmail(contact.contactEmail, 'owacatm@gmail.com', contact.contactSubject, html);
+    }
+    catch(error)
+    {
         res.status(400).send(error)
     }
 });

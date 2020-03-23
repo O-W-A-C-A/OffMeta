@@ -29,6 +29,17 @@ class Landing extends Component {
             });
         }
     }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+          this.props.history.push("/home"); // push user to homepage when they login
+        }
+        
+        if (nextProps.errors) {
+          this.setState({
+            errors: nextProps.errors
+          });
+        }
+      }
 
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard

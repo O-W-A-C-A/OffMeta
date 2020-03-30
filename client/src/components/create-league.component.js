@@ -39,7 +39,7 @@ export default class CreateLeague extends Component{
         //prints to console league information
         console.log(league);
         //crud method post to database
-        axios.post('http://localhost:5000/league/create', league)
+        axios.post('http://localhost:5000/api/leagues/create', league)
             .then(res => console.log(res.data));
         //sets the state back to its default values
         this.setState({ 

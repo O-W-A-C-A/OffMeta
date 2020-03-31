@@ -1,5 +1,4 @@
-  
-//for server
+  //for server
 const express = require('express');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
@@ -47,6 +46,7 @@ require("./config/passport")(passport);
 app.use("/api/Users", users);
 app.use("/api/Leagues", leagues);
 
+
 //process.env.port is Heroku's port if you choose to deploy the app there
 const port = process.env.PORT || 5000;
 
@@ -58,5 +58,13 @@ const port = process.env.PORT || 5000;
  app.use(imageRouter);
  */
 
-app.listen(port, () => 
+const server = app.listen(port, () => 
     console.log(`Server up and running on port ${port} !`));
+
+const io = require('socket.io').listen(server);
+
+// Assign socket object to every request
+app.use(function(req, res, next) {
+    req.io = io;
+    next();
+});

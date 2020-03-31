@@ -3,26 +3,17 @@ const Schema = mongoose.Schema;
 
 // Create Schema for Messages
 const MessageSchema = new Schema({
-    conversation: {
-        type: Schema.Types.ObjectId,
-        ref: 'conversations',
-    },
-    to: {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
-    },
-    from: {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
-    },
-    body: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: String,
-        default: Date.now,
-    },
-});
+  content: {
+      type: String,
+      required: true
+  },
+
+  from: {
+      type: String,
+      required: true
+  }
+},
+
+{timestamps: true});
 
 module.exports = Message = mongoose.model('messages', MessageSchema);

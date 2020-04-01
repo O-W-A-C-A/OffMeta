@@ -18,6 +18,7 @@ export default class FilesUploadComponent extends Component {
         this.setState({ file: e.target.files[0] })
     }
 
+    
     onSubmit(e) {
         e.preventDefault()
         const formData = new FormData()

@@ -21,6 +21,8 @@ import store from "./store"
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 
+import ImageUpload from "./components/image-upload.component";
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -47,6 +49,7 @@ class App extends Component{
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/forgotpassword" component={ForgotPassword}/>
+          <Route path="/image" component={ImageUpload}/>
           <Switch>
             <PrivateRoute exact path="/home" component={HomePage}/>
             <PrivateRoute exact path="/profile" component={Profile} />

@@ -12,10 +12,6 @@ const leagues = require("./Routes/api/League");
 const app = express();
 app.use(cors());
 
-/*
-app.use(express.json());
-*/
-
 //bodyparser middleware
 app.use(
     bodyParser.urlencoded({
@@ -23,11 +19,15 @@ app.use(
     })
 );
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 //DB config
 const db = require("./config/keys").mongoURI;
 
 //Connect to MongoDB
+mongoose.Promise = global.Promise;
 mongoose
     .connect(
         db, 
@@ -45,6 +45,8 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/Users", users);
 app.use("/api/Leagues", leagues);
+
+app.use('/public', express.static('public'));
 
 
 //process.env.port is Heroku's port if you choose to deploy the app there
@@ -67,4 +69,17 @@ const io = require('socket.io').listen(server);
 app.use(function(req, res, next) {
     req.io = io;
     next();
+});
+
+app.use((req, res, next) => {
+    // Error goes via `next()` method
+    setImmediate(() => {
+        next(new Error('Something went wrong'));
+    });
+});
+
+app.use(function (err, req, res, next) {
+    console.error(err.message);
+    if (!err.statusCode) err.statusCode = 500;
+    res.status(err.statusCode).send(err.message);
 });

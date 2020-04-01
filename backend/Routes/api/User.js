@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+const multer = require('multer');
+const uuidv4 = require('uuid/v4');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -11,6 +13,30 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User.model");
+
+const DIR = './backend/public';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuidv4() + '-' + fileName)
+    }
+});
+
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
 
 // @route POST api/users/register
 // @desc Register user
@@ -32,7 +58,7 @@ router.post("/register", (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
       });
 
       // Hash password before saving in database
@@ -104,7 +130,44 @@ router.post("/login", (req, res) => {
       }
     });
   });
+
 });
+
+// @route POST api/update/:id
+// @desc Allow user to update their credentials
+// @access Public
+router.post("/update/:id", (req, res, next) => {
+    
+    User.findById(req.params.id)
+    .then (user => {
+        user.name = req.body.name;
+        user.email= req.body.email;
+       
+
+        user.save()
+        .then(() => res.json('User updated'))
+        .catch(err => res.status(400).json('Error: ' +err));
+})
+.catch(err => res.status(400).json('Error: '+ err));
+});
+
+// @route POST api/update/image/:id
+// @desc Allow user to update their profile image
+// @access Public
+router.post("/uploadimage/:id", upload.single('profileImg'), (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host')
+    User.findById(req.params.id)
+    .then (user => {
+        user.file = url + '/public/' + req.file.filename;
+        console.log(req.file)
+        user.save()
+        .then(() => res.json('User Profile image updated'))
+        .catch(err => res.status(400).json('Error: ' +err));
+})
+.catch(err => res.status(400).json('Error: '+ err));
+});
+
+
 
 module.exports = router;
 

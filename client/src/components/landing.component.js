@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { registerUser } from "../actions/authActions";
 import classnames from "classnames";
 import NavBarLanding from './navbar-landing.component'
-import Image from './filler_picture.png'
+import Image from '../public/filler_picture.png'
 
 class Landing extends Component {
     constructor(){

@@ -11,6 +11,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
 
+import defaultimg from "../public/default-img.png"
+
 class Profile extends Component{
     constructor(){
         super()
@@ -157,7 +159,7 @@ class Profile extends Component{
                     </div>
                     </form>
                     <div className="profile-picture">
-                        <button type="upload" className="btn-profile-upload-img"></button>
+                        <button type="upload" className="btn-profile-upload"><img src={defaultimg} className="btn-profile-upload-img"alt="my image"></img></button>
                     </div>
                     <div className="profile-control">
                         <input type="username" className="profile-form1" placeholder="username" value={this.state.name} />

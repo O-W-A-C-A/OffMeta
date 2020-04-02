@@ -416,7 +416,6 @@ Profile Page CSS
 }
 
 .profile-form1{
-
   height: 45px;
   width: 300px;
   background-color: #384661;
@@ -428,14 +427,21 @@ Profile Page CSS
   padding-left: 10px;
 }
 
-.btn-profile-upload-img{
-  background-color: #384661;
+.btn-profile-upload{
+  background-color: #283245;
   height: 100px;
   width: 100px;
   border-radius: 50px;
   margin-bottom: 25px;
   border: none;
   margin-top: 10%;
+}
+
+.btn-profile-upload-img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+  border: none;
 }
 
 .profile-form2{

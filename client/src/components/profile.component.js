@@ -18,14 +18,18 @@ class Profile extends Component{
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
-            this.state={
-                name: '',
-                email: '',
-                password: '',
-                show:false,
-                showDelete:false
-            }
+        
+        this.state={
+            name: '',
+            id: '',
+            email: '',
+            password: '',
+            show:false,
+            showDelete:false
+        }
     }
+
+    
 
     onLogoutClick = e => {
         e.preventDefault();
@@ -33,17 +37,14 @@ class Profile extends Component{
       };
 
     componentDidMount(){
-        axios.get('http://localhost:5000/users/5e5357be5bc25a2b5438b28e')
-        .then(response =>{
-            this.setState({
-                name:response.data.name,
-                password:response.data.password,
-                email:response.data.email
+       axios.get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
+            .then((res) => {
+                console.log(res.data);
+                this.setState({email: res.data.email, name: res.data.name, password: res.data.password})
             })
-        })
-        .catch(function(error){
-            console.log(error);
-        })
+            .catch((err) =>{
+                console.log(err);
+            });
     }
 
     onChangename(e) {
@@ -63,24 +64,29 @@ class Profile extends Component{
           password: e.target.value
         })
     }
+
+    //updates user email and username
     onSubmit(e) {
         e.preventDefault();
         const user = {
             name: this.state.name,
             email: this.state.email,
-            password: this.state.password,
+            password: this.state.password
         }
 
         console.log(user);
 
-        axios.post('http://localhost:5000/users/update/5e5357be5bc25a2b5438b28e', user)
+        axios.put(`http://localhost:5000/api/users/update/${this.props.auth.user.id}`, user)
+            .then(res => console.log(res.data));
+        
+    }
+
+    //deletes user based off id
+    onDelete() {
+        axios.delete(`http://localhost:5000/api/users/delete/${this.props.auth.user.id}`)
             .then(res => console.log(res.data));
     }
-    ondelete() {
-            axios.delete('http://localhost:5000/users/delete/5e5357be5bc25a2b5438b28e')
-            .then(res => console.log(res.data));
-    
-    }
+
     handleModal(){
         this.setState({show:!this.state.show})
     }
@@ -95,7 +101,7 @@ class Profile extends Component{
           buttons: [
             {
               label: 'Yes',
-              onClick: () => this.ondelete()
+              onClick: () => this.onDelete()
             },
             {
               label: 'No',
@@ -137,12 +143,9 @@ class Profile extends Component{
                             </div>
                             <div className="edit-modal-body">
                                 <div className="modal-profile-control">
-                                    <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.name}
-              onChange={this.onChangename}/>
-                                    <input type="email" className="modal-profile-form1" placeholder="Email" value={this.state.email}
-              onChange={this.onChangeEmail} />
-                                    <input type="password" className="modal-profile-form1" placeholder="Password" value={this.state.password}
-              onChange={this.onChangePassword}/>
+                                    <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.name} onChange={this.onChangename}/>
+                                    <input type="email" className="modal-profile-form1" placeholder="Email" value={this.state.email} onChange={this.onChangeEmail} />
+                                    <input type="password" className="modal-profile-form1" placeholder="Password" onChange={this.onChangePassword}/>
                                 </div>
                             </div>
                             <div className="edit-modal-footer">
@@ -157,8 +160,8 @@ class Profile extends Component{
                         <button type="upload" className="btn-profile-upload-img"></button>
                     </div>
                     <div className="profile-control">
-                        <input type="username" className="profile-form1" placeholder="username" />
-                        <br/><input type="email" className="profile-form2" placeholder="email" />
+                        <input type="username" className="profile-form1" placeholder="username" value={this.state.name} />
+                        <br/><input type="email" className="profile-form2" placeholder="email" value={this.state.email}/>
                     </div>
                    
                         <button type="submit" className="logoff" onClick={this.onLogoutClick}>Logoff</button>
@@ -188,7 +191,4 @@ Profile.propTypes = {
     auth: state.auth
   });
   
-  export default connect(
-    mapStateToProps,
-    { logoutUser }
-  )(Profile);
+  export default connect(mapStateToProps,{ logoutUser })(Profile);

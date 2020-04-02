@@ -149,20 +149,38 @@ router.get('/:id', (req,res) =>{
         .catch(err => res.status(400).json('Error: ' +err));
 });
 
-// @route POST api/users/update/:id
+// @route PUT api/users/update/:id
 // @desc Allow user to update their credentials
 // @access Public
-router.post("/update/:id", (req, res, next) => {
+router.put("/update/:id", (req, res, next) => {
     
     User.findById(req.params.id)
     .then (user => {
+
+      if(req.body.password != ""){
         user.name = req.body.name;
-        user.email= req.body.email;
-       
+        user.email = req.body.email;
+        user.password = req.body.password;
+
+      // Hash password before saving in database
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) throw err;
+              user.password = hash;
+              user.save()
+                .then(() => res.json('User Credentials updated 1'))
+                .catch(err => res.status(400).json('Error: ' +err));
+        });
+      });
+    }
+      else{
+        user.name = req.body.name;
+        user.email = req.body.email;
 
         user.save()
-        .then(() => res.json('User updated'))
+        .then(() => res.json('User Credentials updated 2'))
         .catch(err => res.status(400).json('Error: ' +err));
+      }
 })
 .catch(err => res.status(400).json('Error: '+ err));
 });
@@ -182,13 +200,6 @@ router.post("/uploadimage/:id", upload.single('profileImg'), (req, res, next) =>
 })
 .catch(err => res.status(400).json('Error: '+ err));
 });
-
-// @route POST api/users/forgotpassword/:id
-// @desc reset user password
-// @access Public
-//router.post("/forgotpassword/:id", (req,res){
-
-//});
 
 // @route DELETE api/users/delete/:id
 // @desc delete user by id

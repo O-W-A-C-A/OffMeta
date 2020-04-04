@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 const multer = require('multer');
-const uuidv4 = require('uuid/v4');
+const path = require('path');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -14,21 +14,22 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User.model");
 
-const DIR = './backend/public';
+const DIR = './backend/uploads';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, DIR);
+        cb(null, DIR);//saving to DIR 
     },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, uuidv4() + '-' + fileName)
+        cb(null, req.params.id+ '-' + fileName)//save user image with user id and filename
     }
 });
 
 var upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
+      //only allow user to upload png jpg or jpeg
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
             cb(null, true);
         } else {
@@ -36,6 +37,15 @@ var upload = multer({
             return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
         }
     }
+});
+
+//@route GET api/users/
+//@desc Return a list of all users created
+//@access Public
+router.get("/", (req, res) => {
+  User.find()
+  .then(user => res.json(user))
+  .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // @route POST api/users/register
@@ -189,10 +199,10 @@ router.put("/update/:id", (req, res, next) => {
 // @desc Allow user to update their profile image
 // @access Public
 router.post("/uploadimage/:id", upload.single('profileImg'), (req, res, next) => {
-    const url = req.protocol + '://' + req.get('host')
+   
     User.findById(req.params.id)
     .then (user => {
-        user.file = url + '/public/' + req.file.filename;
+        user.file = req.file.filename;
         console.log(req.file)
         user.save()
         .then(() => res.json('User Profile image updated'))
@@ -200,6 +210,24 @@ router.post("/uploadimage/:id", upload.single('profileImg'), (req, res, next) =>
 })
 .catch(err => res.status(400).json('Error: '+ err));
 });
+
+// @route GET api/users/profileimage/:id
+// @desc Get's user profile picture
+// @access Public
+router.get("/profileimage/:id", (req,res) =>{
+  User.findById(req.params.id)
+  .then (user => {
+    let file = user.file;
+    console.log(user.file)
+    let fileLocation = path.join(DIR, file);
+    console.log(fileLocation)
+    console.log( __dirname )
+    res.sendFile(`${fileLocation}`, {root: '.'})
+})
+.catch(err => res.status(400).json('Error: '+ err));
+}); 
+
+
 
 // @route DELETE api/users/delete/:id
 // @desc delete user by id

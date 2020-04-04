@@ -13,6 +13,23 @@ export default class FilesUploadComponent extends Component {
             file: ''
         }
     }
+    ''
+    componentDidMount(){
+        axios
+        .get(
+          'http://localhost:5000/api/users/profileimage/5e8551cd199aea57486be676',
+          { responseType: 'arraybuffer' },
+        )
+        .then(response => {
+          const base64 = btoa(
+            new Uint8Array(response.data).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              '',
+            ),
+          );
+          this.setState({ file: "data:;base64," + base64 });
+        });
+    }
 
     onFileChange(e) {
         this.setState({ file: e.target.files[0] })
@@ -23,7 +40,7 @@ export default class FilesUploadComponent extends Component {
         e.preventDefault()
         const formData = new FormData()
         formData.append('profileImg', this.state.file)
-        axios.post("http://localhost:5000/api/users/uploadimage/5e850900520cb34cacbd9d75", formData, {
+        axios.post("http://localhost:5000/api/users/uploadimage/5e8551cd199aea57486be676", formData, {
         }).then(res => {
             console.log(res)
         })
@@ -42,6 +59,10 @@ export default class FilesUploadComponent extends Component {
                             <button className="btn btn-primary" type="submit">Upload</button>
                         </div>
                     </form>
+                </div>
+
+                <div>
+                    <img src={this.state.file} alt={"profile picture"} alt="my image"/>
                 </div>
             </div>
         )

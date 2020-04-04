@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 const cors = require('cors');
 
+const router = express.Router();
+
 //constants for routes
 const users = require("./Routes/api/User");
 const leagues = require("./Routes/api/League");
@@ -43,27 +45,29 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes
+app.use("/", router);
 app.use("/api/Users", users);
 app.use("/api/Leagues", leagues);
 
-app.use('/public', express.static('public'));
-
+app.use('/uploads', express.static('uploads'));
 
 //process.env.port is Heroku's port if you choose to deploy the app there
 const port = process.env.PORT || 5000;
 
 /*
  const playerRouter= require('./Routes/Players');
- const imageRouter=require('./Routes/image');
-
  app.use('/player',playerRouter );
- app.use(imageRouter);
  */
 
 const server = app.listen(port, () => 
     console.log(`Server up and running on port ${port} !`));
 
 const io = require('socket.io').listen(server);
+
+//ROUTES WILL GO HERE
+app.get('/', (req, res) => {
+    res.json({ message: 'WELCOME' });   
+});
 
 // Assign socket object to every request
 app.use(function(req, res, next) {

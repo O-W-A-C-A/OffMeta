@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, req.params.id+ '-' + fileName)//save user image with user id and filename
+        cb(null,fileName)//save user image with user id and filename
     }
 });
 
@@ -43,24 +43,19 @@ router.get("/", (req,res)=>{
 //@route POST api/leagues/create
 //@desc Create League
 //@access Public
-router.post("/create", (req,res) => {
-   const leagueName = req.body.leagueName;
-   const leagueSize = Number(req.body.leagueSize);
-   const scoringFormat = req.body.scoringFormat;
-   const logo = req.body.logo;
-   //boolean values do not require double quotes
-   const draftPickTrading = Boolean(req.body.allowDraftTrading);
-    
-    const newLeague = new League({
-        leagueName,
-        leagueSize,
-        scoringFormat,
-        draftPickTrading});
-
-    newLeague.save()
-    .then(() => res.json('League Created!'))
-    .catch(err => res.status(400).json('Error: '+ err));
-    
+router.post("/create", upload.single('logo'), (req,res) => {
+    let newLeague = new League({
+        leagueName: req.body.leagueName,
+        leagueSize: Number(req.body.leagueSize),
+        scoringFormat: req.body.scoringFormat,
+        createdBy: req.body.createdBy,
+        //boolean values do not require double quotes
+        draftPickTrading: Boolean(req.body.allowDraftTrading),
+        logo: req.file
+    });
+ 
+     newLeague.save()
+     res.send(newLeague);
 });
 
 //@route GET api/leagues/id
@@ -97,22 +92,6 @@ router.post("/update/:id", (req, res) =>{
     })
     .catch(err => res.status(400).json('Error: ' + err));
 })
-
-// @route PUT api/leagues/uploadimage/:id
-// @desc Allow user to update their profile image
-// @access Public
-router.put("/uploadimage/:id", upload.single('leagueLogo'), (req, res, next) => {
-   
-    League.findById(req.params.id)
-    .then (league => {
-        league.file = req.file.filename;
-        console.log(req.file)
-        league.save()
-        .then(() => res.json('League Logo image updated'))
-        .catch(err => res.status(400).json('Error: ' +err));
-})
-.catch(err => res.status(400).json('Error: '+ err));
-});
 
 // @route GET api/leagues/profileimage/:id
 // @desc Get's user profile picture

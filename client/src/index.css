@@ -585,12 +585,6 @@ Create League CSS
   -webkit-transition: all .4s ease;
 }
 
-.btn-upload-img:hover{
-  background-color: #55616E;
-  transition: all .4s ease;
-  -webkit-transition: all .4s ease;
-}
-
 
 .league-name-text{
   background-color: #283245;

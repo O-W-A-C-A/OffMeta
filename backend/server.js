@@ -49,6 +49,7 @@ app.use("/", router);
 app.use("/api/Users", users);
 app.use("/api/Leagues", leagues);
 app.use('/uploads', express.static('uploads'));
+app.use('/uploads/league-logos', express.static('logos'));
 
 //process.env.port is Heroku's port if you choose to deploy the app there
 const port = process.env.PORT || 5000;

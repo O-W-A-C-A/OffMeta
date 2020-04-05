@@ -3,9 +3,12 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import NavBar from './navbar.component';
 import defaultimg from "../public/upload.png"
-export default class CreateLeague extends Component{
-    constructor(props){
-        super(props);
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+class CreateLeague extends Component{
+    constructor(){
+        super();
         //onSubmit function delcaration will handle submitting of form to the server
         this.onSubmit = this.onSubmit.bind(this);
 
@@ -23,7 +26,8 @@ export default class CreateLeague extends Component{
             scoringFormat: 'STD',
             leagueSize: 4,
             logo: defaultimg,
-            imagePreviewUrl: ''
+            imagePreviewUrl: '',
+            createdBy:''
         };
     }
 
@@ -31,17 +35,13 @@ export default class CreateLeague extends Component{
         //prevents autoload of page
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('profileImg', this.state.file);
-
-        //creating a league object
-        const league = {
-            leagueName: this.state.leagueName,
-            draftPickTrading: this.state.draftPickTrading,
-            scoringFormat: this.state.scoringFormat,
-            leagueSize: this.state.leagueSize,
-            logo: this.state.logo
-        }
+        const league = new FormData();
+        league.append('logo', this.state.logo);
+        league.append('leagueName', this.state.leagueName);
+        league.append('draftPickTrading', this.state.draftPickTrading);
+        league.append('scoringFormat', this.state.scoringFormat);
+        league.append('leagueSize', this.state.leagueSize);
+        league.append('createdBy', this.props.auth.user.id);
         //prints to console league information
         console.log(league);
         //crud method post to database
@@ -53,16 +53,11 @@ export default class CreateLeague extends Component{
             draftPickTrading: false,
             scoringFormat: 'STD',
             leagueSize: 4,
-            logo:''
+            logo:defaultimg
         })
 
-        axios.put(`http://localhost:5000/api/leagues/uploadimage/${this.props.auth.user.id}`, formData, {
-        }).then(res => console.log(res))
-        .catch((err) =>{
-            console.log(err);
-        }); 
         //after submission brings user to the home page
-       // window.location = '/home';
+       window.location = '/home';
     }
     //handles the state for when user enters a league name
     onChangeLeagueName(e){
@@ -107,7 +102,7 @@ export default class CreateLeague extends Component{
     
         reader.onloadend = () => {
           this.setState({
-            file: file,
+            logo: file,
             imagePreviewUrl: reader.result
           });
         }
@@ -119,10 +114,10 @@ export default class CreateLeague extends Component{
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<img class="btn-profile-upload-img" src={imagePreviewUrl} />);
+            $imagePreview = (<img class="btn-upload-img" src={imagePreviewUrl} />);
         }
         else{
-            $imagePreview = (<img class="btn-profile-upload-img" src={this.state.file} />);
+            $imagePreview = (<img class="btn-upload-img" src={this.state.logo} />);
         }
 
         return(
@@ -152,7 +147,11 @@ export default class CreateLeague extends Component{
                         <div className="league-logo">
                             <label>Optional Logo</label>
                             <div className="logo-img">
-                                <button type="upload" className="btn-upload-img"><img src={this.state.logo}/></button>
+                            {$imagePreview}
+                            <div style={{paddingBottom:'10px', paddingTop: '10px'}}>
+                            <input type="file" onChange={this.onFileChange} style={{color: 'white'}} />
+                            </div>
+                              
                         </div>
                         <div className="teams">
                             <label>League Size</label>
@@ -205,3 +204,13 @@ export default class CreateLeague extends Component{
         );
     }
 }
+
+CreateLeague.propTypes = {
+    auth: PropTypes.object.isRequired
+  };
+  
+  const mapStateToProps = state => ({
+    auth: state.auth
+  });
+  
+  export default connect(mapStateToProps)(CreateLeague);

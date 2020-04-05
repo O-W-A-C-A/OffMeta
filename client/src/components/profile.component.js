@@ -24,7 +24,6 @@ class Profile extends Component{
         
         this.state={
             name: '',
-            id: '',
             email: '',
             password: '',
             show:false,

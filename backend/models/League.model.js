@@ -19,13 +19,15 @@ const LeagueSchema= new Schema({
         trim:true,
         minlength: 3
     },
-    file:{
-        type: String,
-        default: 'none'
+    logo:{
+        type:Object
     },
     draftPickTrading:{
         type: Boolean,
         default: false
+    },
+    createdBy:{
+        type:String
     }
 },
 {

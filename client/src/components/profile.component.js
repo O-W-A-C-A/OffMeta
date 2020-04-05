@@ -16,9 +16,10 @@ import defaultimg from "../public/default-img.png"
 class Profile extends Component{
     constructor(){
         super()
-        this.onChangename = this.onChangename.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+        this.onFileChange = this.onFileChange.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
         
         this.state={
@@ -27,7 +28,9 @@ class Profile extends Component{
             email: '',
             password: '',
             show:false,
-            showDelete:false
+            showDelete:false,
+            file: defaultimg,
+            imagePreviewUrl: ''
         }
     }
 
@@ -41,26 +44,58 @@ class Profile extends Component{
     componentDidMount(){
        axios.get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
             .then((res) => {
-                console.log(res.data);
+                //console.log(res.data); for testing if data is actually receive
                 this.setState({email: res.data.email, name: res.data.name, password: res.data.password})
             })
             .catch((err) =>{
                 console.log(err);
             });
+
+            axios
+            .get(
+              `http://localhost:5000/api/users/profileimage/${this.props.auth.user.id}`,
+              { responseType: 'arraybuffer' },
+            )
+            .then(res => {
+              const base64 = btoa(
+                new Uint8Array(res.data).reduce(
+                  (data, byte) => data + String.fromCharCode(byte),
+                  '',
+                ),
+              );
+              this.setState({ file: "data:;base64," + base64 });
+            });
     }
 
-    onChangename(e) {
+    //handles state change for images
+    onFileChange(e) {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+    
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result
+          });
+        }
+    
+        reader.readAsDataURL(file)
+    }
+    //handles state change for username
+    onChangeName(e) {
         this.setState({
           name: e.target.value
         })
     }
-
+    //handles state change for email
     onChangeEmail(e) {
         this.setState({
           email: e.target.value
         })
     }
-
+    //handles state change for password
     onChangePassword(e) {
         this.setState({
           password: e.target.value
@@ -70,17 +105,30 @@ class Profile extends Component{
     //updates user email and username
     onSubmit(e) {
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('profileImg', this.state.file);
+       
+
         const user = {
             name: this.state.name,
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
         }
 
         console.log(user);
-
         axios.put(`http://localhost:5000/api/users/update/${this.props.auth.user.id}`, user)
-            .then(res => console.log(res.data));
+            .then(res => console.log(res.data))
+            .catch((err) =>{
+                console.log(err);
+            });
         
+        axios.put(`http://localhost:5000/api/users/uploadimage/${this.props.auth.user.id}`, formData, {
+        }).then(res => console.log(res))
+        .catch((err) =>{
+            console.log(err);
+        });      
+    
     }
 
     //deletes user based off id
@@ -96,7 +144,7 @@ class Profile extends Component{
         this.setState({showDelete:!this.state.showDelete})
     }
 
-    delete = () => {
+    delete(){
         confirmAlert({
           title: 'Delete Account',
           message: 'You are about to delete your account, it was nice knowing you :(',
@@ -114,6 +162,15 @@ class Profile extends Component{
       };
 
     render(){
+        //magic
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+          $imagePreview = (<img class="btn-profile-upload-img" src={imagePreviewUrl} />);
+        }
+        else{
+            $imagePreview = (<img class="btn-profile-upload-img" src={this.state.file} />);
+        }
         return(
             <div className ="homePage">
                 <NavBar></NavBar>
@@ -135,35 +192,46 @@ class Profile extends Component{
                     <div className="profile-inner-bar">   
                         <h3 className="profile-title">Profile</h3>
                     </div>
-                    <form onSubmit={this.onSubmit}>
+                   
                     <div className="edit-profile">
                         <button onClick={()=>this.handleModal()} className="btn-edit-profile" type="button">Edit Profile</button>
                         <Modal className="edit-profile-modal" show={this.state.show} onHide={()=>this.handleModal()}>
+                        <form onSubmit={this.onSubmit}>
                            <div className="modal-content"> <div className="edit-modal-header">
                             
                                 <h3 className="edit-profile-title">Edit Profile</h3>
                             </div>
+                            <div className="form-group">
+                                <input type="file" onChange={this.onFileChange}/>
+                            </div>
                             <div className="edit-modal-body">
                                 <div className="modal-profile-control">
-                                    <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.name} onChange={this.onChangename}/>
+                                    <label>Username</label>
+                                    <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.name} onChange={this.onChangeName}/>
+                                    <label>Email address</label>
                                     <input type="email" className="modal-profile-form1" placeholder="Email" value={this.state.email} onChange={this.onChangeEmail} />
+                                    <label>Password</label>
                                     <input type="password" className="modal-profile-form1" placeholder="Password" onChange={this.onChangePassword}/>
                                 </div>
                             </div>
                             <div className="edit-modal-footer">
-                                <button type="submit" className="save" onClick={()=>this.handleModal(),this.onSubmit}>Save</button>
-                                <button type="submit" onClick={()=>this.handleModal()} className="cancel">Cancel</button>
+                                <button type="submit" className="save" onClick={()=>this.handleModal()}>Save</button>
+                                <button type="button" onClick={()=>this.handleModal()} className="cancel">Cancel</button>
                             </div>
                             </div>
+                             </form>
+                             
                         </Modal>
                     </div>
-                    </form>
+                   
                     <div className="profile-picture">
-                        <button type="upload" className="btn-profile-upload"><img src={defaultimg} className="btn-profile-upload-img"alt="my image"></img></button>
+                        {$imagePreview}
                     </div>
                     <div className="profile-control">
+                        <label>Username</label>
                         <input type="username" className="profile-form1" placeholder="username" value={this.state.name} />
-                        <br/><input type="email" className="profile-form2" placeholder="email" value={this.state.email}/>
+                        <br/>
+                        <label>Email</label><input type="email" className="profile-form2" placeholder="email" value={this.state.email}/>
                     </div>
                    
                         <button type="submit" className="logoff" onClick={this.onLogoutClick}>Logoff</button>

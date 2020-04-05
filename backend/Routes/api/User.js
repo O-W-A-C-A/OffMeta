@@ -195,10 +195,10 @@ router.put("/update/:id", (req, res, next) => {
 .catch(err => res.status(400).json('Error: '+ err));
 });
 
-// @route POST api/users/uploadimage/:id
+// @route PUT api/users/uploadimage/:id
 // @desc Allow user to update their profile image
 // @access Public
-router.post("/uploadimage/:id", upload.single('profileImg'), (req, res, next) => {
+router.put("/uploadimage/:id", upload.single('profileImg'), (req, res, next) => {
    
     User.findById(req.params.id)
     .then (user => {
@@ -218,10 +218,7 @@ router.get("/profileimage/:id", (req,res) =>{
   User.findById(req.params.id)
   .then (user => {
     let file = user.file;
-    console.log(user.file)
     let fileLocation = path.join(DIR, file);
-    console.log(fileLocation)
-    console.log( __dirname )
     res.sendFile(`${fileLocation}`, {root: '.'})
 })
 .catch(err => res.status(400).json('Error: '+ err));

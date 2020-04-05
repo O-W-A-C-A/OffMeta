@@ -1,8 +1,35 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
 
 //Load League Model
 const League = require('../../models/League.model');
+
+const DIR = './backend/uploads/league-logos';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);//saving to DIR 
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, req.params.id+ '-' + fileName)//save user image with user id and filename
+    }
+});
+
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+      //only allow user to upload png jpg or jpeg
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
 
 //@route GET api/leagues/
 //@desc Return a list of all leagues created
@@ -70,4 +97,35 @@ router.post("/update/:id", (req, res) =>{
     })
     .catch(err => res.status(400).json('Error: ' + err));
 })
+
+// @route PUT api/leagues/uploadimage/:id
+// @desc Allow user to update their profile image
+// @access Public
+router.put("/uploadimage/:id", upload.single('leagueLogo'), (req, res, next) => {
+   
+    League.findById(req.params.id)
+    .then (league => {
+        league.file = req.file.filename;
+        console.log(req.file)
+        league.save()
+        .then(() => res.json('League Logo image updated'))
+        .catch(err => res.status(400).json('Error: ' +err));
+})
+.catch(err => res.status(400).json('Error: '+ err));
+});
+
+// @route GET api/leagues/profileimage/:id
+// @desc Get's user profile picture
+// @access Public
+router.get("/leaguelogo/:id", (req,res) =>{
+    League.findById(req.params.id)
+  .then (league => {
+    let file = league.file;
+    let fileLocation = path.join(DIR, file);
+    res.sendFile(`${fileLocation}`, {root: '.'})
+})
+.catch(err => res.status(400).json('Error: '+ err));
+}); 
+
+
 module.exports = router;

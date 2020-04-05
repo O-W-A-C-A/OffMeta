@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import NavBar from './navbar.component';
+import defaultimg from "../public/upload.png"
 export default class CreateLeague extends Component{
     constructor(props){
         super(props);
@@ -13,7 +14,7 @@ export default class CreateLeague extends Component{
         this.onChangeDraftPickTrading = this.onChangeDraftPickTrading.bind(this);
         this.onChangeScoringFormat = this.onChangeScoringFormat.bind(this);
         this.onChangeLeagueSize = this.onChangeLeagueSize.bind(this);
-        this.onChangeLogo = this.onChangeLogo.bind(this);
+        this.onFileChange = this.onFileChange.bind(this);
 
         //setting default state of all variables
         this.state = {
@@ -21,13 +22,18 @@ export default class CreateLeague extends Component{
             draftPickTrading: false,
             scoringFormat: 'STD',
             leagueSize: 4,
-            logo: ''
+            logo: defaultimg,
+            imagePreviewUrl: ''
         };
     }
 
     onSubmit(e){
         //prevents autoload of page
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('profileImg', this.state.file);
+
         //creating a league object
         const league = {
             leagueName: this.state.leagueName,
@@ -49,6 +55,12 @@ export default class CreateLeague extends Component{
             leagueSize: 4,
             logo:''
         })
+
+        axios.put(`http://localhost:5000/api/leagues/uploadimage/${this.props.auth.user.id}`, formData, {
+        }).then(res => console.log(res))
+        .catch((err) =>{
+            console.log(err);
+        }); 
         //after submission brings user to the home page
        // window.location = '/home';
     }
@@ -86,12 +98,33 @@ export default class CreateLeague extends Component{
     }
     //handles the the state for when the user uploads a league image
     //this image is optional
-    onChangeLogo(e){
-        this.setState({
-            logo: e.target.value
-        })
+    //handles state change for images
+    onFileChange(e) {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+    
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result
+          });
+        }
+    
+        reader.readAsDataURL(file)
     }
     render(){
+        //magic
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+            $imagePreview = (<img class="btn-profile-upload-img" src={imagePreviewUrl} />);
+        }
+        else{
+            $imagePreview = (<img class="btn-profile-upload-img" src={this.state.file} />);
+        }
+
         return(
             
             <div className="homePage">
@@ -119,7 +152,7 @@ export default class CreateLeague extends Component{
                         <div className="league-logo">
                             <label>Optional Logo</label>
                             <div className="logo-img">
-                                <button type="upload" className="btn-upload-img"></button>
+                                <button type="upload" className="btn-upload-img"><img src={this.state.logo}/></button>
                         </div>
                         <div className="teams">
                             <label>League Size</label>

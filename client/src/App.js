@@ -14,14 +14,12 @@ import ForgotPassword from './components/forgotpassword.component';
 import Profile from './components/profile.component';
 import CreateLeague from './components/create-league.component';
 import Inbox from './components/inbox.component';
-//import ImageUpload from './components/image-upload.component';
 import Verify from './components/verify.component';
 import {Provider} from "react-redux"
 import store from "./store"
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 
-import ImageUpload from "./components/image-upload.component";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -49,7 +47,6 @@ class App extends Component{
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/forgotpassword" component={ForgotPassword}/>
-          <Route path="/image" component={ImageUpload}/>
           <Switch>
             <PrivateRoute exact path="/home" component={HomePage}/>
             <PrivateRoute exact path="/profile" component={Profile} />

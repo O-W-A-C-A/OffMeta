@@ -201,19 +201,30 @@ class Profile extends Component{
                             
                                 <h3 className="edit-profile-title">Edit Profile</h3>
                             </div>
-                            <div className="form-group">
-                                <input type="file" onChange={this.onFileChange}/>
-                            </div>
-                            <div className="edit-modal-body">
+                           
                                 <div className="modal-profile-control">
-                                    <label>Username</label>
-                                    <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.name} onChange={this.onChangeName}/>
-                                    <label>Email address</label>
-                                    <input type="email" className="modal-profile-form1" placeholder="Email" value={this.state.email} onChange={this.onChangeEmail} />
-                                    <label>Password</label>
-                                    <input type="password" className="modal-profile-form1" placeholder="Password" onChange={this.onChangePassword}/>
+                                    <div style={{paddingBottom:'20px'}}>
+                                        <label>Profile Image</label><br/>
+                                        <input type="file" onChange={this.onFileChange} style={{color: 'white'}} />
+                                    </div>
+
+                                    <div>
+                                        <label>Username</label><br/>
+                                        <input type="username" className="modal-profile-form1" placeholder="Username" value={this.state.name} onChange={this.onChangeName}/>
+                                    </div>
+
+                                    <div>
+                                        <label>Email address</label><br/>
+                                        <input type="email" className="modal-profile-form1" placeholder="Email" value={this.state.email} onChange={this.onChangeEmail} />
+                                    </div>
+
+                                    <div>
+                                        <label>Password</label><br/>
+                                        <input type="password" className="modal-profile-form1" placeholder="Password" onChange={this.onChangePassword}/>
+                                    </div>
+
                                 </div>
-                            </div>
+                         
                             <div className="edit-modal-footer">
                                 <button type="submit" className="save" onClick={()=>this.handleModal()}>Save</button>
                                 <button type="button" onClick={()=>this.handleModal()} className="cancel">Cancel</button>
@@ -228,12 +239,17 @@ class Profile extends Component{
                         {$imagePreview}
                     </div>
                     <div className="profile-control">
-                        <label>Username</label>
-                        <input type="username" className="profile-form1" placeholder="username" value={this.state.name} />
-                        <br/>
-                        <label>Email</label><input type="email" className="profile-form2" placeholder="email" value={this.state.email}/>
+                        <div>
+                            <label style={{float: 'left'}}>Username</label><br/>
+                            <input type="username" className="profile-form1" placeholder="username" value={this.state.name} />
+                        </div>
+
+                        <div>
+                            <label style={{float: 'left'}}>Email</label><br/>
+                            <input type="email" className="profile-form2" placeholder="email" value={this.state.email}/>
+                        </div>
+                        
                     </div>
-                   
                         <button type="submit" className="logoff" onClick={this.onLogoutClick}>Logoff</button>
                     </form>
 

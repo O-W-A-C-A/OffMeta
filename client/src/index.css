@@ -27,7 +27,6 @@ html, .App, #root, .auth-wrapper {
   
 }
 
-
 .navbar-land {
   background-color: none;
   padding: 10px;
@@ -427,21 +426,12 @@ Profile Page CSS
   padding-left: 10px;
 }
 
-.btn-profile-upload{
-  background-color: #283245;
-  height: 100px;
-  width: 100px;
-  border-radius: 50px;
-  margin-bottom: 25px;
-  border: none;
-  margin-top: 10%;
-}
-
 .btn-profile-upload-img{
   height: 100px;
   width: 100px;
   border-radius: 50px;
   border: none;
+  margin-top: 5vh;
 }
 
 .profile-form2{
@@ -747,10 +737,6 @@ Profile Modal CSS
   text-align: center;
 }
 
-.edit-modal-body{
-  background-color: #283245;
-}
-
 .edit-profile-title{
   text-align: center;
   padding-bottom: 10px;
@@ -758,15 +744,17 @@ Profile Modal CSS
 }
 
 .modal-profile-control{
+  width:70%;
   padding-bottom: 25px;
-  text-align: center;
+  margin: auto;
 }
 .modal-profile-form1{
   height: 38px;
   width: 340px;
   margin-bottom: 20px;
-  padding-left: 10px;
+  
 }
+
 
 /*
 Inbox CSS

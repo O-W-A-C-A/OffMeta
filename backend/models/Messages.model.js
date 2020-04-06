@@ -8,12 +8,15 @@ const MessageSchema = new Schema({
       required: true
   },
 
-  from: {
+  sender: {
       type: String,
       required: true
+  },
+  receiver: {
+
   }
 },
-
-{timestamps: true});
+{timestamps: true}
+);
 
 module.exports = Message = mongoose.model('messages', MessageSchema);

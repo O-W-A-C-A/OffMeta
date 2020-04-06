@@ -1,11 +1,15 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
+import {Home, Mail, Add, AccountBox} from '@material-ui/icons'
+//components
 import NavBar from './navbar.component';
 import MyTeam from './myteam.component';
 import LeagueSettings from './league-settings.component';
 import MyLeague from './myleague.component';
 import MatchUp from "./matchup.component";
 import ChatApp from "./ChatApp.component"
+
+//auth
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
@@ -41,21 +45,21 @@ class HomePage extends Component{
                 <NavBar></NavBar>
                 <div className="home-wrapper" >
                     <div className="sideBar">
-                        <div class="tab-side">
-                        <Link to={"/home"} ><button class="tablinks-side" >Home</button></Link>
-                        <Link to={"/create"}><button class="tablinks-side" >Leagues</button></Link>
-                        <Link to={"/profile"}><button class="tablinks-side" >Profile</button></Link>
-                        <Link to={"/inbox"}><button class="tablinks-side">Inbox</button></Link>                    
+                        <div className="tab-side">
+                        <Link to={"/home"} ><button className="tablinks-side"><Home className="side-icons"/>Home</button></Link>
+                        <Link to={"/create"}><button className="tablinks-side"><Add className="side-icons"/>Leagues</button></Link>
+                        <Link to={"/profile"}><button className="tablinks-side"><AccountBox className="side-icons"/>Profile</button></Link>
+                        <Link to={"/inbox"}><button className="tablinks-side"><Mail className="side-icons"/>Inbox</button></Link>                    
                         </div>
                     </div>
                 
                 <div className="main-content">
                 
                     <div class="tab">
-                        <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={1}>Matchup</button>
-                        <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={2}>My Team</button>
-                        <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={3}>League</button>
-                        <button class="tablinks" onClick={(e) =>this.onTabClick(e)} value={4}>Settings</button>                   
+                        <button className="tablinks" onClick={(e) =>this.onTabClick(e)} value={1}>Matchup</button>
+                        <button className="tablinks" onClick={(e) =>this.onTabClick(e)} value={2}>My Team</button>
+                        <button className="tablinks" onClick={(e) =>this.onTabClick(e)} value={3}>League</button>
+                        <button className="tablinks" onClick={(e) =>this.onTabClick(e)} value={4}>Settings</button>                   
                     </div>
 
                     <div className="main-content-body">

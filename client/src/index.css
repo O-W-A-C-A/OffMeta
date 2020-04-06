@@ -351,20 +351,19 @@ Homepage Navigation CSS
   overflow: hidden;
   color: white;
   font-size: 20px;
+  text-align: right;
 }
 
 /* Style the buttons that are used to open the tab content */
 .tab-side button {
   background-color: inherit;
-  float: left;
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
+  height: 6vh;
   width: 100%;
   transition: 0.3s;
   color: white;
- 
 }
 
 /* Change background color of buttons on hover */
@@ -375,6 +374,12 @@ Homepage Navigation CSS
 /* Create an active/current tablink class */
 .tab-side button.active {
   background-color: #ccc;
+}
+
+.side-icons{
+  padding-bottom: 3px;
+  padding-right: 3px;
+  
 }
 
 /*

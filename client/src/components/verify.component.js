@@ -22,6 +22,8 @@ export default class Verify extends Component
         const user = {
             confirmCode: this.state.confirmCode
         }
+
+        console.log(user)
     }
 
     render()

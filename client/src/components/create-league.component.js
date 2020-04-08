@@ -117,10 +117,10 @@ class CreateLeague extends Component{
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<img class="btn-upload-img" src={imagePreviewUrl} />);
+            $imagePreview = (<img className="btn-upload-img" src={imagePreviewUrl} alt="League Logo"/>);
         }
         else{
-            $imagePreview = (<img class="btn-upload-img" src={this.state.logo} />);
+            $imagePreview = (<img className="btn-upload-img" src={this.state.logo} alt="League Logo"/>);
         }
 
         return(
@@ -162,15 +162,15 @@ class CreateLeague extends Component{
                                 <ul className="league-size">
                                     <li>
                                         <input type="radio" name = "btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {4} id="size4"/>
-                                        <label for="size4">4 Teams</label>
+                                        <label htmlFor="size4">4 Teams</label>
                                     </li>
                                     <li>
                                         <input type="radio" name = "btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {6} id="size6"/>
-                                        <label for="size6">6 Teams</label>
+                                        <label htmlFor="size6">6 Teams</label>
                                     </li>
                                     <li>
                                         <input type="radio" name = "btn-group-teams-sel" onChange = {this.onChangeLeagueSize} value = {8} id="size8"/>
-                                        <label for="size8">8 Teams</label>
+                                        <label htmlFor="size8">8 Teams</label>
                                     </li>
                                 </ul>
                             </div>

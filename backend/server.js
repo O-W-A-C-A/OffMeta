@@ -1,17 +1,20 @@
   //for server
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const cors = require('cors');
 
 const router = express.Router();
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
 
 //constants for routes
 const users = require("./Routes/api/User");
 const leagues = require("./Routes/api/League");
 
-const app = express();
+
 app.use(cors());
 
 //bodyparser middleware
@@ -59,14 +62,10 @@ const port = process.env.PORT || 5000;
  app.use('/player',playerRouter );
  */
 
-const server = app.listen(port, () => 
-    console.log(`Server up and running on port ${port} !`));
-
-const io = require('socket.io').listen(server);
 
 //ROUTES WILL GO HERE
 app.get('/', (req, res) => {
-    res.json({ message: 'WELCOME' });   
+    res.json({ message: 'WELCOME TO OFFMETA BACKEND' });   
 });
 
 // Assign socket object to every request
@@ -87,3 +86,19 @@ app.use(function (err, req, res, next) {
     if (!err.statusCode) err.statusCode = 500;
     res.status(err.statusCode).send(err.message);
 });
+
+server.listen(port, () => 
+    console.log(`Server up and running on port ${port} !`));
+
+io.on("connection", socket => {
+    const { id } = socket.client;
+    console.log(`User connected: ${id}`);
+
+    socket.on("chat message", ({ name, message }) => {
+        io.emit("chat message", { name, message });
+        console.log(message);
+      });
+          
+});
+
+    

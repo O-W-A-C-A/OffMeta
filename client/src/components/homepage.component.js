@@ -29,7 +29,7 @@ class HomePage extends Component{
     }
 
     render(){
-        const { user } = this.props.auth;
+        
         const renderComponent = () =>{
             console.log(this.state.showComponent)
             switch(this.state.showComponent){
@@ -55,7 +55,7 @@ class HomePage extends Component{
                 
                 <div className="main-content">
                 
-                    <div class="tab">
+                    <div className="tab">
                         <button className="tablinks" onClick={(e) =>this.onTabClick(e)} value={1}>Matchup</button>
                         <button className="tablinks" onClick={(e) =>this.onTabClick(e)} value={2}>My Team</button>
                         <button className="tablinks" onClick={(e) =>this.onTabClick(e)} value={3}>League</button>

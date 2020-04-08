@@ -1,6 +1,74 @@
 import React, {Component} from 'react';
-export default class ChatApp extends Component{
+import io from 'socket.io-client'
+import axios from 'axios'
+//auth
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+const socket = io.connect("http://localhost:5000");
+class ChatApp extends Component{
+    constructor(){
+        super();
+        this.state={
+            message:"",
+            chat:[],
+            name:""
+        }
+    }
+
+    componentDidMount() {
+
+        axios.get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
+        .then((res) => {
+            //console.log(res.data); for testing if data is actually receive
+            this.setState({name:res.data.name})
+        })
+        .catch((err) =>{
+            console.log(err);
+        });
+
+        socket.on("chat message", ({ name, message }) => {
+          // Add new messages to existing messages in "chat"
+          this.setState({
+            chat: [...this.state.chat, { name, message }]
+          });
+        });
+    }
+    
+    renderChat() {
+        const { chat } = this.state;
+        return chat.map(({ name, message }, idx) => (
+          <div key={idx}>
+            <span style={{ color: "green" }}>{name}: </span>
+    
+            <span style={{color: "white"}}>{message}</span>
+          </div>
+        ));
+      }
+    
+    // Function for getting text input
+    onMessageChange = e =>{
+        this.setState({ message: e.target.value });
+    }
+
+    // Function for sending message to chat server
+    onMessageSubmit = e =>{
+        e.preventDefault();
+        const {name, message} = this.state;
+        socket.emit("chat message", {name, message});
+        this.setState({ message: ''});
+    };
+
+    keypress(e){ 
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            const {name, message} = this.state;
+            socket.emit("chat message", {name, message});
+            this.setState({ message: ''});
+        }
+    }
+
     render(){
+       
         return(
             <div className="chat-container">
                 <div className="chat-header">
@@ -8,15 +76,24 @@ export default class ChatApp extends Component{
                     <div className="last-message">Last Message sent</div>
                 </div>
                 <div className="chat-body">
-                    
+                <div>{this.renderChat()}</div>
                 </div>
                 <div className="chat-footer">
-                        <textarea className="chat-input" placeholder="Send a message"></textarea >
+                        <textarea className="chat-input" placeholder="Send a message" onChange={e => this.onMessageChange(e)} onKeyPress={this.keypress.bind(this)} value={this.state.message}></textarea >
                         <div className="chat-btn">
-                            <button type="submit" className="chat-btn-submit">Chat</button>
+                            <button type="submit" onClick={this.onMessageSubmit} className="chat-btn-submit">Chat</button>
                         </div>
                     </div>
             </div>
         )
     }
 }
+ChatApp.propTypes = {
+    auth: PropTypes.object.isRequired
+  };
+  
+  const mapStateToProps = state => ({
+    auth: state.auth
+  });
+  
+export default connect(mapStateToProps)(ChatApp);

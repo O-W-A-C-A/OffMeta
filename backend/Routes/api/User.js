@@ -6,6 +6,7 @@ const keys = require("../../config/keys");
 const passport = require("passport");
 const multer = require('multer');
 const path = require('path');
+//const mailer = require('../middleware/send-mail');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -82,6 +83,26 @@ router.post("/register", (req, res) => {
             .catch(err => console.log(err));
         });
       });
+
+      //send registered user a verification email
+      /*
+      const token = await newUser.generateAuthToken()
+      const confirmCode = randomstring.generate(12)
+      newUser.confirmCode = confirmCode
+      newUser.verified = false
+
+      const html = `Hello
+      <br/>
+      Thanks for registering with Offmeta.
+      <br/><br/>
+      To verify your account please use the following code:
+      <br/>
+      Verification Code: <b>${confirmCode}</b>
+      <br/>
+      Through this link to activate your account:
+      <a href="http://localhost:3000/verify">http://localhost:3000/verify</a>`
+      await mailer.sendEmail('owacat@gmail.com', newUser.email, 'Offmeta account verification', html)
+      */
     }
   });
 });
@@ -235,6 +256,22 @@ router.delete("/delete/:id", (req, res) => {
     .catch(err => res.status(400).json('Error: ' +err));
 });
 
+
+//contact page backend
+/*
+router.post('/contact', async(req, res) => {
+    const tempSchema = new SchemaObject({
+      contactEmail: String,
+      contactSubject: String,
+      contactMessage: String
+    });
+
+    const contact = new tempSchema(req.body);
+    const html = `${contact.contactMessage}`
+
+    await mailer.sendEmail(contact.contactEmail, 'owacat@gmail.com', contact.contactSubject, html);
+});
+*/
 
 module.exports = router;
 

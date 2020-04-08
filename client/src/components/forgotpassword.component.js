@@ -51,7 +51,7 @@ class ForgotPassword extends Component{
         }
     }
     render(){
-        const {email, messageFromServer, showNullError, showError} = this.state;
+        const {email, showNullError, showError} = this.state;
         return(
             <div className="auth-wrapper-form">
             <NavBar></NavBar>

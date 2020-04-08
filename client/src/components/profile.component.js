@@ -166,10 +166,10 @@ class Profile extends Component{
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-          $imagePreview = (<img class="btn-profile-upload-img" src={imagePreviewUrl} />);
+          $imagePreview = (<img className="btn-profile-upload-img" src={imagePreviewUrl} alt="user profile img"/>);
         }
         else{
-            $imagePreview = (<img class="btn-profile-upload-img" src={this.state.file} />);
+            $imagePreview = (<img className="btn-profile-upload-img" src={this.state.file} alt="user profile img"/>);
         }
         return(
             <div className ="homePage">
@@ -241,12 +241,12 @@ class Profile extends Component{
                     <div className="profile-control">
                         <div>
                             <label style={{float: 'left'}}>Username</label><br/>
-                            <input type="username" className="profile-form1" placeholder="username" value={this.state.name} />
+                            <input type="username" className="profile-form1" placeholder="username" defaultValue={this.state.name} />
                         </div>
 
                         <div>
                             <label style={{float: 'left'}}>Email</label><br/>
-                            <input type="email" className="profile-form2" placeholder="email" value={this.state.email}/>
+                            <input type="email" className="profile-form2" placeholder="email" defaultValue={this.state.email}/>
                         </div>
                         
                     </div>

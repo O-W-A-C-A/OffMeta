@@ -22,13 +22,6 @@ class Landing extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps){
-        if (nextProps.errors){
-            this.setState({
-                errors: nextProps.errors
-            });
-        }
-    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
           this.props.history.push("/home"); // push user to homepage when they login
@@ -140,7 +133,7 @@ class Landing extends Component {
                 
                 </div>
                 <div className="landing-left-content">
-                <img className="landing-img" src={Image} alt="landing-image"/>  
+                <img className="landing-img" src={Image} alt="landing-img"/>  
                  <h2 style={{textAlign: 'center'}}> Esports is better with friends</h2>
                  <h6 style={{textAlign: 'center'}}>OffMeta is a fantasy esports league and chat all in one platform 
                     Have fun and enjoy esports with your closest friends</h6>

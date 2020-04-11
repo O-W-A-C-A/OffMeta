@@ -17,6 +17,19 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
+// Forgot Password
+export const forgotPassword = (userData, history) => dispatch =>{
+  axios
+    .post("api/users/forgotpassword/", userData)
+    .then(res => console.log(userData))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios

@@ -5,17 +5,20 @@ import './App.css';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
+import {Provider} from "react-redux"
+
+//components
 import Landing from "./components/landing.component";
 import Login from "./components/login.component";
 import HomePage from "./components/homepage.component";
 import ForgotPassword from './components/forgotpassword.component';
+import ResetPassword from './components/resetpassword.component';
 import Profile from './components/profile.component';
 import CreateLeague from './components/create-league.component';
 import Inbox from './components/inbox.component';
 import Verify from './components/verify.component';
-import {Provider} from "react-redux"
+
 import store from "./store"
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
@@ -47,6 +50,7 @@ class App extends Component{
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/forgotpassword" component={ForgotPassword}/>
+          <Route path="/reset/:token" component={ResetPassword}/>
           <Switch>
             <PrivateRoute exact path="/home" component={HomePage}/>
             <PrivateRoute exact path="/profile" component={Profile} />

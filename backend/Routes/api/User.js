@@ -6,11 +6,25 @@ const keys = require("../../config/keys");
 const passport = require("passport");
 const multer = require('multer');
 const path = require('path');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 //const mailer = require('../middleware/send-mail');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validForgotPasswordInput = require("../../validation/reset");
+
+//Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth:{
+    user: 'owacatm@gmail.com',
+    pass: 'OWACASeniors2020'
+  }
+});
+
+
 
 // Load User model
 const User = require("../../models/User.model");
@@ -254,6 +268,53 @@ router.delete("/delete/:id", (req, res) => {
     User.findByIdAndDelete(req.params.id)
     .then((user) => res.json('User has been succesfully deleted.'))
     .catch(err => res.status(400).json('Error: ' +err));
+});
+
+router.post("/forgotpassword/", (req, res) =>{
+  const {errors, isValid} = validForgotPasswordInput(req.body);
+
+   // Check validation
+   if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const email = req.body.email;
+
+  User.findOne({email}).then(user=>{
+    //checks if user exists
+    if(!user){
+      return res.status(403).json({ emailnotfound: "User not found" });
+    }
+    else{
+
+      const token = crypto.randomBytes(20).toString('hex');
+      user.update({
+        resetPasswordToken: token,
+        resetPasswordExpires: Date.now() + 3600000
+      })
+
+      const mailOptions = {
+        from: 'owacatm@gmail.com',
+        to: user.email,
+        subject: 'OffMeta Reset Password Requested',
+        text: 'You are receiving this because you (or someone else) have requested the reset of your password.\n\n'
+        + 'Please click on the following link, or paste this into your browser to complete the process within once hour of receiving it: \n\n'
+        +`http://localhost:3000/reset/${token}\n\n`
+        + 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+
+      }
+
+      transporter.sendMail(mailOptions, function(err, info){
+        if(err){
+          console.log(err)
+        }
+        else{
+          console.log('Email sent: ' + info.response);
+          res.status(200).json('recovery email sent');
+        }
+      });
+    }
+  });
 });
 
 

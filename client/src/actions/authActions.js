@@ -18,7 +18,7 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 // Forgot Password
-export const forgotPassword = (userData, history) => dispatch =>{
+export const forgotPassword = userData => dispatch =>{
   axios
     .post("api/users/forgotpassword/", userData)
     .then(res => console.log(userData))

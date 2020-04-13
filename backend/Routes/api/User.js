@@ -176,6 +176,99 @@ router.post("/login", (req, res) => {
 
 });
 
+//user search get request
+router.get('/search', async(req, res) => {
+  const sent = [];
+  const friends = [];
+  const received = [];
+  received = req.user.request;
+  sent = req.user.sentRequest;
+  friends = req.user.friendsList;
+
+  User.find({name: {$ne: req.user.name}}, async(err, result) => {
+    if(err) throw err;
+
+    res.render('search', {
+      result: result,
+      sent: sent,
+      friends: friends,
+      received: received
+    })
+  })
+})
+
+//user search post request
+router.post('/search', async(req, res) => {
+  try{
+    const searchfriend = req.body.searchfriend
+
+    if(searchfriend)
+    {
+      const msg = '';
+      if(searchfriend == req.user.name)
+      {
+        searchfriend = null;
+      }
+      
+      User.find({name: searchfriend}, async(err, res) => {
+        if(err) throw err;
+        res.render('search', {
+          result: result,
+          msg: msg
+        })
+      })
+    }
+  }
+  catch(error)
+  {
+    res.status(400).send(error)
+  }
+})
+
+//request a friend
+router.post('/requestFriend', async(req, res) => {
+  try{
+
+  }
+  catch(error)
+  {
+    res.status(400).send(error)
+  }
+})
+
+//reject a friend
+router.post('/rejectFriend', async(req, res) => {
+  try{
+
+  }
+  catch(error)
+  {
+    res.status(400).send(error)
+  }
+})
+
+//accept a friend
+router.post('/acceptFriend', async(req, res) => {
+  try{
+
+  }
+  catch(error)
+  {
+    res.status(400).send(error)
+  }
+})
+
+//get friends list
+router.get('/friendsList', async(req, res) => {
+  try{
+
+  }
+  catch(error)
+  {
+    res.status(400).send(error)
+  }
+})
+
 // @route GET api/users/:id
 // @desc returns user by finding by id
 // @access Public

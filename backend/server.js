@@ -92,13 +92,18 @@ server.listen(port, () =>
     console.log(`Server up and running on port ${port} !`));
 
 io.on("connection", socket => {
-    const { id } = socket.client;
-    console.log(`User connected: ${id}`);
+    socket.on('room', room =>{
+        socket.join(room);
+        console.log("room" + room)
 
-    socket.on("chat message", ({ name, message }) => {
-        io.emit("chat message", { name, message });
-        console.log(message);
-      });
+        socket.on("chat message", ({ name, message }) => {
+            io.in(room).emit("chat message", { name, message });
+            //io.in('jello').emit("chat message", { name, message }); for testing rooms
+            console.log(message);
+          });
+    });
+
+
           
 });
 

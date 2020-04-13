@@ -49,11 +49,13 @@ router.post("/create", upload.single('logo'), (req,res) => {
         leagueSize: Number(req.body.leagueSize),
         scoringFormat: req.body.scoringFormat,
         createdBy: req.body.createdBy,
+        
         //boolean values do not require double quotes
-        draftPickTrading: Boolean(req.body.allowDraftTrading),
+        draftPickTrading: Boolean(req.body.draftPickTrading),
         logo: req.file
     });
- 
+    console.log(req.body.draftPickTrading)
+
      newLeague.save()
      res.send(newLeague);
 });

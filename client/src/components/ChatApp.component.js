@@ -11,7 +11,8 @@ class ChatApp extends Component{
         this.state={
             message:"",
             chat:[],
-            name:""
+            name:"",
+            leagueID: "10",//testing
         }
     }
 
@@ -26,6 +27,12 @@ class ChatApp extends Component{
             console.log(err);
         });
 
+        var room = this.state.leagueID;
+
+        socket.on('connect', function(){
+            socket.emit('room', room);
+        });
+        
         socket.on("chat message", ({ name, message }) => {
           // Add new messages to existing messages in "chat"
           this.setState({

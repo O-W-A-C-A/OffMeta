@@ -25,7 +25,7 @@ class CreateLeague extends Component{
         //setting default state of all variables
         this.state = {
             leagueName:'',
-            draftPickTrading: false,
+            draftPickTrading: '',
             scoringFormat: 'STD',
             leagueSize: 4,
             logo: defaultimg,
@@ -42,6 +42,7 @@ class CreateLeague extends Component{
         league.append('logo', this.state.logo);
         league.append('leagueName', this.state.leagueName);
         league.append('draftPickTrading', this.state.draftPickTrading);
+        console.log("before "+this.state.draftPickTrading)
         league.append('scoringFormat', this.state.scoringFormat);
         league.append('leagueSize', this.state.leagueSize);
         league.append('createdBy', this.props.auth.user.id);
@@ -49,18 +50,10 @@ class CreateLeague extends Component{
         console.log(league);
         //crud method post to database
         axios.post('http://localhost:5000/api/leagues/create', league)
-            .then(res => console.log(res.data));
-        //sets the state back to its default values
-        this.setState({ 
-            leagueName:'',
-            draftPickTrading: false,
-            scoringFormat: 'STD',
-            leagueSize: 4,
-            logo:defaultimg
-        })
-
-        //after submission brings user to the home page
-       window.location = '/home';
+            .then(res => {
+                console.log(res.data)
+                window.location = '/home' //after submission brings user to the home page
+            });
     }
     //handles the state for when user enters a league name
     onChangeLeagueName(e){
@@ -74,7 +67,7 @@ class CreateLeague extends Component{
             draftPickTrading: !this.state.draftPickTrading
         })
         //for testing
-        //console.log(!this.state.draftPickTrading);
+        console.log(!this.state.draftPickTrading);
     }
     //handles the state for when user clicks on a radio button to determine the
     //scoring format

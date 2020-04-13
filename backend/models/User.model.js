@@ -25,8 +25,13 @@ const UserSchema = new Schema({
     file:{
         type: String,
         default: 'none'
-    }
-},{
+    },
+    resetPasswordToken: {
+        type: String,
+        default: 'none'
+    },
+},
+{
     collection: 'users'
 });
 

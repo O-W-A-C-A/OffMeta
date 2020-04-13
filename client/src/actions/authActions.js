@@ -20,11 +20,11 @@ export const registerUser = (userData, history) => dispatch => {
 // Forgot Password
 export const forgotPassword = userData => dispatch =>{
   axios
-    .post("api/users/forgotpassword/", userData)
+    .put("api/users/forgotpassword/", userData)
     .then(res => console.log(userData))
     .catch(err =>
       dispatch({
-        type: GET_ERRORS,
+        type: GET_ERRORS, 
         payload: err.response.data
       })
     );

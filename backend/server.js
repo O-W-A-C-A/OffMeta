@@ -13,7 +13,7 @@ const io = require("socket.io")(server);
 //constants for routes
 const users = require("./Routes/api/User");
 const leagues = require("./Routes/api/League");
-
+const resetPassword = require("./Routes/api/ResetPassword");
 
 app.use(cors());
 
@@ -53,6 +53,7 @@ app.use("/api/Users", users);
 app.use("/api/Leagues", leagues);
 app.use('/uploads', express.static('uploads'));
 app.use('/uploads/league-logos', express.static('logos'));
+app.use("/api/reset", resetPassword);
 
 //process.env.port is Heroku's port if you choose to deploy the app there
 const port = process.env.PORT || 5000;
@@ -100,6 +101,7 @@ io.on("connection", socket => {
       });
           
 });
+
 
 
 

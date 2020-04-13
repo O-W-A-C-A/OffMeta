@@ -24,8 +24,6 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-
-
 // Load User model
 const User = require("../../models/User.model");
 
@@ -270,7 +268,10 @@ router.delete("/delete/:id", (req, res) => {
     .catch(err => res.status(400).json('Error: ' +err));
 });
 
-router.post("/forgotpassword/", (req, res) =>{
+// @route PUT api/users/forgotpassword/
+// @desc send user password reset link
+// @access Public
+router.put("/forgotpassword/", (req, res) =>{
   const {errors, isValid} = validForgotPasswordInput(req.body);
 
    // Check validation
@@ -279,26 +280,26 @@ router.post("/forgotpassword/", (req, res) =>{
   }
 
   const email = req.body.email;
-
+  //console.log(email)
   User.findOne({email}).then(user=>{
     //checks if user exists
     if(!user){
       return res.status(403).json({ emailnotfound: "User not found" });
     }
     else{
-
+      //console.log(user.name)
       const token = crypto.randomBytes(20).toString('hex');
-      user.update({
-        resetPasswordToken: token,
-        resetPasswordExpires: Date.now() + 3600000
-      })
 
+      user.resetPasswordToken = token;
+      //console.log(user.resetPasswordToken)
+      //console.log(user.resetPasswordExpires)
+      user.save()
       const mailOptions = {
         from: 'owacatm@gmail.com',
         to: user.email,
         subject: 'OffMeta Reset Password Requested',
         text: 'You are receiving this because you (or someone else) have requested the reset of your password.\n\n'
-        + 'Please click on the following link, or paste this into your browser to complete the process within once hour of receiving it: \n\n'
+        + 'Please click on the following link, or paste this into your browser to complete the process: \n\n'
         +`http://localhost:3000/reset/${token}\n\n`
         + 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
 
@@ -317,6 +318,51 @@ router.post("/forgotpassword/", (req, res) =>{
   });
 });
 
+// @route PUT api/users/forgotpassword/
+// @desc reset user password using id
+// @access Public
+router.put("/resetpassword", (req, res) =>{
+  const email = req.body.email;
+  User.findOne({email}).then(user=>{
+  
+    // Check if user exists
+    if (!user) {
+        return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+    else{
+          user.password = req.body.password;
+          // Hash password before saving in database
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(user.password, salt, (err, hash) => {
+              if (err) throw err;
+                user.password = hash;
+                user.save()
+                  .then(() => res.json('User Password Reset!'))
+                  .catch(err => res.status(400).json('Error: ' +err));
+            });
+          });
+
+          const mailOptions = {
+            from: 'owacatm@gmail.com',
+            to: user.email,
+            subject: 'OffMeta Password Has Been Reset',
+            text: `Hello, ${user.name}\n\n`
+            + 'Your OffMeta Account password has been reset. \n\n'    
+          }
+
+          transporter.sendMail(mailOptions, function(err, info){
+            if(err){
+              console.log(err)
+            }
+            else{
+              console.log('Email sent: ' + info.response);
+              res.status(200).json('password reset email sent');
+            }
+          });
+    }
+
+  })
+});
 
 //contact page backend
 /*

@@ -17,7 +17,6 @@ class CreateLeague extends Component{
 
         //function declaration for input fields that the user will modify
         this.onChangeLeagueName = this.onChangeLeagueName.bind(this);
-        this.onChangeDraftPickTrading = this.onChangeDraftPickTrading.bind(this);
         this.onChangeScoringFormat = this.onChangeScoringFormat.bind(this);
         this.onChangeLeagueSize = this.onChangeLeagueSize.bind(this);
         this.onFileChange = this.onFileChange.bind(this);
@@ -41,8 +40,6 @@ class CreateLeague extends Component{
         const league = new FormData();
         league.append('logo', this.state.logo);
         league.append('leagueName', this.state.leagueName);
-        league.append('draftPickTrading', this.state.draftPickTrading);
-        console.log("before "+this.state.draftPickTrading)
         league.append('scoringFormat', this.state.scoringFormat);
         league.append('leagueSize', this.state.leagueSize);
         league.append('createdBy', this.props.auth.user.id);
@@ -60,14 +57,6 @@ class CreateLeague extends Component{
         this.setState({
             leagueName: e.target.value
         })
-    }
-    //handles the state for when user toggles switch to allow draft pick trading
-    onChangeDraftPickTrading(e){
-        this.setState({
-            draftPickTrading: !this.state.draftPickTrading
-        })
-        //for testing
-        console.log(!this.state.draftPickTrading);
     }
     //handles the state for when user clicks on a radio button to determine the
     //scoring format
@@ -177,14 +166,6 @@ class CreateLeague extends Component{
                             <input className="radio-scoring" type="radio" value="PPA" onChange = {this.onChangeScoringFormat} name="scoring-format"/> PPA
                             <br></br>
                             <input className="radio-scoring" type="radio" value="0.5 PPA" onChange = {this.onChangeScoringFormat} name="scoring-format"/> 0.5 PPA
-                        </div>
-                        <div className="allow-draft-trade">
-                            <label>Allow Draft Picking Trading</label>
-                            <br></br>
-                            <label className="switch">
-                                <input value = {this.state.draftPickTrading} onChange = {this.onChangeDraftPickTrading} type="checkbox"/>
-                                <span className="slider round"></span>
-                            </label>
                         </div>
                         <button type="submit" className="btn-createLeague">Finish</button>
                     </div>

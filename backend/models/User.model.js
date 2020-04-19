@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//Create Schema
+//User Schema
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -30,20 +30,6 @@ const UserSchema = new Schema({
         type: String,
         default: 'none'
     },
-    //new start
-    sentRequest: [{
-        username: {type: String, default: ''}
-    }],
-    request: [{
-        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        username: {type: String, default: ''}
-    }],
-    friendsList: [{
-        friendId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        friendName: {type: String, default: ''}
-    }],
-    totalRequest: {type: Number, default: 0},
-    //new end
 },
 {
     collection: 'users'

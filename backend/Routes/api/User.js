@@ -225,50 +225,6 @@ router.post('/search', async(req, res) => {
   }
 })
 
-//request a friend
-router.post('/requestFriend', async(req, res) => {
-  try{
-
-  }
-  catch(error)
-  {
-    res.status(400).send(error)
-  }
-})
-
-//reject a friend
-router.post('/rejectFriend', async(req, res) => {
-  try{
-
-  }
-  catch(error)
-  {
-    res.status(400).send(error)
-  }
-})
-
-//accept a friend
-router.post('/acceptFriend', async(req, res) => {
-  try{
-
-  }
-  catch(error)
-  {
-    res.status(400).send(error)
-  }
-})
-
-//get friends list
-router.get('/friendsList', async(req, res) => {
-  try{
-
-  }
-  catch(error)
-  {
-    res.status(400).send(error)
-  }
-})
-
 // @route GET api/users/:id
 // @desc returns user by finding by id
 // @access Public
@@ -384,8 +340,12 @@ router.put("/forgotpassword/", (req, res) =>{
       const token = crypto.randomBytes(20).toString('hex');
 
       user.resetPasswordToken = token;
+
+      //testing expiration
       //console.log(user.resetPasswordToken)
       //console.log(user.resetPasswordExpires)
+
+      //creating email to send user
       user.save()
       const mailOptions = {
         from: 'owacatm@gmail.com',

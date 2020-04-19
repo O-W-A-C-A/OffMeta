@@ -1,4 +1,4 @@
-  //for server
+// for server
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
@@ -10,14 +10,15 @@ const router = express.Router();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
-//constants for routes
+// constants for routes
 const users = require("./Routes/api/User");
 const leagues = require("./Routes/api/League");
 const resetPassword = require("./Routes/api/ResetPassword");
+const leagueInvite = require("./Routes/api/AcceptInvite");
 
 app.use(cors());
 
-//bodyparser middleware
+// bodyparser middleware
 app.use(
     bodyParser.urlencoded({
         extended: false
@@ -28,10 +29,10 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-//DB config
+// DB config
 const db = require("./config/keys").mongoURI;
 
-//Connect to MongoDB
+// Connect to MongoDB
 mongoose.Promise = global.Promise;
 mongoose
     .connect(
@@ -54,8 +55,9 @@ app.use("/api/Leagues", leagues);
 app.use('/uploads', express.static('uploads'));
 app.use('/uploads/league-logos', express.static('logos'));
 app.use("/api/reset", resetPassword);
+app.use("/api/invite", leagueInvite);
 
-//process.env.port is Heroku's port if you choose to deploy the app there
+// process.env.port is Heroku's port if you choose to deploy the app there
 const port = process.env.PORT || 5000;
 
 /*
@@ -75,6 +77,7 @@ app.use(function(req, res, next) {
     next();
 });
 
+//Error checking
 app.use((req, res, next) => {
     // Error goes via `next()` method
     setImmediate(() => {
@@ -88,9 +91,11 @@ app.use(function (err, req, res, next) {
     res.status(err.statusCode).send(err.message);
 });
 
+//reporting port server is running is on
 server.listen(port, () => 
     console.log(`Server up and running on port ${port} !`));
 
+//socket io chat connection
 io.on("connection", socket => {
     socket.on('room', room =>{
         socket.join(room);
@@ -101,10 +106,7 @@ io.on("connection", socket => {
             //io.in('jello').emit("chat message", { name, message }); for testing rooms
             console.log(message);
           });
-    });
-
-
-          
+    });       
 });
 
 

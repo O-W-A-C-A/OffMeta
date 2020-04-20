@@ -114,13 +114,27 @@ router.post("/update/:id", (req, res) =>{
 // @access Public
 router.get("/leaguelogo/:id", (req,res) =>{
     League.findById(req.params.id)
-  .then (league => {
-    let file = league.file;
-    let fileLocation = path.join(DIR, file);
-    res.sendFile(`${fileLocation}`, {root: '.'})
+    .then (league => {
+        let file = league.file;
+        let fileLocation = path.join(DIR, file);
+        res.sendFile(`${fileLocation}`, {root: '.'})
 })
 .catch(err => res.status(400).json('Error: '+ err));
 });
+
+// @route PUT api/leagues/uploadlogo/:id
+// @desc Allow user to update their profile image
+// @access Public
+router.put("/uploadlogo/:id", upload.single('leagueLogo'), (req, res, next) =>{
+    League.findById(req.params.id)
+        .then(league =>{
+            league.file = req.file.filename;
+            console.log(req.file)
+            league.save()
+                .then(() => res.json('League Logo updated'))
+                .catch(err => res.status(400).json('Error: ' + err))
+        })
+})
 
 // @route POST api/leagues/invite
 // @desc Send an invite to league email to user in database

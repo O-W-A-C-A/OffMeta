@@ -64,15 +64,38 @@ router.post("/create", upload.single('logo'), (req,res) => {
         leagueName: req.body.leagueName,
         leagueSize: Number(req.body.leagueSize),
         scoringFormat: req.body.scoringFormat,
-        createdBy: req.body.createdBy,
-    
-        logo: req.file
+        createdBy: req.body.createdBy, //user id of creator
+        logo: req.file,//logo
     });
-    console.log(req.body.draftPickTrading)
-
+    
+    //adding user who created league to list of league members
+    newLeague.members.push(req.body.createdBy)
+    //saving league to database
      newLeague.save()
-     res.send(newLeague);
+        //checking for errors
+        .then(() => res.json(`New League ${req.body.leagueName} Created`))
+        .catch(err => res.status(400).json('Error: ' + err));
+
+     User.findById(req.body.createdBy)
+        .then(user => {
+            //if user does not exist
+            if(!user){
+                return res.status(403).json({idnotfound: "User not found"});
+            }
+            //if user exists
+            else{
+                //adding new league to array of object id of leagues joined
+                user.leaguesJoined.push(newLeague);
+                user.save()
+
+                //below then and catch statements causing errors
+                //.then(() => res.json('User joined a new league'))
+                //.catch(err => res.status(400).json('Error: ' + err));
+            }
+        }).catch(err => res.status(400).json('Error: ' + err));
 });
+
+// league.members.push(user.id);//push user id into members object id array for league
 
 //@route GET api/leagues/id
 //@desc Find league by ID
@@ -155,32 +178,59 @@ router.post("/invite/", (req,res) =>{
     //console.log(leagueId)
     const leagueName = req.body.leagueName;
 
+    //attempting to find user in database
     User.findOne({email}).then(user =>{
         //if user does not exist
         if(!user){
             return res.status(403).json({emailnotfound: "User not found"});
         }
+        //if they exist
         else{
-            //creating email to send user
-            const mailOptions = {
-                from: 'owacatm@gmail.com',
-                to: user.email,
-                subject: `OffMeta you have been invited to join ${leagueName}`,
-                text: `To join ${leagueName} click on the following link: \n\n`
-                + `http://localhost:3000/acceptinvite/${leagueId}\n\n`
-                + 'Please ignore if you dont want to accept.'
-            }
+            //check if league exists
+            League.findById(req.body.id)
+                .then(league => {
+                    //function checks if user id is found in member object id array
+                    //returns boolean 
+                    var isInArray = league.members.some(function (member){
+                        return member.equals(user.id)
+                    });
 
-            //sending email
-            transporter.sendMail(mailOptions, function(err, info){
-                if(err){//print error
-                    console.log(err)
-                }
-                else{//if successful
-                    console.log('League Invite Sent' + info.response);
-                    res.status(200).json('league invitation sent');
-                }
-            });
+                    //if it doesnt
+                    if(!league){
+                        return res.status(409).json({leaguenotfound: "League not found"});
+                    }
+                    //if league does exists
+                    else{
+                        //check if user already exists in member list of league
+                        if(isInArray){
+                            //console.log('user already exists')
+                            return res.status(409).json({memberexists: "User is already a member of league"});
+                        }
+                        //user id not found in members list send new member invite
+                        else{
+                            //creating email to send user
+                            const mailOptions = {
+                                from: 'owacatm@gmail.com',
+                                to: user.email,
+                                subject: `OffMeta you have been invited to join ${leagueName}`,
+                                text: `To join ${leagueName} click on the following link: \n\n`
+                                + `http://localhost:3000/acceptinvite/${leagueId}\n\n`
+                                + 'Please ignore if you dont want to accept.'
+                            }
+
+                            //sending email
+                            transporter.sendMail(mailOptions, function(err, info){
+                                if(err){//print error
+                                    console.log(err)
+                                }
+                                else{//if successful
+                                    console.log('League Invite Sent' + info.response);
+                                    res.status(200).json('league invitation sent');
+                                }
+                            });
+                        }
+                    }
+                })
         }
     }).catch(err => res.status(400).json('Error: '+ err));
 
@@ -211,7 +261,11 @@ router.put('/acceptinvite', (req, res) =>{
                 league.save()//save information to league
                 .then(() => res.json('New League Member Joined'))
                 .catch(err => res.status(400).json('Error: ' + err));
-            })
+            });
+            
+            //added league to user's leaguesJoined object id array
+            user.leaguesJoined.push(req.body.id);
+            user.save()
         }
     }).catch(err => res.status(400).json('Error: ' + err));
 })

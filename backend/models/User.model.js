@@ -30,6 +30,10 @@ const UserSchema = new Schema({
         type: String,
         default: 'none'
     },
+    leaguesJoined: [{
+        type: mongoose.Types.ObjectId,
+        ref: "League"
+    }],
 },
 {
     collection: 'users'

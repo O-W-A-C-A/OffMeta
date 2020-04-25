@@ -26,6 +26,8 @@ const transporter = nodemailer.createTransport({
 
 // Load User model
 const User = require("../../models/User.model");
+// Load League model
+const League = require("../../models/League.model");
 
 const DIR = './backend/uploads';
 
@@ -415,6 +417,37 @@ router.put("/resetpassword", (req, res) =>{
     }
 
   })
+});
+
+// @route PUT api/users/leaveleague/
+// @desc removes league from user's leaguesJoined object id array and that leagues member
+// object id array
+// @access Public
+router.post("/leaveleague/", (req, res) =>{
+
+  const leagueToLeave = req.body.leagueID;
+  const user = req.body.userID;
+  
+  User.findById(user)
+    .then(user =>{
+        League.findById(leagueToLeave)
+          .then(league => {
+            //if user created league return error
+            if(user.id === league.createdBy){
+              return res.status(409).json({usererror: "League creator cannot leave league"});
+            }
+            //if user is not creator
+            else{
+                league.members.filter(member => member !== user.id);
+                league.save();
+        
+                user.leaguesJoined.filter(leagueJoined => leagueJoined !== league.id)
+                user.save()
+                .then(() => res.json('League Member Left'))
+                .catch(err => res.status(400).json('Error: ' +err));
+            }
+          })
+    }).catch(err => res.status(400).json('Error: ' +err));
 });
 
 //contact page backend

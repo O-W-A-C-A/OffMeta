@@ -13,7 +13,9 @@ const contactSchema = Joi.object.keys({
   contactMessage: Joi.string().required()
 });
 
-//send message
+// @route POST api/contact
+// @desc Allows user to send a message to dev team email
+// @access Public
 router.post('/contact', (req, res) => {
   try{
     const result = Joi.validate(req.body, contactSchema);

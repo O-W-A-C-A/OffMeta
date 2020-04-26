@@ -60,12 +60,17 @@ router.get("/", (req,res)=>{
 //@desc Create League
 //@access Public
 router.post("/create", upload.single('logo'), (req,res) => {
+    //creating a unique 6 character code which will allow user's to join a league when creating an account
+    const token = crypto.randomBytes(3).toString('hex');
+
+    //creating newLeague
     let newLeague = new League({
         leagueName: req.body.leagueName,
         leagueSize: Number(req.body.leagueSize),
         scoringFormat: req.body.scoringFormat,
         createdBy: req.body.createdBy, //user id of creator
-        logo: req.file,//logo
+        logo: req.file,//logom
+        joinCode: token,
     });
     
     //adding user who created league to list of league members
@@ -94,8 +99,6 @@ router.post("/create", upload.single('logo'), (req,res) => {
             }
         }).catch(err => res.status(400).json('Error: ' + err));
 });
-
-// league.members.push(user.id);//push user id into members object id array for league
 
 //@route GET api/leagues/id
 //@desc Find league by ID
@@ -268,7 +271,25 @@ router.put('/acceptinvite', (req, res) =>{
             user.save()
         }
     }).catch(err => res.status(400).json('Error: ' + err));
-})
+});
 
+// @route GET api/leagues/getmembers
+// @desc Retrieve the list of members a part of a league
+// @access Public
+router.get('/getmembers/:id', (req, res) =>{
+    League.findById(req.params.id)
+        .then(league =>{
+            if(!league){
+                return res.status(404).json({leaguenotfound: "league not found"});
+            }
+            else{
+                //prints out member IDs to console
+                console.log(league.members)
+                //sends members array commented out is send which app will treat as text/html
+                //res.send(league.members);
+                res.json(league.members)
+            }
+        }).catch(err => res.status(400).json('Error: ' + err));
+});
 
 module.exports = router;

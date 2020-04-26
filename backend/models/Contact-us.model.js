@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+//Contact Schema
 const contactSchema = mongoose.Schema({
     name: String,
     subject: String,

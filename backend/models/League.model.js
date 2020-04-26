@@ -30,6 +30,9 @@ const LeagueSchema= new Schema({
         type: mongoose.Types.ObjectId,
         ref: "User"
     }],
+    joinCode:{
+        type: String
+    },
 },
 {
     timestamps:true,

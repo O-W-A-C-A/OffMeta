@@ -438,10 +438,13 @@ router.post("/leaveleague/", (req, res) =>{
             }
             //if user is not creator
             else{
-                league.members.filter(member => member !== user.id);
+                //console.log('members before '+league.members)
+                league.members.remove(user.id)
+                //console.log('members after '+league.members)
                 league.save();
-        
-                user.leaguesJoined.filter(leagueJoined => leagueJoined !== league.id)
+                //console.log('leagues joined before '+user.leaguesJoined)
+                user.leaguesJoined.remove(league.id)
+                //console.log('laegues joined after '+user.leaguesJoined)
                 user.save()
                 .then(() => res.json('League Member Left'))
                 .catch(err => res.status(400).json('Error: ' +err));

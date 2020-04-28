@@ -9,28 +9,30 @@ import defaultimg from "../public/upload.png"
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-class CreateLeague extends Component{
-    constructor(){
-        super();
+class CreateOrJoinLeague extends Component{
+    constructor(props){
+        super(props);
+
         //onSubmit function delcaration will handle submitting of form to the server
         this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmitCode = this.onSubmitCode.bind(this);
 
         //function declaration for input fields that the user will modify
         this.onChangeLeagueName = this.onChangeLeagueName.bind(this);
         this.onChangeScoringFormat = this.onChangeScoringFormat.bind(this);
         this.onChangeLeagueSize = this.onChangeLeagueSize.bind(this);
         this.onFileChange = this.onFileChange.bind(this);
+        this.onCodeChange = this.onCodeChange.bind(this);
 
-        //setting default state of all variables
         this.state = {
             leagueName:'',
-            draftPickTrading: '',
             scoringFormat: 'STD',
             leagueSize: 4,
             logo: defaultimg,
             imagePreviewUrl: '',
-            createdBy:''
-        };
+            createdBy:'',
+            joinCode:''
+        }
     }
 
     onSubmit(e){
@@ -50,6 +52,20 @@ class CreateLeague extends Component{
             .then(res => {
                 console.log(res.data)
                 window.location = '/home' //after submission brings user to the home page
+            });
+    }
+
+    onSubmitCode(e){
+        //prevents autoload of page
+        e.preventDefault();
+        const code = {
+            joinCode: this.state.joinCode
+        }
+        //crud method post to database
+        axios.post(`http://localhost:5000/api/users/joinleague/${this.props.auth.user.id}`, code)
+            .then(res => {
+                console.log(res.data)
+               // window.location = '/home' //after submission brings user to the home page
             });
     }
     //handles the state for when user enters a league name
@@ -94,6 +110,14 @@ class CreateLeague extends Component{
     
         reader.readAsDataURL(file)
     }
+
+    onCodeChange(e){
+        this.setState({
+            joinCode: e.target.value
+        });
+        console.log(this.state.joinCode)
+    }
+
     render(){
         //magic
         let {imagePreviewUrl} = this.state;
@@ -106,7 +130,6 @@ class CreateLeague extends Component{
         }
 
         return(
-            
             <div className="homePage">
                  <NavBar></NavBar>
                 <div className="home-wrapper">
@@ -167,8 +190,20 @@ class CreateLeague extends Component{
                             <br></br>
                             <input className="radio-scoring" type="radio" value="0.5 PPA" onChange = {this.onChangeScoringFormat} name="scoring-format"/> 0.5 PPA
                         </div>
-                        <button type="submit" className="btn-createLeague">Finish</button>
+                        <button type="submit" className="btn-createLeague">Get Started</button>
                     </div>
+                    </form>
+                    <br></br>
+                    <h3 className = "mid-or">OR</h3>
+                    <form onSubmit={this.onSubmitCode}>
+                    <h3 className = "mid">Join a League by Entering Invite Code</h3>
+                        <div className="codeWrapper">
+                            <label>League Code</label>
+                            <div>
+                                <input className="join-code" type="text" onChange = {this.onCodeChange} placeholder="Enter League Code"/>
+                            </div>
+                        </div>
+                        <button type="submit" className="btn-joinleague">Join League</button>
                     </form>
                     </div>
                 </div>
@@ -181,13 +216,13 @@ class CreateLeague extends Component{
         );
     }
 }
-
-CreateLeague.propTypes = {
+CreateOrJoinLeague.propTypes = {
     auth: PropTypes.object.isRequired
-  };
-  
-  const mapStateToProps = state => ({
+  };const mapStateToProps = state => ({
     auth: state.auth
   });
   
-  export default connect(mapStateToProps)(CreateLeague);
+  export default connect(
+    mapStateToProps,
+  )(CreateOrJoinLeague);
+

@@ -598,8 +598,8 @@ Create League CSS
   border-right: none;
   color:grey;
   width: 400px;
-
 }
+
 .league-name-text{
   color: white;
 }
@@ -1446,3 +1446,30 @@ Chat App CSS
 .trans-timestamp, .player-pos{
   font-size: 11px;
 }
+
+/* GET STARTED PAGE CSS*/
+.mid-or{
+  text-align: center;
+  justify-content: center;
+}
+
+.join-code{
+  background-color: #283245;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color:white;
+  width: 150px;
+}
+
+.btn-joinleague{
+  color: white;
+  background-color: #1DA1F2;
+  border: none;
+  height: 50px;
+  width: 200px;
+  font-size: 20px;
+  float: right;
+  margin-top: -10%;
+}
+

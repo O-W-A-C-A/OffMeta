@@ -472,8 +472,8 @@ router.get('/getleagues/:id', (req, res) =>{
   }).catch(err => res.status(400).json('Error: ' + err));
 });
 
-// @route POST api/leagues/joinleague
-// @desc Allow's a user to join a league using joinCode
+// @route POST api/users/joinleague
+// @desc Allow's a user to join a league using joinCode, id in param is user id
 // @access Public
 router.post('/joinleague/:id', (req, res) =>{
   const joinCode = req.body.joinCode;
@@ -500,13 +500,14 @@ router.post('/joinleague/:id', (req, res) =>{
               return res.status(409).json({memberexists: "User is already a member of league"});
             }
             else{
+              //console.log(league.id)
               //testing route
               //res.send('works')
               league.members.push(user.id);//push user id into members object id array for league
               league.save()//save information to league
               .then(() => res.json('New League Member Joined'))
               .catch(err => res.status(400).json('Error: ' + err));
-
+              
               //added league to user's leaguesJoined object id array
               user.leaguesJoined.push(league.id);
               user.save()
@@ -516,6 +517,19 @@ router.post('/joinleague/:id', (req, res) =>{
       }
     }).catch(err => res.status(400).json('Error: ' + err));
 });
+
+/* Simplified route used for testing
+router.get('/get/:id', (req, res) =>{
+  const joinCode = req.body.joinCode;
+  User.findById(req.params.id)
+    .then(user =>{
+      League.findOne({joinCode})
+        .then(league =>{
+          res.send(league.id)
+        })
+    })
+});
+*/
 
 //contact page backend
 /*

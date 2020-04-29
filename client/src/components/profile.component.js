@@ -249,8 +249,6 @@ class Profile extends Component{
             </div>
         </div>
         
-        <div className="bar"></div>
-        
         </div>
         </div>
         );

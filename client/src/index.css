@@ -66,7 +66,6 @@ html, .App, #root, .auth-wrapper {
   text-align: left;
 }
 
-
 .auth-wrapper-form {
   margin-top: 4%;
   display: flex;
@@ -285,10 +284,10 @@ Homepage Navigation CSS
 .main-content{
   background:#283245; 
   width:46.3%;
-  border-left: 2.5px solid grey;
-  border-right: 2.5px solid grey;
   position: relative;
   overflow-y: hidden;
+  margin-right: 10px;
+  border-radius: 10px;
 }
 
 .main-content-body{
@@ -304,19 +303,8 @@ Homepage Navigation CSS
   background:#283245; 
   width:20%;  
   display: flex; 
-}
+  border-radius: 10px;
 
-.bar{
-  background:none; 
-  width:20%; 
-  padding-left: 10px;
-  padding-bottom: 54.5%;
-  display: flex; 
-}
-
-.sideBar{  
-  width:9.5%; 
-  display: flex; 
 }
 
  /* Style the tab */
@@ -361,45 +349,6 @@ Homepage Navigation CSS
   border-top: none;
   
 } 
- /* Style the tab */
- .tab-side {
-  overflow: hidden;
-  color: white;
-  font-size: 20px;
-  text-align: right;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tab-side button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  height: 6vh;
-  width: 100%;
-  transition: 0.3s;
-  color: white;
-}
-
-/* Change background color of buttons on hover */
-.tab-side button:hover {
-  background-color: #1DA1F2;
-}
-
-/* Create an active/current tablink class */
-.tab-side button.active {
-  background-color: #ccc;
-}
-
-.side-icons{
-  padding-bottom: 3px;
-  padding-right: 3px;
-  
-}
-
-/*
-Forgot Password CSS
-*/
 
 /*
 Profile Page CSS

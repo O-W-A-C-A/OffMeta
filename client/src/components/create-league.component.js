@@ -161,9 +161,6 @@ class CreateLeague extends Component{
                     </form>
                     </div>
                 </div>
-                <div className="bar">
-
-                </div>
                 </div>
                 
             </div>

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
-import {Home, Mail, Add, AccountBox} from '@material-ui/icons'
 //components
 import NavBar from './navbar.component';
 import defaultimg from "../public/upload.png"
@@ -111,15 +109,6 @@ class CreateLeague extends Component{
                  <NavBar></NavBar>
                 <div className="home-wrapper">
                
-                <div className="sideBar">
-                    <div className="tab-side">
-                        <Link to={"/home"} ><button className="tablinks-side"><Home className="side-icons"/>Home</button></Link>
-                        <Link to={"/create"}><button className="tablinks-side"><Add className="side-icons"/>Leagues</button></Link>
-                        <Link to={"/profile"}><button className="tablinks-side"><AccountBox className="side-icons"/>Profile</button></Link>
-                        <Link to={"/inbox"}><button className="tablinks-side"><Mail className="side-icons"/>Inbox</button></Link>                    
-                    </div>
-                </div>
-                
                     <div className="clWrapper">
                        <div className="clContent"><h3>Create a new league</h3>
                         <p>Don't worry you will be able to make changes later</p>

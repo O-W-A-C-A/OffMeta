@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import NavBar from './navbar.component'
+import BasicNavBar from './basic-navbar.component'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 
@@ -59,7 +58,7 @@ export default class AcceptInvite extends Component {
         axios.put('http://localhost:5000/api/leagues/acceptinvite', accept)
             .then(res =>{
                 console.log(res)
-                //window.location = '/login'
+                window.location = '/home'
             })
             .catch((err) =>{
                 console.log(err)
@@ -71,7 +70,7 @@ export default class AcceptInvite extends Component {
         const {email, leagueName} = this.state;
         return (
             <div className="auth-wrapper-form">
-                <NavBar></NavBar>
+                <BasicNavBar></BasicNavBar>
                 <div className="auth-inner">
                     <form onSubmit={this.onSubmit}>
                         <h3 >You have been invited to Join: {`${leagueName}`}</h3>

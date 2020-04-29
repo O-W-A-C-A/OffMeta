@@ -15,7 +15,7 @@ class CreateOrJoinLeague extends Component{
 
         //onSubmit function delcaration will handle submitting of form to the server
         this.onSubmit = this.onSubmit.bind(this);
-        this.onSubmitCode = this.onSubmitCode.bind(this);
+        this.onSubmitCode = this.onSubmitCode.bind(this);//this is for if the user want to join by code
 
         //function declaration for input fields that the user will modify
         this.onChangeLeagueName = this.onChangeLeagueName.bind(this);
@@ -47,14 +47,14 @@ class CreateOrJoinLeague extends Component{
         league.append('createdBy', this.props.auth.user.id);
         //prints to console league information
         console.log(league);
-        //crud method post to database
+        //crud method post new league to database
         axios.post('http://localhost:5000/api/leagues/create', league)
             .then(res => {
                 console.log(res.data)
                 window.location = '/home' //after submission brings user to the home page
             });
     }
-
+    //handles submit code method that allows user to join of a league join code
     onSubmitCode(e){
         //prevents autoload of page
         e.preventDefault();
@@ -110,7 +110,7 @@ class CreateOrJoinLeague extends Component{
     
         reader.readAsDataURL(file)
     }
-
+    //handles changing of states for join code input
     onCodeChange(e){
         this.setState({
             joinCode: e.target.value

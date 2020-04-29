@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import NavBar from './navbar.component'
+import BasicNavBar from './basic-navbar.component'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 export default class ResetPassword extends Component{
@@ -67,7 +67,7 @@ export default class ResetPassword extends Component{
 
         return(
             <div className="auth-wrapper-form">
-            <NavBar></NavBar>
+            <BasicNavBar></BasicNavBar>
             <div className="auth-inner">
                 <form onSubmit={this.onSubmit}>
                     <h3>Reset Password</h3>

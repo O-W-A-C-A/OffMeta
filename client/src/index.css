@@ -24,7 +24,22 @@ html, .App, #root, .auth-wrapper {
   border: 1px solid #18202F;
   padding: 10px;
   box-shadow: 1px 5px 10px rgb(17, 22, 32);
-  
+}
+.center-navbar {
+  margin-left: 20%;
+  width: 60%;
+  background-color: #18202F;
+  border: 1px solid #18202F;
+  padding: 10px;
+  box-shadow: 1px 5px 10px rgb(17, 22, 32);
+}
+
+.nav-text {
+  color:white !important;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
 }
 
 .navbar-land {
@@ -320,7 +335,7 @@ Homepage Navigation CSS
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
-  width: 25%;
+  width: 33.33%;
   transition: 0.3s;
   color: white;
  
@@ -777,6 +792,50 @@ Inbox CSS
 /*
 Matchup Panel CSS
 */
+
+.my-team-panel{
+
+}
+
+.my-team-edit button{
+  background-color: #283245;
+  color: white;
+  float: left;
+  width: 33.33%;
+  border: none;
+  -webkit-transition: color 0.2s; /* For Safari 3.0 to 6.0 */
+  transition: color 0.2s; /* For modern browsers */
+  padding-bottom: 25px;
+}
+
+.my-team-edit button:hover{
+  color: #1DA1F2;
+}
+
+.my-team-edit:after{
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.my-team-user{
+  display : table-row;
+}
+
+.my-team-user-img{
+  display: table-cell;
+  width: 15%;
+}
+
+.my-team-user-img-2{
+  border-radius: 50px;
+  width: 100%;
+  height: 75px;
+}
+.my-team-username{
+  display: table-cell;
+  width: 85%;
+}
 
 
 /*

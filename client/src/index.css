@@ -19,6 +19,17 @@ html, .App, #root, .auth-wrapper {
   height: 100%;
 }
 
+.bloc {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  border: none;
+}
+
+.bloc select {
+ 
+  margin: -5px -20px -5px -5px;
+}
 .navbar-light {
   background-color: #18202F;
   border: 1px solid #18202F;
@@ -269,7 +280,7 @@ Homepage Navigation CSS
 */
 
 .homePage{
-  margin:  8vh auto; 
+  margin:  9vh auto; 
 }
 
 .home-wrapper{

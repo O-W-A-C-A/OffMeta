@@ -39,7 +39,7 @@ class Profile extends Component{
         this.props.logoutUser();
       };
 
-    componentDidMount(){
+      componentDidMount (){
        axios.get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
             .then((res) => {
                 //console.log(res.data); for testing if data is actually receive

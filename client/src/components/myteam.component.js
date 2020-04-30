@@ -104,7 +104,7 @@ class MyTeam extends Component{
                         Propose a Trade
                     </button>
 
-                    <Modal show={this.state.showModal2}  onClick={() => this.setState({ showModal2:false})}>
+                    <Modal show={this.state.showModal2}  onHide ={() => this.setState({ showModal2:false})}>
                         <Modal.Header>
                            <Modal.Title>Propose a Trade with Another User</Modal.Title>
                         </Modal.Header>

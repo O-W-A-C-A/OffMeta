@@ -1,17 +1,14 @@
 import React, {Component} from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Modal} from 'react-bootstrap'
 import NavBar from './navbar.component'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import {Home, Mail, Add, AccountBox} from '@material-ui/icons'
 //auth
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../actions/authActions";
-
+//default profile img
 import defaultimg from "../public/default-img.png"
 
 class Profile extends Component{
@@ -34,14 +31,7 @@ class Profile extends Component{
         }
     }
 
-    
-
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-      };
-
-    componentDidMount(){
+      componentDidMount (){
        axios.get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
             .then((res) => {
                 //console.log(res.data); for testing if data is actually receive
@@ -176,15 +166,6 @@ class Profile extends Component{
                 <NavBar></NavBar>
                 <div className="home-wrapper">
 
-                <div className="sideBar">
-                <div className="tab-side">
-                        <Link to={"/home"} ><button className="tablinks-side"><Home className="side-icons"/>Home</button></Link>
-                        <Link to={"/create"}><button className="tablinks-side"><Add className="side-icons"/>Leagues</button></Link>
-                        <Link to={"/profile"}><button className="tablinks-side"><AccountBox className="side-icons"/>Profile</button></Link>
-                        <Link to={"/inbox"}><button className="tablinks-side"><Mail className="side-icons"/>Inbox</button></Link>                    
-                    </div>
-                </div>
-
             <div className="profile-wrapper">
             <div className="profile-inner">
                 <div className="profile-fields">
@@ -250,7 +231,6 @@ class Profile extends Component{
                         </div>
                         
                     </div>
-                        <button type="submit" className="logoff" onClick={this.onLogoutClick}>Logoff</button>
                     </form>
 
                     </div>
@@ -260,8 +240,6 @@ class Profile extends Component{
             </div>
         </div>
         
-        <div className="bar"></div>
-        
         </div>
         </div>
         );
@@ -269,7 +247,6 @@ class Profile extends Component{
 }
 
 Profile.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
   
@@ -277,4 +254,4 @@ Profile.propTypes = {
     auth: state.auth
   });
   
-  export default connect(mapStateToProps,{ logoutUser })(Profile);
+  export default connect(mapStateToProps)(Profile);

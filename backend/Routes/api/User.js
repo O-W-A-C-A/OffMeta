@@ -26,6 +26,8 @@ const transporter = nodemailer.createTransport({
 
 // Load User model
 const User = require("../../models/User.model");
+// Load League model
+const League = require("../../models/League.model");
 
 const DIR = './backend/uploads';
 
@@ -176,6 +178,55 @@ router.post("/login", (req, res) => {
 
 });
 
+//user search get request
+router.get('/search', async(req, res) => {
+  const sent = [];
+  const friends = [];
+  const received = [];
+  received = req.user.request;
+  sent = req.user.sentRequest;
+  friends = req.user.friendsList;
+
+  User.find({name: {$ne: req.user.name}}, async(err, result) => {
+    if(err) throw err;
+
+    res.render('search', {
+      result: result,
+      sent: sent,
+      friends: friends,
+      received: received
+    })
+  })
+})
+
+//user search post request
+router.post('/search', async(req, res) => {
+  try{
+    const searchfriend = req.body.searchfriend
+
+    if(searchfriend)
+    {
+      const msg = '';
+      if(searchfriend == req.user.name)
+      {
+        searchfriend = null;
+      }
+      
+      User.find({name: searchfriend}, async(err, res) => {
+        if(err) throw err;
+        res.render('search', {
+          result: result,
+          msg: msg
+        })
+      })
+    }
+  }
+  catch(error)
+  {
+    res.status(400).send(error)
+  }
+})
+
 // @route GET api/users/:id
 // @desc returns user by finding by id
 // @access Public
@@ -291,8 +342,12 @@ router.put("/forgotpassword/", (req, res) =>{
       const token = crypto.randomBytes(20).toString('hex');
 
       user.resetPasswordToken = token;
+
+      //testing expiration
       //console.log(user.resetPasswordToken)
       //console.log(user.resetPasswordExpires)
+
+      //creating email to send user
       user.save()
       const mailOptions = {
         from: 'owacatm@gmail.com',
@@ -363,6 +418,118 @@ router.put("/resetpassword", (req, res) =>{
 
   })
 });
+
+// @route PUT api/users/leaveleague/
+// @desc removes league from user's leaguesJoined object id array and that leagues member
+// object id array
+// @access Public
+router.post("/leaveleague/", (req, res) =>{
+
+  const leagueToLeave = req.body.leagueID;
+  const user = req.body.userID;
+  
+  User.findById(user)
+    .then(user =>{
+        League.findById(leagueToLeave)
+          .then(league => {
+            //if user created league return error
+            if(user.id === league.createdBy){
+              return res.status(409).json({usererror: "League creator cannot leave league"});
+            }
+            //if user is not creator
+            else{
+                //console.log('members before '+league.members)
+                league.members.remove(user.id)
+                //console.log('members after '+league.members)
+                league.save();
+                //console.log('leagues joined before '+user.leaguesJoined)
+                user.leaguesJoined.remove(league.id)
+                //console.log('laegues joined after '+user.leaguesJoined)
+                user.save()
+                .then(() => res.json('League Member Left'))
+                .catch(err => res.status(400).json('Error: ' +err));
+            }
+          })
+    }).catch(err => res.status(400).json('Error: ' +err));
+});
+
+// @route GET api/users/getleagues
+// @desc Retrieve leagues joined by a particular user
+// @access Public
+router.get('/getleagues/:id', (req, res) =>{
+  User.findById(req.params.id)
+  .then(user =>{
+      if(!user){
+          return res.status(404).json({usernotfound: "user not found"});
+      }
+      else{
+          //prints out member IDs to console
+          console.log(user.leaguesJoined)
+          //sends leaguesJoined array commented out is send which app will treat as text/html
+          //res.send(league.members);
+          res.json(user.leaguesJoined)
+      }
+  }).catch(err => res.status(400).json('Error: ' + err));
+});
+
+// @route POST api/users/joinleague
+// @desc Allow's a user to join a league using joinCode, id in param is user id
+// @access Public
+router.post('/joinleague/:id', (req, res) =>{
+  const joinCode = req.body.joinCode;
+  User.findById(req.params.id)
+    .then(user =>{
+      if(!user){
+        return res.status(404).json({usernotfound: "user not found"});
+      }
+      else{
+        League.findOne({joinCode})
+        .then(league =>{
+          //function checks if user id is found in member object id array
+          //returns boolean 
+          var isInArray = league.members.some(function (member){
+            return member.equals(user.id)
+          });
+
+          if(!league){
+            return res.status(404).json({leaguenotfound: "league not found"});
+          }
+          else{
+            //check if user already exists in member list of league
+            if(isInArray){
+              return res.status(409).json({memberexists: "User is already a member of league"});
+            }
+            else{
+              //console.log(league.id)
+              //testing route
+              //res.send('works')
+              league.members.push(user.id);//push user id into members object id array for league
+              league.save()//save information to league
+              .then(() => res.json('New League Member Joined'))
+              .catch(err => res.status(400).json('Error: ' + err));
+              
+              //added league to user's leaguesJoined object id array
+              user.leaguesJoined.push(league.id);
+              user.save()
+            }
+          }
+        })
+      }
+    }).catch(err => res.status(400).json('Error: ' + err));
+});
+
+/* Simplified route used for testing
+router.get('/get/:id', (req, res) =>{
+  const joinCode = req.body.joinCode;
+  User.findById(req.params.id)
+    .then(user =>{
+      League.findOne({joinCode})
+        .then(league =>{
+          res.send(league.id)
+        })
+    })
+});
+*/
 
 //contact page backend
 /*

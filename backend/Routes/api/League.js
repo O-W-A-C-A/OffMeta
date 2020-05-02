@@ -2,11 +2,27 @@ const express = require("express");
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto')
+//load input validation
+const validateInviteInput = require("../../validation/invite");
 
 //Load League Model
 const League = require('../../models/League.model');
 
+//Load User Model
+const User = require('../../models/User.model')
+
 const DIR = './backend/uploads/league-logos';
+
+//Nodemailer transporter
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth:{
+      user: 'owacatm@gmail.com',
+      pass: 'OWACASeniors2020'
+    }
+  });
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -44,20 +60,44 @@ router.get("/", (req,res)=>{
 //@desc Create League
 //@access Public
 router.post("/create", upload.single('logo'), (req,res) => {
+    //creating a unique 6 character code which will allow user's to join a league when creating an account
+    const token = crypto.randomBytes(3).toString('hex');
+
+    //creating newLeague
     let newLeague = new League({
         leagueName: req.body.leagueName,
         leagueSize: Number(req.body.leagueSize),
         scoringFormat: req.body.scoringFormat,
-        createdBy: req.body.createdBy,
-        
-        //boolean values do not require double quotes
-        draftPickTrading: Boolean(req.body.draftPickTrading),
-        logo: req.file
+        createdBy: req.body.createdBy, //user id of creator
+        logo: req.file,//logom
+        joinCode: token,
     });
-    console.log(req.body.draftPickTrading)
-
+    
+    //adding user who created league to list of league members
+    newLeague.members.push(req.body.createdBy)
+    //saving league to database
      newLeague.save()
-     res.send(newLeague);
+        //checking for errors
+        .then(() => res.json(`New League ${req.body.leagueName} Created`))
+        .catch(err => res.status(400).json('Error: ' + err));
+
+     User.findById(req.body.createdBy)
+        .then(user => {
+            //if user does not exist
+            if(!user){
+                return res.status(403).json({idnotfound: "User not found"});
+            }
+            //if user exists
+            else{
+                //adding new league to array of object id of leagues joined
+                user.leaguesJoined.push(newLeague);
+                user.save()
+
+                //below then and catch statements causing errors
+                //.then(() => res.json('User joined a new league'))
+                //.catch(err => res.status(400).json('Error: ' + err));
+            }
+        }).catch(err => res.status(400).json('Error: ' + err));
 });
 
 //@route GET api/leagues/id
@@ -100,13 +140,156 @@ router.post("/update/:id", (req, res) =>{
 // @access Public
 router.get("/leaguelogo/:id", (req,res) =>{
     League.findById(req.params.id)
-  .then (league => {
-    let file = league.file;
-    let fileLocation = path.join(DIR, file);
-    res.sendFile(`${fileLocation}`, {root: '.'})
+    .then (league => {
+        let file = league.file;
+        let fileLocation = path.join(DIR, file);
+        res.sendFile(`${fileLocation}`, {root: '.'})
 })
 .catch(err => res.status(400).json('Error: '+ err));
-}); 
+});
 
+// @route PUT api/leagues/uploadlogo/:id
+// @desc Allow user to update their profile image
+// @access Public
+router.put("/uploadlogo/:id", upload.single('leagueLogo'), (req, res, next) =>{
+    League.findById(req.params.id)
+        .then(league =>{
+            league.file = req.file.filename;
+            console.log(req.file)
+            league.save()
+                .then(() => res.json('League Logo updated'))
+                .catch(err => res.status(400).json('Error: ' + err))
+        })
+})
+
+// @route POST api/leagues/invite
+// @desc Send an invite to league email to user in database
+// @access Public
+router.post("/invite/", (req,res) =>{
+    const {errors, isValid} = validateInviteInput(req.body);
+
+    // Check validation
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
+
+    //these are to be passed into function
+    //league variables should be gathered from props
+    const email = req.body.email;
+     //console.log(email)
+    const leagueId = req.body.id;
+    //console.log(leagueId)
+    const leagueName = req.body.leagueName;
+
+    //attempting to find user in database
+    User.findOne({email}).then(user =>{
+        //if user does not exist
+        if(!user){
+            return res.status(403).json({emailnotfound: "User not found"});
+        }
+        //if they exist
+        else{
+            //check if league exists
+            League.findById(req.body.id)
+                .then(league => {
+                    //function checks if user id is found in member object id array
+                    //returns boolean 
+                    var isInArray = league.members.some(function (member){
+                        return member.equals(user.id)
+                    });
+
+                    //if it doesnt
+                    if(!league){
+                        return res.status(409).json({leaguenotfound: "League not found"});
+                    }
+                    //if league does exists
+                    else{
+                        //check if user already exists in member list of league
+                        if(isInArray){
+                            //console.log('user already exists')
+                            return res.status(409).json({memberexists: "User is already a member of league"});
+                        }
+                        //user id not found in members list send new member invite
+                        else{
+                            //creating email to send user
+                            const mailOptions = {
+                                from: 'owacatm@gmail.com',
+                                to: user.email,
+                                subject: `OffMeta you have been invited to join ${leagueName}`,
+                                text: `To join ${leagueName} click on the following link: \n\n`
+                                + `http://localhost:3000/acceptinvite/${leagueId}\n\n`
+                                + 'Please ignore if you dont want to accept.'
+                            }
+
+                            //sending email
+                            transporter.sendMail(mailOptions, function(err, info){
+                                if(err){//print error
+                                    console.log(err)
+                                }
+                                else{//if successful
+                                    console.log('League Invite Sent' + info.response);
+                                    res.status(200).json('league invitation sent');
+                                }
+                            });
+                        }
+                    }
+                })
+        }
+    }).catch(err => res.status(400).json('Error: '+ err));
+
+});
+
+// @route PUT api/leagues/invite
+// @desc After accepting invitation add user to league member lists
+// @access Public
+router.put('/acceptinvite', (req, res) =>{
+    const {errors, isValid} = validateInviteInput(req.body);
+
+    // Check validation
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
+
+    const email = req.body.email;
+
+    User.findOne({email}).then(user =>{
+        //already checked user when sending invitation this is another check just in case
+        if(!user){
+            return res.status(404).json({emailnotfound: "Email not found"});
+        }
+        else{
+            //console.log(user.id); //testing if user id is received from searching by email
+            League.findById(req.body.id).then(league =>{
+                league.members.push(user.id);//push user id into members object id array for league
+                league.save()//save information to league
+                .then(() => res.json('New League Member Joined'))
+                .catch(err => res.status(400).json('Error: ' + err));
+            });
+            
+            //added league to user's leaguesJoined object id array
+            user.leaguesJoined.push(req.body.id);
+            user.save()
+        }
+    }).catch(err => res.status(400).json('Error: ' + err));
+});
+
+// @route GET api/leagues/getmembers
+// @desc Retrieve the list of members a part of a league
+// @access Public
+router.get('/getmembers/:id', (req, res) =>{
+    League.findById(req.params.id)
+        .then(league =>{
+            if(!league){
+                return res.status(404).json({leaguenotfound: "league not found"});
+            }
+            else{
+                //prints out member IDs to console
+                console.log(league.members)
+                //sends members array commented out is send which app will treat as text/html
+                //res.send(league.members);
+                res.json(league.members)
+            }
+        }).catch(err => res.status(400).json('Error: ' + err));
+});
 
 module.exports = router;

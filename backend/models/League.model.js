@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
+//League Schema
 const LeagueSchema= new Schema({
     leagueName:{
         type: String,
@@ -17,18 +17,22 @@ const LeagueSchema= new Schema({
         type: String,
         required:true,
         trim:true,
-        minlength: 3
     },
     logo:{
         type:Object
     },
-    draftPickTrading:{
-        type: Boolean,
-        default: false
-    },
+    //invite user to league start
     createdBy:{
         type:String
-    }
+    },
+   
+    members: [{
+        type: mongoose.Types.ObjectId,
+        ref: "User"
+    }],
+    joinCode:{
+        type: String
+    },
 },
 {
     timestamps:true,

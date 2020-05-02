@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import NavBar from './navbar.component'
+import BasicNavBar from './basic-navbar.component'
 import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
@@ -48,7 +48,7 @@ class ForgotPassword extends Component{
         const { errors } = this.state;
         return(
             <div className="auth-wrapper-form">
-            <NavBar></NavBar>
+            <BasicNavBar></BasicNavBar>
             <div className="auth-inner">
                 <form onSubmit={this.onSubmit}>
                     <h3>Forgot Password</h3>

@@ -16,8 +16,9 @@ import ForgotPassword from './components/forgotpassword.component';
 import ResetPassword from './components/resetpassword.component';
 import Profile from './components/profile.component';
 import CreateLeague from './components/create-league.component';
-import Inbox from './components/inbox.component';
 import Verify from './components/verify.component';
+import Invite from './components/accept-invite.component';
+import CreateOrJoinLeague from './components/create-or-joinleague.component';
 
 import store from "./store"
 
@@ -46,17 +47,18 @@ class App extends Component{
   return (
     <Provider store={store}>
       <Router>
-        <div className="App">
-          <Route exact path="/" component={Landing} />
-          <Route path="/login" component={Login} />
-          <Route path="/forgotpassword" component={ForgotPassword}/>
-          <Route path="/reset/:token" component={ResetPassword}/>
+        <div className = "App">
+          <Route exact path = "/" component = {Landing} />
+          <Route path = "/login" component = {Login} />
+          <Route path = "/forgotpassword" component = {ForgotPassword}/>
+          <Route path = "/reset/:token" component = {ResetPassword}/>
+          <Route path = "/acceptinvite/:token" component = {Invite}/>
           <Switch>
-            <PrivateRoute exact path="/home" component={HomePage}/>
-            <PrivateRoute exact path="/profile" component={Profile} />
-            <PrivateRoute exact path ="/create" component={CreateLeague}/>
-            <PrivateRoute exact path ="/inbox" component={Inbox}/>
-            <PrivateRoute exact path ="/verify" component={Verify}/>
+            <PrivateRoute exact path = "/home" component = {HomePage}/>
+            <PrivateRoute exact path = "/profile" component = {Profile} />
+            <PrivateRoute exact path = "/create" component = {CreateLeague}/>
+            <PrivateRoute exact path = "/verify" component = {Verify}/>
+            <PrivateRoute exact path = "/getstarted" component = {CreateOrJoinLeague} />
           </Switch>
         </div>
       </Router>

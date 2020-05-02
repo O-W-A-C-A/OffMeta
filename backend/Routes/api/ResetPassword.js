@@ -3,6 +3,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/User.model");
 const auth = require("../../middleware/auth")
+
+// @route GET api/reset/
+// @desc Checks if reset password link is valid
+// @access Public
 router.get('/', (req, res) =>{ 
     const token = req.query.resetPasswordToken;
     console.log(req.query.resetPasswordToken)

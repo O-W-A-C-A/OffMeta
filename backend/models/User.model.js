@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//Create Schema
+//User Schema
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -30,6 +30,10 @@ const UserSchema = new Schema({
         type: String,
         default: 'none'
     },
+    leaguesJoined: [{
+        type: mongoose.Types.ObjectId,
+        ref: "League"
+    }],
 },
 {
     collection: 'users'

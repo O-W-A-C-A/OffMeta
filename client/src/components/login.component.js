@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import NavBar from './navbar.component'
+import BasicNavBar from './basic-navbar.component'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
@@ -79,7 +79,7 @@ class Login extends Component {
         const { errors } = this.state;
         return (
             <div className="auth-wrapper-form">
-                <NavBar></NavBar>
+                <BasicNavBar></BasicNavBar>
                 <div className="auth-inner">
                     <form noValidate onSubmit={this.onSubmit}>
                         <h3>Login</h3>

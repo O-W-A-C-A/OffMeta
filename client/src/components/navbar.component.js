@@ -43,8 +43,6 @@ class NavBarHome extends Component{
 
     render(){
         let leaguesJoined = this.state.leaguesJoinedArray
-        let optionItems = leaguesJoined.map((league) =>
-            <option key={league}>{league}</option>);
         return(
             <Navbar bg="#18202F" fixed="top" variant="dark" className="center-navbar">
             <Navbar.Brand as={Link} to='/' style={{color: '#fff'}}>OffMeta</Navbar.Brand>
@@ -56,13 +54,13 @@ class NavBarHome extends Component{
                     <NavDropdown.Item as={Link} to='/create'>Create New League</NavDropdown.Item>
                     <NavDropdown.Divider />
                    
-                    <NavDropdown.Item >
-                    <div className="bloc">
-                        <select size={this.state.length}>
-                            {optionItems}
-                        </select>
-                        </div>
-                    </NavDropdown.Item>
+                    {/*Dynamically display leagues joined into bootstrap dropdown item*/}
+                    {leaguesJoined.map(leagues =>(
+                                            <NavDropdown.Item >
+                                            {leagues}
+                                        </NavDropdown.Item>
+                    ))}
+
                 </NavDropdown>
 
                 <NavDropdown title="Profile" id="basic-nav-dropdown">

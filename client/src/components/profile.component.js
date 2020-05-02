@@ -8,8 +8,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 //auth
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../actions/authActions";
-
+//default profile img
 import defaultimg from "../public/default-img.png"
 
 class Profile extends Component{
@@ -31,13 +30,6 @@ class Profile extends Component{
             imagePreviewUrl: ''
         }
     }
-
-    
-
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-      };
 
       componentDidMount (){
        axios.get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
@@ -239,7 +231,6 @@ class Profile extends Component{
                         </div>
                         
                     </div>
-                        <button type="submit" className="logoff" onClick={this.onLogoutClick}>Logoff</button>
                     </form>
 
                     </div>
@@ -256,7 +247,6 @@ class Profile extends Component{
 }
 
 Profile.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
   
@@ -264,4 +254,4 @@ Profile.propTypes = {
     auth: state.auth
   });
   
-  export default connect(mapStateToProps,{ logoutUser })(Profile);
+  export default connect(mapStateToProps)(Profile);

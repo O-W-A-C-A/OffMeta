@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import {Home, Mail, Add, AccountBox} from '@material-ui/icons'
 //components
 import NavBar from './navbar.component';
 import defaultimg from "../public/upload.png"
@@ -130,21 +129,12 @@ class CreateOrJoinLeague extends Component{
         }
 
         return(
-            <div className="homePage">
+            <div className="homePage-getstarted">
                  <NavBar></NavBar>
-                <div className="home-wrapper">
-               
-                <div className="sideBar">
-                    <div className="tab-side">
-                        <Link to={"/home"} ><button className="tablinks-side"><Home className="side-icons"/>Home</button></Link>
-                        <Link to={"/create"}><button className="tablinks-side"><Add className="side-icons"/>Leagues</button></Link>
-                        <Link to={"/profile"}><button className="tablinks-side"><AccountBox className="side-icons"/>Profile</button></Link>
-                        <Link to={"/inbox"}><button className="tablinks-side"><Mail className="side-icons"/>Inbox</button></Link>                    
-                    </div>
-                </div>
+                <div className="home-wrapper-getstarted">
                 
-                    <div className="clWrapper">
-                       <div className="clContent"><h3>Create a new league</h3>
+                    <div className="clWrapper-Or">
+                       <div className="clContent-Or"><h3>Create a new league</h3>
                         <p>Don't worry you will be able to make changes later</p>
                         <form  onSubmit={this.onSubmit}>
                         <div className="league-name">
@@ -193,22 +183,25 @@ class CreateOrJoinLeague extends Component{
                         <button type="submit" className="btn-createLeague">Get Started</button>
                     </div>
                     </form>
-                    <br></br>
-                    <h3 className = "mid-or">OR</h3>
-                    <form onSubmit={this.onSubmitCode}>
-                    <h3 className = "mid">Join a League by Entering Invite Code</h3>
-                        <div className="codeWrapper">
-                            <label>League Code</label>
-                            <div>
-                                <input className="join-code" type="text" onChange = {this.onCodeChange} placeholder="Enter League Code"/>
-                            </div>
-                        </div>
-                        <button type="submit" className="btn-joinleague">Join League</button>
-                    </form>
                     </div>
                 </div>
-                <div className="bar">
+                <div className="mid-div">
+                    <h4 className = "mid-or">OR</h4>
+                </div>
+                <div className="cl-or-join-wrapper">
 
+                        <form onSubmit={this.onSubmitCode}>
+                        <h3 className = "mid">Join a League</h3>
+                        <p>Just Enter a League Invitation Code</p>
+                            <div className="codeWrapper">
+                                <label>League Code</label>
+                                <div>
+                                    <input className="join-code" type="text" onChange = {this.onCodeChange} placeholder="Enter League Code"/>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" className="btn-joinleague">Join League</button>
+                        </form>
                 </div>
                 </div>
                 

@@ -503,13 +503,13 @@ router.post('/joinleague/:id', (req, res) =>{
               //console.log(league.id)
               //testing route
               //res.send('works')
-              league.members.push(user.id);//push user id into members object id array for league
+              league.members.push(user);//push user id into members object id array for league
               league.save()//save information to league
               .then(() => res.json('New League Member Joined'))
               .catch(err => res.status(400).json('Error: ' + err));
               
               //added league to user's leaguesJoined object id array
-              user.leaguesJoined.push(league.id);
+              user.leaguesJoined.push(league);
               user.save()
             }
           }
@@ -517,19 +517,6 @@ router.post('/joinleague/:id', (req, res) =>{
       }
     }).catch(err => res.status(400).json('Error: ' + err));
 });
-
-/* Simplified route used for testing
-router.get('/get/:id', (req, res) =>{
-  const joinCode = req.body.joinCode;
-  User.findById(req.params.id)
-    .then(user =>{
-      League.findOne({joinCode})
-        .then(league =>{
-          res.send(league.id)
-        })
-    })
-});
-*/
 
 //contact page backend
 /*

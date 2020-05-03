@@ -9,10 +9,10 @@ class ChatApp extends Component{
     constructor(){
         super();
         this.state={
-            message:"",
+            message:'',
             chat:[],
-            name:"",
-            leagueID: "10",//testing
+            name:'',
+            leagueID: '',//testing
         }
     }
 

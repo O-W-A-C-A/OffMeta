@@ -72,14 +72,6 @@ router.post("/create", upload.single('logo'), (req,res) => {
         logo: req.file,//logom
         joinCode: token,
     });
-    
-    //adding user who created league to list of league members
-    newLeague.members.push(req.body.createdBy)
-    //saving league to database
-     newLeague.save()
-        //checking for errors
-        .then(() => res.json(`New League ${req.body.leagueName} Created`))
-        .catch(err => res.status(400).json('Error: ' + err));
 
      User.findById(req.body.createdBy)
         .then(user => {
@@ -92,6 +84,15 @@ router.post("/create", upload.single('logo'), (req,res) => {
                 //adding new league to array of object id of leagues joined
                 user.leaguesJoined.push(newLeague);
                 user.save()
+
+
+                //adding user who created league to list of league members
+                newLeague.members.push(user)
+                //saving league to database
+                newLeague.save()
+                //checking for errors
+                .then(() => res.json(`New League ${req.body.leagueName} Created`))
+                .catch(err => res.status(400).json('Error: ' + err));
 
                 //below then and catch statements causing errors
                 //.then(() => res.json('User joined a new league'))
@@ -194,8 +195,8 @@ router.post("/invite/", (req,res) =>{
                 .then(league => {
                     //function checks if user id is found in member object id array
                     //returns boolean 
-                    var isInArray = league.members.some(function (member){
-                        return member.equals(user.id)
+                    var isInArray = league.members.id.some(function (member){
+                        return member.id.equals(user.id)
                     });
 
                     //if it doesnt
@@ -260,15 +261,17 @@ router.put('/acceptinvite', (req, res) =>{
         else{
             //console.log(user.id); //testing if user id is received from searching by email
             League.findById(req.body.id).then(league =>{
-                league.members.push(user.id);//push user id into members object id array for league
+                league.members.push(user);//push user id into members object id array for league
                 league.save()//save information to league
+
+                //added league to user's leaguesJoined object id array
+                user.leaguesJoined.push(league);
+                user.save()
+                
                 .then(() => res.json('New League Member Joined'))
                 .catch(err => res.status(400).json('Error: ' + err));
             });
-            
-            //added league to user's leaguesJoined object id array
-            user.leaguesJoined.push(req.body.id);
-            user.save()
+    
         }
     }).catch(err => res.status(400).json('Error: ' + err));
 });

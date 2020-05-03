@@ -25,11 +25,8 @@ const LeagueSchema= new Schema({
     createdBy:{
         type:String
     },
-   
-    members: [{
-        type: mongoose.Types.ObjectId,
-        ref: "User"
-    }],
+    //saving user info league schema
+    members: [mongoose.Schema.Types.Mixed],
     joinCode:{
         type: String
     },

@@ -30,9 +30,10 @@ const UserSchema = new Schema({
         type: String,
         default: 'none'
     },
+    //only want to store id and league name in user model
     leaguesJoined: [{
-        type: mongoose.Types.ObjectId,
-        ref: "League"
+        id: {type: mongoose.Types.ObjectId},
+        leagueName: {type: String, trim: true}
     }],
 },
 {

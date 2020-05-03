@@ -485,12 +485,6 @@ router.post('/joinleague/:id', (req, res) =>{
       else{
         League.findOne({joinCode})
         .then(league =>{
-          //function checks if user id is found in member object id array
-          //returns boolean 
-          var isInArray = league.members.some(function (member){
-            return member.equals(user.id)
-          });
-
           if(!league){
             return res.status(404).json({leaguenotfound: "league not found"});
           }

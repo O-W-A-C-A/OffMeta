@@ -28,7 +28,7 @@ class CreateLeague extends Component{
             logo: defaultimg,
             imagePreviewUrl: '',
             createdBy:'',
-            playerdatabase:[]
+            playerdatabase:''
         };
     }
     componentDidMount(){
@@ -55,7 +55,7 @@ class CreateLeague extends Component{
         axios.post('http://localhost:5000/api/leagues/create', league)
             .then(res => {
                 console.log(res.data)
-               // window.location = '/home' //after submission brings user to the home page
+                window.location = '/home' //after submission brings user to the home page
             });
     }
     //handles the state for when user enters a league name
@@ -106,11 +106,9 @@ class CreateLeague extends Component{
         axios
           .get('https://api.overwatchleague.com/stats/players')
           .then((res) => {
-            for (let i = 0; i < res.data.data.length - 1; i++) {
-              qb.push(JSON.stringify(res.data.data[i]));
-            }
-            console.log(qb);
-            //console.log(qb[138].name);
+            qb.push(JSON.stringify(res.data.data))
+        
+            //console.log(qb); testing
           })
           .catch((error) => {
             console.log(error);

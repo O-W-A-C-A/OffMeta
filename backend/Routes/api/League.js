@@ -62,7 +62,7 @@ router.get("/", (req,res)=>{
 router.post("/create", upload.single('logo'), (req,res) => {
     //creating a unique 6 character code which will allow user's to join a league when creating an account
     const token = crypto.randomBytes(3).toString('hex');
-
+    
     //creating newLeague
     let newLeague = new League({
         leagueName: req.body.leagueName,
@@ -72,11 +72,16 @@ router.post("/create", upload.single('logo'), (req,res) => {
         logo: req.file,//logom
         joinCode: token,
         createdBy: req.body.createdBy,
-        playerdatabase:req.body.playerdatabase,
-        
         //boolean values do not require double quotes
         draftPickTrading: Boolean(req.body.draftPickTrading),
         logo: req.file
+    });
+    //parse data in array to separate them into separate objects
+    data = JSON.parse(req.body.playerdatabase)
+    //loop through each element and push to league
+    data.forEach(function(element){
+        //console.log(element)
+        newLeague.playerdatabase.push(element)
     });
 
      User.findById(req.body.createdBy)

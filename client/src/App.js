@@ -19,6 +19,7 @@ import CreateLeague from './components/create-league.component';
 import Verify from './components/verify.component';
 import Invite from './components/accept-invite.component';
 import CreateOrJoinLeague from './components/create-or-joinleague.component';
+import addPlayer from './components/addPlayer.component';
 
 import store from "./store"
 
@@ -47,12 +48,12 @@ class App extends Component{
   return (
     <Provider store={store}>
       <Router>
-        <div className = "App">
-          <Route exact path = "/" component = {Landing} />
-          <Route path = "/login" component = {Login} />
-          <Route path = "/forgotpassword" component = {ForgotPassword}/>
-          <Route path = "/reset/:token" component = {ResetPassword}/>
-          <Route path = "/acceptinvite/:token" component = {Invite}/>
+        <div className="App">
+          <Route exact path="/" component={Landing} />
+          <Route path="/login" component={Login} />
+          <Route path="/forgotpassword" component={ForgotPassword}/>
+          <Route path="/reset/:token" component={ResetPassword}/>
+          <Route path="/addPlayer" component={addPlayer}/>
           <Switch>
             <PrivateRoute exact path = "/home" component = {HomePage}/>
             <PrivateRoute exact path = "/profile" component = {Profile} />

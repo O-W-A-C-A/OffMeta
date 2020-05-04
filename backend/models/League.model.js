@@ -22,6 +22,11 @@ const LeagueSchema= new Schema({
         type:Object
     },
     //invite user to league start
+    draftPickTrading:{
+        type: Boolean,
+        default: false
+    },
+    playerdatabase:[mongoose.Schema.Types.Mixed],
     createdBy:{
         type:String
     },

@@ -71,6 +71,12 @@ router.post("/create", upload.single('logo'), (req,res) => {
         createdBy: req.body.createdBy, //user id of creator
         logo: req.file,//logom
         joinCode: token,
+        createdBy: req.body.createdBy,
+        playerdatabase:req.body.playerdatabase,
+        
+        //boolean values do not require double quotes
+        draftPickTrading: Boolean(req.body.draftPickTrading),
+        logo: req.file
     });
 
      User.findById(req.body.createdBy)
@@ -294,5 +300,17 @@ router.get('/getmembers/:id', (req, res) =>{
             }
         }).catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.get('/getplayers/:id', (req, res)=>{
+    League.findById(req.params.id)
+    .then(league=>{
+        if(!league){
+            return res.status(404).json({leaguenotfound: "league not found"});
+        }
+        else{
+            res.send(league.playerdatabase[0].qb[0])
+        }
+    })
+})
 
 module.exports = router;

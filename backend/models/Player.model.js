@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const playerSchema = new Schema({
-    Alias:{
+    id:{
         type: String,
         required:true,
         trim:true,
@@ -15,27 +15,7 @@ const playerSchema = new Schema({
         trim:true,
         minlength: 3
     },
-    Dmgdone:{
-        type: Number,
-        required:true,
-    },
-    elim:{
-        type: Number,
-        required:true,
-    },
-    Objkills:{
-        type: Number,
-        required:true
-    },
-    Assists:{
-        type: Number,
-        required:true
-    },
-    Healed:{
-        type: Number,
-        required:true
-    },
-    Role:{
+    leagueNum:{
         type: String,
         required:true,
         trim: true,

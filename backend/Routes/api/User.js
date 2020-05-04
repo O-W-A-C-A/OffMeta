@@ -464,7 +464,7 @@ router.get('/getleagues/:id', (req, res) =>{
       }
       else{
           //prints out member IDs to console
-          console.log(user.leaguesJoined)
+          //console.log(user.leaguesJoined)
           //sends leaguesJoined array commented out is send which app will treat as text/html
           //res.send(league.members);
           res.json(user.leaguesJoined)

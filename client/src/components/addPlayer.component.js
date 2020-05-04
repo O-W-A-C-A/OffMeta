@@ -1,20 +1,8 @@
 import React, {Component} from "react";
-import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Modal} from 'react-bootstrap'
-import NavBar from './navbar.component'
-import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import {Home, Mail, Add, AccountBox} from '@material-ui/icons'
-//auth
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "../actions/authActions";
-
-import defaultimg from "../public/default-img.png"
 import axios from 'axios'
-import { Input } from "@material-ui/core";
-
+import defaultimg from "../public/default-img.png"
 
 export default class addplayer extends Component {
     constructor(){
@@ -86,7 +74,7 @@ changeNameState(e){
              />
              <img src ={
                  this.state.imageurl
-             }/>
+             } alt={defaultimg}/>
         </div>
       );
   }

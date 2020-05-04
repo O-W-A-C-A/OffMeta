@@ -72,8 +72,6 @@ router.post("/create", upload.single('logo'), (req,res) => {
         logo: req.file,//logom
         joinCode: token,
         createdBy: req.body.createdBy,
-        //boolean values do not require double quotes
-        draftPickTrading: Boolean(req.body.draftPickTrading),
         logo: req.file
     });
     //parse data in array to separate them into separate objects

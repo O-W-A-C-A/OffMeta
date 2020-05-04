@@ -54,6 +54,7 @@ class App extends Component{
           <Route path="/forgotpassword" component={ForgotPassword}/>
           <Route path="/reset/:token" component={ResetPassword}/>
           <Route path="/addPlayer" component={addPlayer}/>
+          <Route path="/acceptinvite/:token" component={Invite}/>
           <Switch>
             <PrivateRoute exact path = "/home" component = {HomePage}/>
             <PrivateRoute exact path = "/profile" component = {Profile} />

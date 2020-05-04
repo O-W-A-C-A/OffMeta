@@ -22,7 +22,6 @@ class CreateLeague extends Component{
         //setting default state of all variables
         this.state = {
             leagueName:'',
-            draftPickTrading: '',
             scoringFormat: 'STD',
             leagueSize: 4,
             logo: defaultimg,

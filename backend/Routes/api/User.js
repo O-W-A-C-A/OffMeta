@@ -485,12 +485,6 @@ router.post('/joinleague/:id', (req, res) =>{
       else{
         League.findOne({joinCode})
         .then(league =>{
-          //function checks if user id is found in member object id array
-          //returns boolean 
-          var isInArray = league.members.some(function (member){
-            return member.equals(user.id)
-          });
-
           if(!league){
             return res.status(404).json({leaguenotfound: "league not found"});
           }
@@ -500,6 +494,11 @@ router.post('/joinleague/:id', (req, res) =>{
               return res.status(409).json({memberexists: "User is already a member of league"});
             }
             else{
+              //function checks if user id is found in member object id array
+              //returns boolean 
+              var isInArray = league.members.some(function (member){
+                return member.equals(user.id)
+              });
               //console.log(league.id)
               //testing route
               //res.send('works')

@@ -199,18 +199,19 @@ router.post("/invite/", (req,res) =>{
             //check if league exists
             League.findById(req.body.id)
                 .then(league => {
-                    //function checks if user id is found in member object id array
-                    //returns boolean 
-                    var isInArray = league.members.id.some(function (member){
-                        return member.id.equals(user.id)
-                    });
-
                     //if it doesnt
                     if(!league){
                         return res.status(409).json({leaguenotfound: "League not found"});
                     }
                     //if league does exists
                     else{
+                        //function checks if user id is found in member object id array
+                        //returns boolean 
+                        var isInArray = league.members.some(member =>{
+                            return member.equals(user.id)
+                        });
+                        
+                        
                         //check if user already exists in member list of league
                         if(isInArray){
                             //console.log('user already exists')

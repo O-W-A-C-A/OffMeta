@@ -52,7 +52,7 @@ class NavBarHome extends Component{
                    
                     {/*Dynamically display leagues joined into bootstrap dropdown item*/}
                     {leaguesJoined.map(leagues =>(
-                                            <NavDropdown.Item >
+                                            <NavDropdown.Item key={leagues} >
                                             {leagues.leagueName}
                                         </NavDropdown.Item>
                     ))}

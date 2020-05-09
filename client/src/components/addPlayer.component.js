@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 //auth
 import axios from 'axios';
-
+import defaultimg from "../public/default-img.png"
 export default class addplayer extends Component {
   constructor() {
     super();

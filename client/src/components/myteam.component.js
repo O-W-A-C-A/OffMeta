@@ -3,7 +3,7 @@ import { PersonAdd, SwapHorizontalCircle, Delete } from '@material-ui/icons';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import AddPlayer from './addPlayer.component.js';
+import AddPlayer from './addplayer.component.js';
 
 //auth
 import PropTypes from 'prop-types';

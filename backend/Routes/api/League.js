@@ -398,4 +398,26 @@ router.post("/dropplayer/:id", (req,res)=> {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//@route GET api/leagues/getuserteam/:id
+//@desc gets the players for a specific user
+//@access Public
+router.get("/getuserteam/:id", (req, res) =>{
+    League.findById(req.params.id)
+        .then(league =>{
+            if(!league){
+                return res.status(404).json({leaguenotfound: "league not found"});
+            }
+            else{
+                League.aggregate([
+                    { $unwind: '$leaguePlayers'}, //unwide leaguePlayers array
+                    { $match: {'leaguePlayers.ownerID': req.body.ownerID}},//find subdocuments that match ownerID
+                    { $group: {_id: '$_id', leaguePlayers: {$push: '$leaguePlayers'}}}//group them by league ID and push leaguePlayer objects in array
+                ])
+                    .then(function(players){
+                        return res.status(200).json(players)
+                    })
+            }
+        })
+})
+
 module.exports = router;

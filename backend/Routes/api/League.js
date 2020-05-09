@@ -331,7 +331,7 @@ router.get('/getplayers/:id', (req, res) => {
     }
   });
 });
-// @route POST api/leagues/addplayers/:id
+// @route POST api/leagues/addplayer/:id
 // @desc Adds players information and ownership of user to league database
 // @access Public
 router.post('/addplayer/:id', (req, res) => {

@@ -3,23 +3,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const playerSchema = new Schema({
-    id:{
+    playerID:{
         type: String,
         required:true,
-        trim:true,
-        minlength: 3
     },
-    name:{
+    playerName:{
         type: String,
         required:true,
-        trim:true,
-        minlength: 3
     },
-    leagueNum:{
+    playerImg:{
         type: String,
         required:true,
-        trim: true,
-        minlength:3
+    },
+    ownerID:{
+        type: String,
+        required:true,
     },
 },
     {

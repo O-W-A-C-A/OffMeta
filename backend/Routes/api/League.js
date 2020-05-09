@@ -14,9 +14,6 @@ const League = require('../../models/League.model');
 //Load User Model
 const User = require('../../models/User.model')
 
-//Load Player Model
-const Player = require('../../models/Player.model')
-
 const DIR = './backend/uploads/league-logos';
 
 //Nodemailer transporter
@@ -73,12 +70,13 @@ router.post("/create", upload.single('logo'), (req,res) => {
         leagueSize: Number(req.body.leagueSize),
         scoringFormat: req.body.scoringFormat,
         createdBy: req.body.createdBy, //user id of creator
-        logo: req.file,//logom
+        logo: req.file,//logo
         joinCode: token,
         createdBy: req.body.createdBy,
         //boolean values do not require double quotes
         draftPickTrading: Boolean(req.body.draftPickTrading),
-        logo: req.file
+        logo: req.file,
+        leaguePlayers: []//by default create empty array
     });
     //parse data in array to separate them into separate objects
     data = JSON.parse(req.body.playerdatabase)
@@ -328,21 +326,28 @@ router.get('/getplayers/:id', (req, res)=>{
 // @route POST api/leagues/addplayers/:id
 // @desc Adds players information and ownership of user to league database
 // @access Public
-router.post('/addplayers/:id', (req, res)=>{
+router.post('/addplayer/:id', (req, res)=>{
     League.findById(req.params.id)
     .then(league=>{
         if(!league){
             return res.status(404).json({leaguenotfound: "league not found"});
         }
         else{
-            let addPlayer = new Player({
-                playerID : req.body.playerID, //this is the playerID
-                playerImg: req.body.playerImg, //This is the player headshot
-                playerName: req.body.playerName,
-                ownerID: req.body.ownerID//This is the user Id
-            })
-            league.leaguePlayers.push(addPlayer)
-            league.save()
+            League.updateOne(
+                { _id: req.params.id },
+                {
+                    $push:
+                        {
+                            "leaguePlayers": {
+                                "playerID": req.body.playerID,
+                                "playerName": req.body.playerName,
+                                "playerImg": req.body.playerImg,
+                                "teamName": req.body.teamName,
+                                "ownerID": req.body.ownerID
+                            }
+                        }
+                }
+            )
             .then(() => res.json('User added new Player'))
             .catch(err => res.status(400).json('Error: ' + err));
         }
@@ -352,7 +357,7 @@ router.post('/addplayers/:id', (req, res)=>{
 // @route GET api/leagues/getLeaguePlayers/:id
 // @desc Retrienves info from leaguePlayers ID from a specific league
 // @access Public
-router.get('/getLeaguePlayers/:id', (req,res)=>{
+router.get('/getleagueplayers/:id', (req,res)=>{
     League.findById(req.params.id)
     .then(league=>{
         if(!league){
@@ -367,32 +372,27 @@ router.get('/getLeaguePlayers/:id', (req,res)=>{
 //@route POST api/leagues/dropPlayer/:id
 //@desc Drop player form leaguePlayers array
 //@access Public
-router.put("/dropPlayer/:id", (req,res)=> {
+router.post("/dropplayer/:id", (req,res)=> {
     League.findById(req.params.id)
     .then(league => {
         if(!league){
             return res.status(404).json({leaguenotfound: "league not found"});
         }
         else{
-            var isInArray = league.leaguePlayers.some(player => {
-                return player.playerID === req.body.playerID
-            })
-                if(!isInArray)
-                {
-                    return res.status(404).json({leaguePlayernotfound:" league player not found "})
-                }
-                else{
-                    league.update({
-                        _id:req.params.id},{
-                            $pull:{
-                                leaguePlayers:{
-                                playerID: req.body.playerID                               }
-                            }
-                        })
-                    league.save()
-                    .then(() => res.json('User dropped player'))
-                .catch(err => res.status(400).json('Error: ' +err));
-                }
+
+                    League.updateOne(
+                        { _id: req.params.id },
+                        {
+                            $pull:
+                                {
+                                    "leaguePlayers": {
+                                        "playerID": req.body.playerID
+                                    }
+                                }
+                        }
+                    )
+                    .then(() => res.json('User dropped new Player'))
+                    .catch(err => res.status(400).json('Error: ' + err));   
         }
     })
     .catch(err => res.status(400).json('Error: ' + err));

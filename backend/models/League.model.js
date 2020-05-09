@@ -30,7 +30,13 @@ const LeagueSchema= new Schema({
     createdBy:{
         type:String
     },
-    leaguePlayers:[mongoose.Schema.Types.Mixed],
+    leaguePlayers:{
+        playerID: {type: String, trim: true},
+        playerName: {type: String, trim: true},
+        playerImg:{type: String, trim: true},
+        ownerID:{type: String, trim: true},
+        teamName:{type: String, trim: true},
+    },
     createdBy:{
         type:String
     },

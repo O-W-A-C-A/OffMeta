@@ -30,6 +30,10 @@ const LeagueSchema= new Schema({
     createdBy:{
         type:String
     },
+    leaguePlayers:[mongoose.Schema.Types.Mixed],
+    createdBy:{
+        type:String
+    },
     //saving user info league schema
     members: [{
         id: {type: mongoose.Types.ObjectId},

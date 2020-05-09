@@ -87,6 +87,7 @@ changeNameState(e){
              <img src ={
                  this.state.imageurl
              }/>
+             <button type = "submit"> submit</button>
         </div>
       );
   }

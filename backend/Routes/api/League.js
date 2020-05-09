@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require("express");
 const router = express.Router();
 const multer = require('multer');
@@ -12,6 +13,9 @@ const League = require('../../models/League.model');
 
 //Load User Model
 const User = require('../../models/User.model')
+
+//Load Player Model
+const Player = require('../../models/Player.model')
 
 const DIR = './backend/uploads/league-logos';
 
@@ -307,6 +311,9 @@ router.get('/getmembers/:id', (req, res) =>{
         }).catch(err => res.status(400).json('Error: ' + err));
 });
 
+// @route GET api/leagues/getplayers/:id
+// @desc Retrieve all players from api from a league
+// @access Public
 router.get('/getplayers/:id', (req, res)=>{
     League.findById(req.params.id)
     .then(league=>{
@@ -318,5 +325,77 @@ router.get('/getplayers/:id', (req, res)=>{
         }
     })
 })
+// @route POST api/leagues/addplayers/:id
+// @desc Adds players information and ownership of user to league database
+// @access Public
+router.post('/addplayers/:id', (req, res)=>{
+    League.findById(req.params.id)
+    .then(league=>{
+        if(!league){
+            return res.status(404).json({leaguenotfound: "league not found"});
+        }
+        else{
+            let addPlayer = new Player({
+                playerID : req.body.playerID, //this is the playerID
+                playerImg: req.body.playerImg, //This is the player headshot
+                playerName: req.body.playerName,
+                ownerID: req.body.ownerID//This is the user Id
+            })
+            league.leaguePlayers.push(addPlayer)
+            league.save()
+            .then(() => res.json('User added new Player'))
+            .catch(err => res.status(400).json('Error: ' + err));
+        }
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+// @route GET api/leagues/getLeaguePlayers/:id
+// @desc Retrienves info from leaguePlayers ID from a specific league
+// @access Public
+router.get('/getLeaguePlayers/:id', (req,res)=>{
+    League.findById(req.params.id)
+    .then(league=>{
+        if(!league){
+            return res.status(404).json({leaguenotfound: "league not found"});
+        }
+        else{
+            res.json(league.leaguePlayers)
+        }
+    })
+})
+
+//@route POST api/leagues/dropPlayer/:id
+//@desc Drop player form leaguePlayers array
+//@access Public
+router.put("/dropPlayer/:id", (req,res)=> {
+    League.findById(req.params.id)
+    .then(league => {
+        if(!league){
+            return res.status(404).json({leaguenotfound: "league not found"});
+        }
+        else{
+            var isInArray = league.leaguePlayers.some(player => {
+                return player.playerID === req.body.playerID
+            })
+                if(!isInArray)
+                {
+                    return res.status(404).json({leaguePlayernotfound:" league player not found "})
+                }
+                else{
+                    league.update({
+                        _id:req.params.id},{
+                            $pull:{
+                                leaguePlayers:{
+                                playerID: req.body.playerID                               }
+                            }
+                        })
+                    league.save()
+                    .then(() => res.json('User dropped player'))
+                .catch(err => res.status(400).json('Error: ' +err));
+                }
+        }
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 module.exports = router;

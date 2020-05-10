@@ -421,6 +421,29 @@ router.get("/getuserteam/:id", (req, res) =>{
                     })
             }
         })
-})
+});
+
+//@route POST api/leagues/tradeplayers/:id
+//@desc Trade players between each user ONLY supporting 2 player trades
+//@access Public
+router.post("/tradeplayers/:id", (req, res) =>{
+  League.findById(req.params.id)
+    .then(league => {
+      if(!league){
+        return res.status(404).json({leaguenotfound: "league not found"});
+      }
+      else{
+        league.updateOne(
+          { _id: req.params.id,
+          "leaguePlayers.playerID":req.body.playerID1},
+          {
+            $set:{"leaguePlayers.$.ownerID": req.body.ownerID1}
+          })
+          league.save()
+          .then(() => res.json('User dropped new Player'))
+          .catch((err) => res.status(400).json('Error: ' + err));
+      }
+    })
+});
 
 module.exports = router;

@@ -28,7 +28,7 @@ class HomePage extends Component{
     render(){
         
         const renderComponent = () =>{
-            console.log(this.state.showComponent)
+            //console.log(this.state.showComponent) for testing
             switch(this.state.showComponent){
                 case '1': return <MyLeague/>;
                 case '2': return <MyTeam/>;

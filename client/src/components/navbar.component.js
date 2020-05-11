@@ -30,11 +30,7 @@ class NavBarHome extends Component{
                 this.setState({
                     length: res.data.length,
                     leaguesJoinedArray: res.data
-                })
-                //console.log(this.state.leaguesJoinedArray)
-               //console.log(res.data)
-            //console.log(this.state.length)
-                
+                })             
             })
             .catch((err) =>{
                 console.log(err)
@@ -49,15 +45,15 @@ class NavBarHome extends Component{
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                <Nav.Link as={Link} to='/' >Home</Nav.Link>
+                <Nav.Link as={Link} to='/'>Home</Nav.Link>
                 <NavDropdown title="League" id="basic-nav-dropdown" >
                     <NavDropdown.Item as={Link} to='/create'>Create New League</NavDropdown.Item>
                     <NavDropdown.Divider />
                    
                     {/*Dynamically display leagues joined into bootstrap dropdown item*/}
                     {leaguesJoined.map(leagues =>(
-                                            <NavDropdown.Item >
-                                            {leagues}
+                                            <NavDropdown.Item key={leagues} >
+                                            {leagues.leagueName}
                                         </NavDropdown.Item>
                     ))}
 

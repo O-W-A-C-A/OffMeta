@@ -22,27 +22,34 @@ class CreateLeague extends Component{
         //setting default state of all variables
         this.state = {
             leagueName:'',
-            draftPickTrading: '',
             scoringFormat: 'STD',
             leagueSize: 4,
             logo: defaultimg,
             imagePreviewUrl: '',
-            createdBy:''
+            createdBy:'',
+            playerdatabase:''
         };
     }
-
+    componentDidMount(){
+        let playerDB = this.player2db();
+        this.setState({
+            playerdatabase: playerDB
+        })
+    }
     onSubmit(e){
         //prevents autoload of page
         e.preventDefault();
-
+        //this.state.playerdatabase = playerDB
         const league = new FormData();
         league.append('logo', this.state.logo);
         league.append('leagueName', this.state.leagueName);
         league.append('scoringFormat', this.state.scoringFormat);
         league.append('leagueSize', this.state.leagueSize);
         league.append('createdBy', this.props.auth.user.id);
+        league.append('playerdatabase', this.state.playerdatabase);
         //prints to console league information
         console.log(league);
+        console.log(this.state.playerdatabase);
         //crud method post to database
         axios.post('http://localhost:5000/api/leagues/create', league)
             .then(res => {
@@ -92,6 +99,21 @@ class CreateLeague extends Component{
     
         reader.readAsDataURL(file)
     }
+    //Below is the methods to add the player database into the league:
+    player2db() {
+        let qb = [];
+        axios
+          .get('https://api.overwatchleague.com/stats/players')
+          .then((res) => {
+            qb.push(JSON.stringify(res.data.data))
+        
+            //console.log(qb); testing
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+          return qb;
+      }
     render(){
         //magic
         let {imagePreviewUrl} = this.state;

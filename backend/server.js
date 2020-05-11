@@ -99,7 +99,7 @@ server.listen(port, () =>
 io.on("connection", socket => {
     socket.on('room', room =>{
         socket.join(room);
-        console.log("room" + room)
+        console.log("room: " + room)
 
         socket.on("chat message", ({ name, message }) => {
             io.in(room).emit("chat message", { name, message });

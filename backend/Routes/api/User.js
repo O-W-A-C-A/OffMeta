@@ -464,7 +464,7 @@ router.get('/getleagues/:id', (req, res) =>{
       }
       else{
           //prints out member IDs to console
-          console.log(user.leaguesJoined)
+          //console.log(user.leaguesJoined)
           //sends leaguesJoined array commented out is send which app will treat as text/html
           //res.send(league.members);
           res.json(user.leaguesJoined)
@@ -485,16 +485,17 @@ router.post('/joinleague/:id', (req, res) =>{
       else{
         League.findOne({joinCode})
         .then(league =>{
-          //function checks if user id is found in member object id array
-          //returns boolean 
-          var isInArray = league.members.some(function (member){
-            return member.equals(user.id)
-          });
 
           if(!league){
             return res.status(404).json({leaguenotfound: "league not found"});
           }
           else{
+            //function checks if user id is found in member object id array
+            //returns boolean 
+            var isInArray = league.members.some(function (member){
+              return member.equals(user.id)
+            });
+            
             //check if user already exists in member list of league
             if(isInArray){
               return res.status(409).json({memberexists: "User is already a member of league"});
@@ -503,13 +504,13 @@ router.post('/joinleague/:id', (req, res) =>{
               //console.log(league.id)
               //testing route
               //res.send('works')
-              league.members.push(user.id);//push user id into members object id array for league
+              league.members.push(user);//push user id into members object id array for league
               league.save()//save information to league
               .then(() => res.json('New League Member Joined'))
               .catch(err => res.status(400).json('Error: ' + err));
               
               //added league to user's leaguesJoined object id array
-              user.leaguesJoined.push(league.id);
+              user.leaguesJoined.push(league);
               user.save()
             }
           }
@@ -517,19 +518,6 @@ router.post('/joinleague/:id', (req, res) =>{
       }
     }).catch(err => res.status(400).json('Error: ' + err));
 });
-
-/* Simplified route used for testing
-router.get('/get/:id', (req, res) =>{
-  const joinCode = req.body.joinCode;
-  User.findById(req.params.id)
-    .then(user =>{
-      League.findOne({joinCode})
-        .then(league =>{
-          res.send(league.id)
-        })
-    })
-});
-*/
 
 //contact page backend
 /*

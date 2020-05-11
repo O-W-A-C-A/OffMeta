@@ -22,13 +22,29 @@ const LeagueSchema= new Schema({
         type:Object
     },
     //invite user to league start
+    draftPickTrading:{
+        type: Boolean,
+        default: false
+    },
+    playerdatabase:[mongoose.Schema.Types.Mixed],
     createdBy:{
         type:String
     },
-   
+    leaguePlayers:{
+        playerID: {type: String, trim: true},
+        playerName: {type: String, trim: true},
+        playerImg:{type: String, trim: true},
+        ownerID:{type: String, trim: true},
+        teamName:{type: String, trim: true},
+    },
+    createdBy:{
+        type:String
+    },
+    //saving user info league schema
     members: [{
-        type: mongoose.Types.ObjectId,
-        ref: "User"
+        id: {type: mongoose.Types.ObjectId},
+        name: {type: String, trim: true},
+        email: {type: String, trim: true}
     }],
     joinCode:{
         type: String

@@ -3,7 +3,6 @@ import {PersonAdd, SwapHorizontalCircle, Delete} from '@material-ui/icons'
 import axios from 'axios'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import AddPlayer from './addplayer.component.js'
 
 //auth
 import PropTypes from 'prop-types';
@@ -14,6 +13,10 @@ class MyTeam extends Component {
   constructor(props) {
     super(props);
 
+    this.getPlayers = this.getPlayers.bind(this);
+    this.changeNameState = this.changeNameState.bind(this);
+    this.getPlayerByName = this.getPlayerByName.bind(this);
+
     this.state = {
       name: '',
       imagePreviewUrl: '',
@@ -22,6 +25,12 @@ class MyTeam extends Component {
       showModal1: false,
       showModal2: false,
       showModal3: false,
+      search: '',
+      playerName:'',
+      team:'',
+      role:'',
+      playerID:'',
+      imageurl: defaultimg,
     };
   }
 
@@ -69,6 +78,78 @@ class MyTeam extends Component {
     reader.readAsDataURL(file);
   }
 
+  /******
+   * ADD PLAYER
+   */
+    /*
+Purpose: Get Request To The Players Endpoint
+*/
+getPlayers() {
+  axios
+    .get('https://api.overwatchleague.com/players')
+    .then((res) => {
+      // console.log(res.data.content[0]);
+      let name = this.state.search;
+      for (let i = 0; i < res.data.size - 1; i++) {
+        let APIName = res.data.content[i].name;
+        let ModifiedApiName = APIName.toLowerCase();
+        let ModifiedName = name.toLowerCase();
+        if (ModifiedApiName == ModifiedName) {
+          this.setState({ imageurl: res.data.content[i].headshot,
+                          playerName: res.data.content[i].name,
+                          team: res.data.content[i].teams[0].team.abbreviatedName,
+                          role:res.data.content[i].attributes.role,
+                          playerID: res.data.content[i].id     
+          });
+          break;
+        } else {
+          this.setState({ imageurl: defaultimg ,
+            playerName: 'not found',
+          team: 'not found',
+          role: 'not found'});
+        }
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+changeNameState(e) {
+  const data = this.getPlayerByName(e);
+  this.setState({ search: e.target.value });
+}
+
+/*
+Purpose: Grabs the data from the getPlayers function and searches a player by name
+Params@ name variable that holds the name of player we are searching for
+Returns@ if player found returns their headshot, id, and name
+*/
+getPlayerByName = async (search) => {
+  try {
+    const data = this.getPlayers(search);
+  } catch (error) {
+    console.log('Player was not found');
+  }
+};
+
+onSubmitAddedPlayer(e){
+  e.preventDefault();
+
+  const addNewPlayer = new FormData();
+  addNewPlayer.append('playerID', this.state.playerID);
+  addNewPlayer.append('playerName', this.state.playerName);
+  addNewPlayer.append('teamName', this.state.team);
+  addNewPlayer.append('playerImg', this.state.imageurl);
+  addNewPlayer.append('ownerID', this.props.auth.user.id);
+
+  axios.post(`http://localhost:5000/api/leagues/addplayer/5eb6d50c81fbe72244a3bb54`, addNewPlayer)
+  .then(res => {
+    console.log(res.data)
+});
+}
+/******ADD PLAYER DONE */
+
   render() {
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
@@ -113,7 +194,23 @@ class MyTeam extends Component {
               <Modal.Title style={{color:'white'}} className="add-title">Add A Player</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <AddPlayer />
+            <div>
+        <div className="search-bar">
+          <input type='text' className="search-bar-style"placeholder='Search Players' value={this.state.search} onChange={this.changeNameState}/>
+        </div>
+        <div className="show-results">
+          <div className="player-img">
+            <img src={this.state.imageurl} style={{borderRadius: '5px'}} width='100' height='98' />
+          </div>
+          <div className="player-info">
+            <form className="form-info">
+              <label>Name</label><input className ="player-fields" value={this.state.playerName} disabled />
+              <label>Team</label><input className ="player-fields" value={this.state.team} disabled />
+              <label>Role</label><input className ="player-fields" value={this.state.role} disabled />
+            </form>
+          </div>
+        </div>
+      </div>
             </Modal.Body>
             <Modal.Footer>
               <Button

@@ -1529,7 +1529,6 @@ Add A Player CSS
   height: 100%;
   text-align: center;
   margin-top: 15%;
-
 }
 
 .player-info{
@@ -1546,4 +1545,10 @@ Add A Player CSS
   float: none; /* if you had floats before? otherwise inline-block will behave differently */
   display: inline-block;
   vertical-align: middle;    
+}
+
+.player-fields{
+  border-radius: 5px;
+  border: none;
+  padding-left: 10px;
 }

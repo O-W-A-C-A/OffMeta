@@ -1502,7 +1502,7 @@ Chat App CSS
 }
 
 /*
-Add A Player CSS
+ADD PLAYER CSS
 */
 
 .search-bar{
@@ -1556,4 +1556,35 @@ Add A Player CSS
 /****DROP PLAYERS CSS***/
 .drop-players-list{
   color:white;
+  overflow-y: auto;
+  height: 10vh;
+  display: table;
+  margin-left: 15%;
+}
+
+.drop-player-wrapper{
+  display: table-row;
+  background-color: #414d63;
+}
+
+.drop-player-img{
+  width: 30%;
+  text-align: center;
+  display: table-cell;
+}
+
+.drop-player-info{
+  display: table-cell;
+  padding-left: 10px;
+}
+
+.drop-btn-wrapper{
+}
+
+.drop-btn{
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  height: 2vh;
 }

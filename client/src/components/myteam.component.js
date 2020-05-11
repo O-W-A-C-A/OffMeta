@@ -76,44 +76,6 @@ class MyTeam extends Component {
         console.log(err)
       })
   }
-  /*
-  submits new addNewplayer object,
-  this object is associates an ownerID (user id) and player information
-  to keep track who owns who
-  */
-  onSubmitAddedPlayer(e){
-  e.preventDefault();
-   const addNewPlayer = {
-    playerID: this.state.playerID,
-    playerName: this.state.playerName,
-    ownerID: this.props.auth.user.id,
-    playerImg: this.state.playerImg,
-    teamName: this.state.teamName,
-    role: this.state.role,
-   }
-
- console.log(addNewPlayer)
-
- axios.post(`http://localhost:5000/api/leagues/addplayer/5eb6d50c81fbe72244a3bb54`, addNewPlayer)
- .then(res => {
-   console.log(res.data)
- });
-}
-
-  /*
-  submits new drooPlayer object,
-  this drops a player by id from leaguePlayers array in backend
-  */
-onSubmitDropPlayer(e){
-  e.preventDefault();
-  const dropPlayer ={
-    dropPlayerID: this.state.dropPlayerID
-  }
-  axios.post(`http://localhost:5000/api/leagues/dropplayer/${this.props.auth.user.id}/5eb6d50c81fbe72244a3bb54`, dropPlayer)
-  .then(res => {
-    console.log(res.data)
-  });
-}
 
   //handles state change for images
   onFileChange(e) {
@@ -136,6 +98,32 @@ onSubmitDropPlayer(e){
 * ADD PLAYER
 Purpose: Get Request To The Players Endpoint
 */
+
+  /*
+  submits new addNewplayer object,
+  this object is associates an ownerID (user id) and player information
+  to keep track who owns who
+  */
+  onSubmitAddedPlayer(e){
+  e.preventDefault();
+   const addNewPlayer = {
+    playerID: this.state.playerID,
+    playerName: this.state.playerName,
+    ownerID: this.props.auth.user.id,
+    playerImg: this.state.playerImg,
+    teamName: this.state.teamName,
+    role: this.state.role,
+   }
+
+ console.log(addNewPlayer)
+
+ axios.post(`http://localhost:5000/api/leagues/addplayer/5eb6d50c81fbe72244a3bb54`, addNewPlayer)
+ .then(res => {
+   console.log(res.data)
+   window.location.reload(false)
+ });
+}
+
 getPlayers() {
   axios
     .get('https://api.overwatchleague.com/players')
@@ -185,16 +173,49 @@ getPlayerByName = async (search) => {
   }
 }
 
+/*
+**********DROP PLAYER*************
+*/
+
+  /*
+  submits new drooPlayer object,
+  this drops a player by id from leaguePlayers array in backend
+  */
+ onSubmitDropPlayer(dropPlayerID){
+  const dropPlayer ={
+    dropPlayerID: dropPlayerID
+  }
+  axios.post(`http://localhost:5000/api/leagues/dropplayer/5eb6d50c81fbe72244a3bb54`, dropPlayer)
+  .then(res => {
+    console.log(res.data)
+    window.location.reload(false)
+  });
+}
+
+/*
+  Renders front end for user's team array
+*/
 renderDropPlayers(){
   return this.state.myTeam.map(player => (
-    <div key={player.playerID}>
-      <p>Name: {player.playerName}</p>
-      <p>Team: {player.teamName}</p>
-      <p>Role: {player.role}</p>
-      <img src={player.playerImg}/>
+    <div key={player.playerID} className="drop-player-wrapper">
+      <div className="drop-player-img">
+        <img src={player.playerImg} width='100' height='100' className="drop-img"/>
+      </div>
+     <div className="drop-player-info">
+      Name: {player.playerName}<br/>
+      Team: {player.teamName}<br/>
+      Role: {player.role}
+     </div>
+     <div className="drop-btn-wrapper">
+       <button className="drop-btn" onClick={() => this.onSubmitDropPlayer(player.playerID)}>DROP</button>
+     </div>
     </div>
   ));
 }
+
+/*
+**********END DROP PLAYER*************
+*/
 
 
 
@@ -333,18 +354,12 @@ renderDropPlayers(){
             <Modal.Body>
 
             <div className="drop-players-list">
-            {this.renderDropPlayers()}
+              {this.renderDropPlayers()}
             </div>
 
             </Modal.Body>
             <Modal.Footer>
-              <Button
-                variant='secondary'
-                onClick={() => this.setState({ showModal3: false })}
-              >
-                Close
-              </Button>
-              <Button variant='primary'>Drop</Button>
+              <Button variant='primary'onClick={() => this.setState({ showModal3: false })}>Close</Button>
             </Modal.Footer>
           </Modal>
                       {/******END DROP PLAYER */}

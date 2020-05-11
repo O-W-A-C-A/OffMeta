@@ -374,10 +374,10 @@ router.get('/getleagueplayers/:id', (req, res) => {
   });
 });
 
-//@route POST api/leagues/dropPlayer/:id/:id
-//@desc Drop player form leaguePlayers array, firt id is user id, second id is league id
+//@route POST api/leagues/dropPlayer/:id
+//@desc Drop player form leaguePlayers array
 //@access Public
-router.post('/dropplayer/:id/:id', (req, res) => {
+router.post('/dropplayer/:id', (req, res) => {
   League.findById(req.params.id)
     .then((league) => {
       if (!league) {

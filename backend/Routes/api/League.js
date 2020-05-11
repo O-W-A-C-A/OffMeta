@@ -374,10 +374,10 @@ router.get('/getleagueplayers/:id', (req, res) => {
   });
 });
 
-//@route POST api/leagues/dropPlayer/:id
-//@desc Drop player form leaguePlayers array
+//@route POST api/leagues/dropPlayer/:id/:id
+//@desc Drop player form leaguePlayers array, firt id is user id, second id is league id
 //@access Public
-router.post('/dropplayer/:id', (req, res) => {
+router.post('/dropplayer/:id/:id', (req, res) => {
   League.findById(req.params.id)
     .then((league) => {
       if (!league) {
@@ -390,7 +390,7 @@ router.post('/dropplayer/:id', (req, res) => {
             //pulls(remove) from league players, specifically looking for player id that matches id
             $pull: {
               leaguePlayers: {
-                playerID: req.body.playerID,
+                playerID: req.body.dropPlayerID,
               },
             },
           }

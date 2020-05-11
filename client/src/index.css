@@ -1552,3 +1552,8 @@ Add A Player CSS
   border: none;
   padding-left: 10px;
 }
+
+/****DROP PLAYERS CSS***/
+.drop-players-list{
+  color:white;
+}

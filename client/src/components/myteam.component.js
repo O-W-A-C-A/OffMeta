@@ -33,7 +33,8 @@ class MyTeam extends Component {
       playerID:'',
       playerImg: defaultimg,
       //array to hold user's team
-      myTeam:[]
+      myTeam:[],
+      droppedPlayerID:''
     };
   }
 
@@ -69,13 +70,17 @@ class MyTeam extends Component {
         }
       })
       .then((res) =>{
-        this.setState({myTeam: res.data})
+        this.setState({myTeam: res.data[0].leaguePlayers})
         console.log(this.state.myTeam)//prints out team to console
       }).catch((err) =>{
         console.log(err)
       })
   }
-
+  /*
+  submits new addNewplayer object,
+  this object is associates an ownerID (user id) and player information
+  to keep track who owns who
+  */
   onSubmitAddedPlayer(e){
   e.preventDefault();
    const addNewPlayer = {
@@ -95,6 +100,21 @@ class MyTeam extends Component {
  });
 }
 
+  /*
+  submits new drooPlayer object,
+  this drops a player by id from leaguePlayers array in backend
+  */
+onSubmitDropPlayer(e){
+  e.preventDefault();
+  const dropPlayer ={
+    dropPlayerID: this.state.dropPlayerID
+  }
+  axios.post(`http://localhost:5000/api/leagues/dropplayer/${this.props.auth.user.id}/5eb6d50c81fbe72244a3bb54`, dropPlayer)
+  .then(res => {
+    console.log(res.data)
+  });
+}
+
   //handles state change for images
   onFileChange(e) {
     e.preventDefault();
@@ -112,10 +132,8 @@ class MyTeam extends Component {
     reader.readAsDataURL(file);
   }
 
-  /******
-   * ADD PLAYER
-   */
-    /*
+/******
+* ADD PLAYER
 Purpose: Get Request To The Players Endpoint
 */
 getPlayers() {
@@ -166,6 +184,20 @@ getPlayerByName = async (search) => {
     console.log('Player was not found');
   }
 }
+
+renderDropPlayers(){
+  return this.state.myTeam.map(player => (
+    <div key={player.playerID}>
+      <p>Name: {player.playerName}</p>
+      <p>Team: {player.teamName}</p>
+      <p>Role: {player.role}</p>
+      <img src={player.playerImg}/>
+    </div>
+  ));
+}
+
+
+
 /******ADD PLAYER DONE */
   render() {
     let { imagePreviewUrl } = this.state;
@@ -187,7 +219,9 @@ getPlayerByName = async (search) => {
         />
       );
     }
+    
     return (
+
       <div className='my-team-panel'>
         <div className='my-team-edit'>
           <button
@@ -199,6 +233,7 @@ getPlayerByName = async (search) => {
               })
             }
           >
+             {/******ADD PLAYER */}
             <PersonAdd />
             <br />
             Add Player
@@ -234,6 +269,7 @@ getPlayerByName = async (search) => {
               <Button variant='primary'  onClick={this.onSubmitAddedPlayer}>Add</Button>
             </Modal.Footer>
           </Modal>
+             {/******END ADD PLAYER */}
 
           <button
             onClick={() =>
@@ -248,6 +284,7 @@ getPlayerByName = async (search) => {
             <br />
             Propose a Trade
           </button>
+            {/******TRADE PLAYER */}
 
           <Modal
             show={this.state.showModal2}
@@ -256,7 +293,9 @@ getPlayerByName = async (search) => {
             <Modal.Header>
               <Modal.Title style={{color:'white'}}>Propose a Trade with Another User</Modal.Title>
             </Modal.Header>
-            <Modal.Body></Modal.Body>
+            <Modal.Body>
+
+            </Modal.Body>
             <Modal.Footer>
               <Button
                 variant='secondary'
@@ -277,6 +316,9 @@ getPlayerByName = async (search) => {
               })
             }
           >
+           {/******END TRADE PLAYER */}
+
+            {/******DROP PLAYER */}
             <Delete />
             <br />
             Drop Player
@@ -288,7 +330,13 @@ getPlayerByName = async (search) => {
             <Modal.Header>
               <Modal.Title style={{color:'white'}}>Drop a Player from your Team</Modal.Title>
             </Modal.Header>
-            <Modal.Body></Modal.Body>
+            <Modal.Body>
+
+            <div className="drop-players-list">
+            {this.renderDropPlayers()}
+            </div>
+
+            </Modal.Body>
             <Modal.Footer>
               <Button
                 variant='secondary'
@@ -299,6 +347,8 @@ getPlayerByName = async (search) => {
               <Button variant='primary'>Drop</Button>
             </Modal.Footer>
           </Modal>
+                      {/******END DROP PLAYER */}
+
         </div>
 
         <div className='my-team-user'>

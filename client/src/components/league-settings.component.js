@@ -12,7 +12,7 @@ export default class LeagueSettings extends Component{
 
                 <div className="settings-section form-section">
                     <div className="settings-header">League Settings
-                        <div class="right-edit">
+                        <div className="right-edit">
                             <i>Edit League</i>
                         </div>
                     </div>
@@ -33,7 +33,7 @@ export default class LeagueSettings extends Component{
                 
                 <div className="settings-section form-section">
                     <div className="settings-header">Scoring Settings
-                        <div class="right-edit">
+                        <div className="right-edit">
                             <i>Edit Scoring</i>
                         </div>
                     </div>

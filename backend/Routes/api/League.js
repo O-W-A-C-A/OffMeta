@@ -169,7 +169,7 @@ router.get('/leaguelogo/:id', (req, res) => {
 });
 
 // @route PUT api/leagues/uploadlogo/:id
-// @desc Allow user to update their profile image
+// @desc Allow user to update their league logo
 // @access Public
 router.put('/uploadlogo/:id', upload.single('leagueLogo'), (req, res, next) => {
   League.findById(req.params.id).then((league) => {

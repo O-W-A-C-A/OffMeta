@@ -416,7 +416,7 @@ Profile Page CSS
   float: left;
   background-color: #1DA1F2;
   border: none;
-  border-radius: 25px;
+  border-radius: 5px;
   color: #fff;
   height: 35px;
   width: 100px;
@@ -432,7 +432,7 @@ Profile Page CSS
   float: right;
   background-color: red;
   border: none;
-  border-radius: 25px;
+  border-radius: 5px;
   color: #fff;
   height: 35px;
   width: 100px;
@@ -467,7 +467,7 @@ Profile Page CSS
 .btn-edit-profile{
   background-color: #283245;
   border: solid #1DA1F2 2px;
-  border-radius: 25px;
+  border-radius: 5px;
   color: #fff;
   height: 35px;
   width: 100px;
@@ -507,6 +507,7 @@ Create League CSS
   font-size: 20px;
   float: right;
   margin-top: -10%;
+  border-radius: 5px;
 }
 
 .btn-createLeague:hover{
@@ -1576,9 +1577,6 @@ ADD PLAYER CSS
 .drop-player-info{
   display: table-cell;
   padding-left: 10px;
-}
-
-.drop-btn-wrapper{
 }
 
 .drop-btn{

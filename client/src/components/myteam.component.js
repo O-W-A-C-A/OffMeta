@@ -349,7 +349,7 @@ renderDropPlayers(){
             onHide={() => this.setState({ showModal3: false })}
           >
             <Modal.Header>
-              <Modal.Title style={{color:'white'}}>Drop a Player from your Team</Modal.Title>
+              <Modal.Title style={{color:'white'}}>Drop a Player</Modal.Title>
             </Modal.Header>
             <Modal.Body>
 

@@ -110,7 +110,7 @@ class MyTeam extends Component {
             onHide={() => this.setState({ showModal1: false })}
           >
             <Modal.Header>
-              <Modal.Title>Add A Player</Modal.Title>
+              <Modal.Title style={{color:'white'}} className="add-title">Add A Player</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <AddPlayer />

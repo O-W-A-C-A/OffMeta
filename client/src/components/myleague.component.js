@@ -4,7 +4,7 @@ export default class MyLeague extends Component{
         return(
             <div className="my-league-panel">
                 <div className="settings-section form-section">
-                    <div className="my-league-header">League Matchups</div>
+                    <div className="my-league-header">League Members</div>
                    
                     <div className="matchup-header" style={{marginTop:'20px'}}>
                         <div className="matchup-row">
@@ -170,22 +170,6 @@ export default class MyLeague extends Component{
                         <div className="points-for">0.0</div>
                         <div className="points-for">0.0</div>
                         <div className="waiver">4</div>
-                    </div>
-                </div>
-
-                <div className="settings-section form-section">
-                    <div className="my-league-header">Recent League Activity</div>
-                    <div className="league-transaction-item">
-                        <div className="team-owner-with-desc">
-                            <div className="av"></div>
-                            <div className="team-owner">Username</div>
-                            <div className="trans-timestamp">placeholder</div>
-                        </div>
-                        <div className="trans-action-label">-</div>
-                        <div className="trans-player-name">
-                            player name
-                            <div className="player-pos">player position</div>
-                        </div>
                     </div>
                 </div>
             </div>

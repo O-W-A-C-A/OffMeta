@@ -11,20 +11,22 @@ export default class addplayer extends Component {
     this.changeNameState = this.changeNameState.bind(this);
     this.getPlayerByName = this.getPlayerByName.bind(this);
     this.state = {
-      name: '',
-      imageurl: '',
+      search: '',
+      playerName:'',
+      team:'',
+      role:'',
+      imageurl: defaultimg,
     };
   }
   /*
 Purpose: Get Request To The Players Endpoint
 */
   getPlayers() {
-    this.setState({ imageurl: defaultimg });
     axios
       .get('https://api.overwatchleague.com/players')
       .then((res) => {
         // console.log(res.data.content[0]);
-        let name = this.state.name;
+        let name = this.state.search;
         for (let i = 0; i < res.data.size - 1; i++) {
           let APIName = res.data.content[i].name;
           let ModifiedApiName = APIName.toLowerCase();
@@ -32,10 +34,13 @@ Purpose: Get Request To The Players Endpoint
           if (ModifiedApiName == ModifiedName) {
             console.log(res.data.content[i].name);
             console.log(res.data.content[i].headshot);
-            this.setState({ imageurl: res.data.content[i].headshot });
+            this.setState({ imageurl: res.data.content[i].headshot,
+                            playerName: res.data.content[i].name,             
+            });
             break;
           } else {
-            this.setState({ imageurl: defaultimg });
+            this.setState({ imageurl: defaultimg ,
+              playerName: 'not found' });
           }
         }
       })
@@ -46,7 +51,7 @@ Purpose: Get Request To The Players Endpoint
 
   changeNameState(e) {
     const data = this.getPlayerByName(e);
-    this.setState({ name: e.target.value });
+    this.setState({ search: e.target.value });
     console.log(data + 'test');
   }
 
@@ -55,9 +60,9 @@ Purpose: Get Request To The Players Endpoint
   Params@ name variable that holds the name of player we are searching for
   Returns@ if player found returns their headshot, id, and name
   */
-  getPlayerByName = async (name) => {
+  getPlayerByName = async (search) => {
     try {
-      const data = this.getPlayers(name);
+      const data = this.getPlayers(search);
       console.log(data + 'test');
     } catch (error) {
       console.log('Player was not found');
@@ -66,14 +71,21 @@ Purpose: Get Request To The Players Endpoint
   render() {
     return (
       <div>
-        <img src={this.state.imageurl} width='100' />
-        <br></br>
-        <input
-          type='text'
-          placeholder='search players'
-          value={this.state.name}
-          onChange={this.changeNameState}
-        />
+        <div className="search-bar">
+          <input type='text' className="search-bar-style"placeholder='Search Players' value={this.state.name}onChange={this.changeNameState}/>
+        </div>
+        <div className="show-results">
+          <div className="player-img">
+            <img src={this.state.imageurl} width='100' height='98' />
+          </div>
+          <div className="player-info">
+            <form className="form-info">
+              <label >Name</label><input value={this.state.playerName} disabled />
+              <label >Team</label><input value={this.state.team} disabled />
+              <label >Role</label><input value={this.state.role} disabled />
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

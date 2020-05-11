@@ -433,15 +433,9 @@ router.post("/tradeplayers/:id", (req, res) =>{
         return res.status(404).json({leaguenotfound: "league not found"});
       }
       else{
-        league.updateOne(
-          { _id: req.params.id,
-          "leaguePlayers.playerID":req.body.playerID1},
-          {
-            $set:{"leaguePlayers.$.ownerID": req.body.ownerID1}
-          })
-          league.save()
-          .then(() => res.json('User dropped new Player'))
-          .catch((err) => res.status(400).json('Error: ' + err));
+        league.updateOne({},{$set:{"leaguePlayers.$.ownerID":req.body.ownerID2}},
+        {arrayFilters: [{"leaguePlayers.playerID": req.body.playerID1}]})          .then(() => res.json('User dropped new Player'))
+        .catch((err) => res.status(400).json('Error: ' + err));
       }
     })
 });

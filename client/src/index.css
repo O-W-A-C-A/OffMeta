@@ -1500,3 +1500,50 @@ Chat App CSS
   width: 70%;
   margin-left: 33%;
 }
+
+/*
+Add A Player CSS
+*/
+
+.search-bar{
+  text-align: center;
+}
+.search-bar-style{
+  border-radius: 5px;
+  padding-left: 10px;
+  background: url('./public/search.png'), white;
+  background-repeat: no-repeat;
+  background-position: right;
+  border: none;
+}
+
+.show-results{
+  margin-top: 5%;
+  margin-left: 10%;
+  width: 80%;
+}
+
+.player-img{
+  float: left;
+  width: 30%;
+  height: 100%;
+  text-align: center;
+  margin-top: 15%;
+
+}
+
+.player-info{
+  float: right;
+  width: 65%;
+  margin-left: 5%;
+}
+
+.form-info label{
+  display: block;
+}
+
+.input-w label, .input-w input {
+  float: none; /* if you had floats before? otherwise inline-block will behave differently */
+  display: inline-block;
+  vertical-align: middle;    
+}

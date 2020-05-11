@@ -350,6 +350,7 @@ router.post('/addplayer/:id', (req, res) => {
                 playerImg: req.body.playerImg,
                 teamName: req.body.teamName,
                 ownerID: req.body.ownerID,
+                role: req.body.role
               },
             },
           }
@@ -394,7 +395,7 @@ router.post('/dropplayer/:id', (req, res) => {
             },
           }
         )
-          .then(() => res.json('User dropped new Player'))
+          .then(() => res.json('User dropped a player'))
           .catch((err) => res.status(400).json('Error: ' + err));
       }
     })
@@ -413,7 +414,7 @@ router.get("/getuserteam/:id", (req, res) =>{
             else{
                 League.aggregate([
                     { $unwind: '$leaguePlayers'}, //unwide leaguePlayers array
-                    { $match: {'leaguePlayers.ownerID': req.body.ownerID}},//find subdocuments that match ownerID
+                    { $match: {'leaguePlayers.ownerID': req.query.ownerID}},//find subdocuments that match ownerID
                     { $group: {_id: '$_id', leaguePlayers: {$push: '$leaguePlayers'}}}//group them by league ID and push leaguePlayer objects in array
                 ])
                     .then(function(players){

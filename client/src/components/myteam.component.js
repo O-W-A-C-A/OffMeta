@@ -16,7 +16,7 @@ class MyTeam extends Component {
     this.getPlayers = this.getPlayers.bind(this);
     this.changeNameState = this.changeNameState.bind(this);
     this.getPlayerByName = this.getPlayerByName.bind(this);
-
+    this.onSubmitAddedPlayer = this.onSubmitAddedPlayer.bind(this);
     this.state = {
       name: '',
       imagePreviewUrl: '',
@@ -25,12 +25,15 @@ class MyTeam extends Component {
       showModal1: false,
       showModal2: false,
       showModal3: false,
+      //player variables to add, drop and trade
       search: '',
       playerName:'',
-      team:'',
+      teamName:'',
       role:'',
       playerID:'',
-      imageurl: defaultimg,
+      playerImg: defaultimg,
+      //array to hold user's team
+      myTeam:[]
     };
   }
 
@@ -59,7 +62,38 @@ class MyTeam extends Component {
         );
         this.setState({ file: 'data:;base64,' + base64 });
       });
+
+      axios.get(`http://localhost:5000/api/leagues/getuserteam/5eb6d50c81fbe72244a3bb54`,{
+        params:{
+          'ownerID': this.props.auth.user.id
+        }
+      })
+      .then((res) =>{
+        this.setState({myTeam: res.data})
+        console.log(this.state.myTeam)//prints out team to console
+      }).catch((err) =>{
+        console.log(err)
+      })
   }
+
+  onSubmitAddedPlayer(e){
+  e.preventDefault();
+   const addNewPlayer = {
+    playerID: this.state.playerID,
+    playerName: this.state.playerName,
+    ownerID: this.props.auth.user.id,
+    playerImg: this.state.playerImg,
+    teamName: this.state.teamName,
+    role: this.state.role,
+   }
+
+ console.log(addNewPlayer)
+
+ axios.post(`http://localhost:5000/api/leagues/addplayer/5eb6d50c81fbe72244a3bb54`, addNewPlayer)
+ .then(res => {
+   console.log(res.data)
+ });
+}
 
   //handles state change for images
   onFileChange(e) {
@@ -95,17 +129,17 @@ getPlayers() {
         let ModifiedApiName = APIName.toLowerCase();
         let ModifiedName = name.toLowerCase();
         if (ModifiedApiName == ModifiedName) {
-          this.setState({ imageurl: res.data.content[i].headshot,
+          this.setState({ playerImg: res.data.content[i].headshot,
                           playerName: res.data.content[i].name,
-                          team: res.data.content[i].teams[0].team.abbreviatedName,
+                          teamName: res.data.content[i].teams[0].team.abbreviatedName,
                           role:res.data.content[i].attributes.role,
                           playerID: res.data.content[i].id     
           });
           break;
         } else {
-          this.setState({ imageurl: defaultimg ,
+          this.setState({ playerImg: defaultimg ,
             playerName: 'not found',
-          team: 'not found',
+          teamName: 'not found',
           role: 'not found'});
         }
       }
@@ -131,25 +165,8 @@ getPlayerByName = async (search) => {
   } catch (error) {
     console.log('Player was not found');
   }
-};
-
-onSubmitAddedPlayer(e){
-  e.preventDefault();
-
-  const addNewPlayer = new FormData();
-  addNewPlayer.append('playerID', this.state.playerID);
-  addNewPlayer.append('playerName', this.state.playerName);
-  addNewPlayer.append('teamName', this.state.team);
-  addNewPlayer.append('playerImg', this.state.imageurl);
-  addNewPlayer.append('ownerID', this.props.auth.user.id);
-
-  axios.post(`http://localhost:5000/api/leagues/addplayer/5eb6d50c81fbe72244a3bb54`, addNewPlayer)
-  .then(res => {
-    console.log(res.data)
-});
 }
 /******ADD PLAYER DONE */
-
   render() {
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
@@ -200,12 +217,12 @@ onSubmitAddedPlayer(e){
         </div>
         <div className="show-results">
           <div className="player-img">
-            <img src={this.state.imageurl} style={{borderRadius: '5px'}} width='100' height='98' />
+            <img src={this.state.playerImg} style={{borderRadius: '5px'}} width='100' height='98' />
           </div>
           <div className="player-info">
             <form className="form-info">
               <label>Name</label><input className ="player-fields" value={this.state.playerName} disabled />
-              <label>Team</label><input className ="player-fields" value={this.state.team} disabled />
+              <label>Team</label><input className ="player-fields" value={this.state.teamName} disabled />
               <label>Role</label><input className ="player-fields" value={this.state.role} disabled />
             </form>
           </div>
@@ -213,13 +230,8 @@ onSubmitAddedPlayer(e){
       </div>
             </Modal.Body>
             <Modal.Footer>
-              <Button
-                variant='secondary'
-                onClick={() => this.setState({ showModal1: false })}
-              >
-                Close
-              </Button>
-              <Button variant='primary'>Add</Button>
+              <Button variant='secondary' onClick={() => this.setState({ showModal1: false })}>Close</Button>
+              <Button variant='primary'  onClick={this.onSubmitAddedPlayer}>Add</Button>
             </Modal.Footer>
           </Modal>
 
@@ -242,7 +254,7 @@ onSubmitAddedPlayer(e){
             onHide={() => this.setState({ showModal2: false })}
           >
             <Modal.Header>
-              <Modal.Title>Propose a Trade with Another User</Modal.Title>
+              <Modal.Title style={{color:'white'}}>Propose a Trade with Another User</Modal.Title>
             </Modal.Header>
             <Modal.Body></Modal.Body>
             <Modal.Footer>
@@ -274,7 +286,7 @@ onSubmitAddedPlayer(e){
             onHide={() => this.setState({ showModal3: false })}
           >
             <Modal.Header>
-              <Modal.Title>Drop a Player from your Team</Modal.Title>
+              <Modal.Title style={{color:'white'}}>Drop a Player from your Team</Modal.Title>
             </Modal.Header>
             <Modal.Body></Modal.Body>
             <Modal.Footer>

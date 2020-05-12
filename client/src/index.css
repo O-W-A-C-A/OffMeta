@@ -720,11 +720,11 @@ Inbox CSS
 }
 
 /*
-Matchup Panel CSS
+My Team Panel CSS
 */
 
 .my-team-panel{
-
+ 
 }
 
 .my-team-edit button{
@@ -748,25 +748,68 @@ Matchup Panel CSS
   display: table;
 }
 
-.my-team-user{
-  display : table-row;
+.my-team-user-wrapper{
+  
+}
+
+.my-team-user-content{
+  width:80%;
+  margin: 0 auto;
 }
 
 .my-team-user-img{
   display: table-cell;
-  width: 15%;
 }
 
 .my-team-user-img-2{
   border-radius: 50px;
   width: 100%;
   height: 75px;
+  
 }
-.my-team-username{
+.my-team-username-info{
   display: table-cell;
   width: 85%;
+  padding-left: 5%;
 }
 
+.my-team-starters-wrapper{
+ 
+}
+
+.my-team-starters-content{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.my-team-starters-header{
+  color: #929599;
+  border-bottom: 1px solid white;
+  font-weight: bold;
+  
+}
+
+.my-team-player-role{
+
+}
+
+.myteam-player-img{
+  width: 25%;
+  float: left;
+}
+
+.myteam-player-info{
+  width: 50%;
+  float: left;
+  margin-top: 5.7%;
+}
+
+.my-team-player-points{
+  width: 25%;
+  float: left;
+  padding-bottom: 10%;
+  margin-top:5.7%;
+}
 
 /*
 Users CSS
@@ -1298,6 +1341,7 @@ Chat App CSS
   border-bottom: 1px solid white;
   margin: 0px 10px 0px 10px;
   padding-top: 40px;
+  font-weight: bold;
 }
 
 .coowner-button{

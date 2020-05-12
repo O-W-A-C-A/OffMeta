@@ -17,6 +17,7 @@ class MyTeam extends Component {
     this.changeNameState = this.changeNameState.bind(this);
     this.getPlayerByName = this.getPlayerByName.bind(this);
     this.onSubmitAddedPlayer = this.onSubmitAddedPlayer.bind(this);
+
     this.state = {
       name: '',
       imagePreviewUrl: '',
@@ -34,7 +35,8 @@ class MyTeam extends Component {
       playerImg: defaultimg,
       //array to hold user's team
       myTeam:[],
-      droppedPlayerID:''
+      droppedPlayerID:'',
+      leagueName: ''
     };
   }
 
@@ -74,6 +76,14 @@ class MyTeam extends Component {
         console.log(this.state.myTeam)//prints out team to console
       }).catch((err) =>{
         console.log(err)
+      })
+
+      axios.get(`http://localhost:5000/api/leagues/5eb8965bcb33cb61f47cf384`)
+      .then((res) =>{
+          this.setState({leagueName:res.data.leagueName})
+      })
+      .catch((err) =>{
+          console.log(err)
       })
   }
 
@@ -123,6 +133,9 @@ Purpose: Get Request To The Players Endpoint
    window.location.reload(false)
  });
 }
+
+
+/******ADD PLAYER DONE */
 
 getPlayers() {
   axios
@@ -218,8 +231,35 @@ renderDropPlayers(){
 */
 
 
+/****
+ * MY TEAM START
+ */
 
-/******ADD PLAYER DONE */
+
+renderMyTeam(){
+  return this.state.myTeam.map(player => (
+    <div key={player.playerID} className="myteam-player-wrapper">
+      <div className="my-team-player-role">
+        
+      </div>
+      <div className="myteam-player-img">
+        <img src={player.playerImg} width='100' height='100' className="drop-img"/>
+      </div>
+     <div className="myteam-player-info">
+      Name: {player.playerName}<br/>
+      Team: {player.teamName}<br/>
+      Role: {player.role}
+     </div>
+     <div className="my-team-player-points">
+       Points Earned: 
+     </div>
+    </div>
+  ));
+}
+ 
+/****
+ * MY TEAM END
+ */
   render() {
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
@@ -366,22 +406,26 @@ renderDropPlayers(){
 
         </div>
 
-        <div className='my-team-user'>
+        <div className="my-team-user-wrapper">
+          <div className="my-team-user-content">
           <div className='my-team-user-img'>{$imagePreview}</div>
+          <div className='my-team-username-info'>
+            <div>{this.state.name}</div>
+            <div>League: {this.state.leagueName}</div>
+          </div>
+          </div>
 
-          <div className='my-team-username'>{this.state.name}</div>
         </div>
 
-        <div className='my-team-starters-wrapper'>
-          <div className='my-team-starters-header'>Starters</div>
+        <div className="my-team-starters-wrapper">
+            <div className="my-team-starters-content">
 
-          <div className='my-team-starters-body'></div>
-        </div>
+            <div className='my-team-starters-header'>Team</div>
 
-        <div className='my-team-bench'>
-          <div className='my-team-bench-header'>Bench</div>
-
-          <div className='my-team-bench-body'></div>
+            <div className='my-team-starters-body'>
+              {this.renderMyTeam()}
+            </div>
+            </div>
         </div>
       </div>
     );

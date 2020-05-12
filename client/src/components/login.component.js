@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import BasicNavBar from './basic-navbar.component'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -115,14 +114,10 @@ class Login extends Component {
                         <div className="form-group">
                             <div className="custom-control custom-checkbox">
                                 <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                             </div>
                         </div>
 
                         <button type="submit" className="btn btn-primary btn-block">Login</button>
-                        <p className="forgot-password text-right">
-                            <Link to={"/forgotpassword"}>Forgot password?</Link>
-                        </p>
                         </form>
                 </div>
             </div>

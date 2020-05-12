@@ -113,7 +113,7 @@ class Landing extends Component {
 
                                                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                                                 <p className="forgot-password text-right">
-                                                    Already registered <Link to={"/login"}>login?</Link>
+                                                     <Link to={"/login"}>Already registered?</Link>
                                                 </p>
                                          </form>
                                         </div>

@@ -74,12 +74,9 @@ router.post('/create', upload.single('logo'), (req, res) => {
     leagueSize: Number(req.body.leagueSize),
     scoringFormat: req.body.scoringFormat,
     createdBy: req.body.createdBy, //user id of creator
-    logo: req.file, //logo
+    logo: req.file.filename, //logo
     joinCode: token,
     createdBy: req.body.createdBy,
-    //boolean values do not require double quotes
-    draftPickTrading: Boolean(req.body.draftPickTrading),
-    logo: req.file,
     leaguePlayers: [], //by default create empty array
   });
   //parse data in array to separate them into separate objects
@@ -146,7 +143,7 @@ router.post('/update/:id', (req, res) => {
       league.leagueName = req.body.leagueName;
       league.leagueSize = req.body.leagueSize;
       league.scoringFormat = req.body.scoringFormat;
-
+      league.joinCode = req.body.joinCode;
       league
         .save()
         .then(() => res.json('league updated!'))
@@ -161,7 +158,7 @@ router.post('/update/:id', (req, res) => {
 router.get('/leaguelogo/:id', (req, res) => {
   League.findById(req.params.id)
     .then((league) => {
-      let file = league.file;
+      let file = league.logo;
       let fileLocation = path.join(DIR, file);
       res.sendFile(`${fileLocation}`, { root: '.' });
     })
@@ -171,9 +168,9 @@ router.get('/leaguelogo/:id', (req, res) => {
 // @route PUT api/leagues/uploadlogo/:id
 // @desc Allow user to update their league logo
 // @access Public
-router.put('/uploadlogo/:id', upload.single('leagueLogo'), (req, res, next) => {
+router.put('/uploadlogo/:id', upload.single('logo'), (req, res, next) => {
   League.findById(req.params.id).then((league) => {
-    league.file = req.file.filename;
+    league.logo = req.file.filename;
     console.log(req.file);
     league
       .save()

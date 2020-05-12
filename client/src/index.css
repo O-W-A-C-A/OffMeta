@@ -194,7 +194,7 @@ Landing Page CSS
 }
 
 .landing-btn{
-  border-radius: 25px;
+  border-radius: 5px;
   width: 100px;
   height: 40px;
   background-color:#18202F;
@@ -217,7 +217,7 @@ Landing Page CSS
   border:1px solid #4CE2A7;
   width: 450px;
   height: 45px;  
-  border-radius: 30px;
+  border-radius: 5px;
   background-color: #1B2136;
   color: #273E64;
   font-size: 20px;
@@ -231,7 +231,7 @@ Landing Page CSS
   color: #022047;
   width: 340px;
   height: 38px;
-  border-radius: 30px;
+  border-radius: 5px;
   font-size: 19px;
   font-weight: bold;
   margin: center;
@@ -245,7 +245,7 @@ Landing Page CSS
   color: #0BC7FB;
   width: 340px;
   height: 38px;
-  border-radius: 30px;
+  border-radius: 5px;
   font-size: 19px;
   font-weight: bold;
   margin-left: center;
@@ -448,7 +448,7 @@ Profile Page CSS
   float: right;
   background-color: #283245;
   border: 1px solid red;
-  border-radius: 25px;
+  border-radius: 5px;
   color: red;
   height: 35px;
   width: 120px;
@@ -1352,6 +1352,26 @@ Chat App CSS
 .settings-value2{
   float: right;
   margin: 0px 10px 0px 0px
+}
+
+.edit-league-wrapper{
+  color: white;
+  margin-left: 15%;
+}
+
+.edit-league-btn{
+  border: none;
+  background-color: #283245;
+  color: #58A7FF; 
+}
+
+.edit-league-btn:hover{
+  color: #55504E;
+}
+
+.modal-edit-league-input{
+  border:none;
+  padding-left: 10px;
 }
 
 /*View League CSS*/

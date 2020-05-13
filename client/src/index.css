@@ -1423,82 +1423,81 @@ Chat App CSS
   overflow-y: auto;
 }
 
+.my-league-wrapper{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.my-league-content{
+  margin: 0 auto;
+}
+
 .my-league-header{
   color: #929599;
   border-bottom: 1px solid white;
-  margin: 0px 10px 0px 10px;
   padding-top: 40px;
   font-weight: bold;
 }
 
-.my-league-points-for{
-  float: right;
-  width: 10%;
+.my-league-logo{
+  width:80px;
+  height:80px;
+  border-radius: 5px;
+  float: left;
+}
+.my-league-logo-wrapper{
+  width:20%
 }
 
-.my-league-points-allowed{
-  float: right;
-  width: 10%;
+.my-league-info-wrapper{
+  float:left;
+  width:80%;
+  margin-left: 10px;
 }
 
-.my-league-waiver{
-  float: right;
-  width: 10%;
+.my-league-quick-info{
+  margin-top: 2.5%;
 }
 
-.my-league-div{
+.my-league-info-content{
+  white-space: pre-wrap;
+  font-size: 13px;
+  color: #9cb0d3;
+  
+}
+
+.my-league-name{
+  font-size: 20px;
+  font-weight: bold;
+  width:auto;
+}
+
+.my-league-member-wrapper{
 
 }
 
-.league-standing-row{
-  margin: 0px 10px 0px 10px;
-  display: flex;
+.member-img{
+  width: 25%;
+  float: left;
 }
 
-.rank{
-  width: 5%;
+.member-info{
+  width: 50%;
+  float: left;
+  margin-top: 5.7%;
+}
+.my-league-member-score{
+  width: 25%;
+  float: left;
+  padding-bottom: 10%;
+  margin-top:5.7%;
 }
 
-.team-container{
-  width: 65%;
+.render-img{
+  width: 80px;
+  height:80px;
 }
 
-.team-owner-name{
-}
-
-.team-owner-desc{
-  font-size: 11px;
-}
-
-.points-for{
-  width: 10%;
-}
-
-.points-allowed{
-  width: 10%;
-}
-
-.waiver{
-  width: 10%;
-  text-align: center;
-}
-
-.league-transaction-item{
-  margin: 0px 10px 0px 10px;
-  display: flex;
-}
-
-.team-owner-with-desc{
-  width: 40%;
-}
-
-.av{
-  width: 10%
-}
-
-.trans-timestamp, .player-pos{
-  font-size: 11px;
-}
 
 /* GET STARTED PAGE CSS*/
 .mid-or{

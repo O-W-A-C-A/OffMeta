@@ -239,9 +239,6 @@ renderDropPlayers(){
 renderMyTeam(){
   return this.state.myTeam.map(player => (
     <div key={player.playerID} className="myteam-player-wrapper">
-      <div className="my-team-player-role">
-        
-      </div>
       <div className="myteam-player-img">
         <img src={player.playerImg} width='100' height='100' className="drop-img"/>
       </div>

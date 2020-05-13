@@ -5,8 +5,8 @@ import profilesimg from "../public/default-img.png"
 export default class MyLeague extends Component{
 
   
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             leagueName:'',
             leagueSize:'',
@@ -15,22 +15,25 @@ export default class MyLeague extends Component{
             scoringFormat:'',
             members:[],
             img:'',
-            imgs:[]
+            imgs:[],
+            leagueID: this.props.leagueIDFromParent
         }
     }
-    componentDidMount(){
+    
+ async componentDidMount(){
 
-        axios.get(`http://localhost:5000/api/leagues/5eb8965bcb33cb61f47cf384`)
+         await axios.get(`http://localhost:5000/api/leagues/${this.state.leagueID}`)
             .then((res) =>{
                 this.setState({leagueName: res.data.leagueName, leagueSize: res.data.leagueSize,
                 scoringFormat: res.data.scoringFormat, members: res.data.members})
-                console.log(res)
+                console.log('my league get league', res.data)
+                console.log('asdasdasd ',this.state.members)
             }).catch((err) =>{
                 console.log(err)
             })
 
 
-            axios.get(`http://localhost:5000/api/leagues/leaguelogo/5eb8965bcb33cb61f47cf384`,
+            await axios.get(`http://localhost:5000/api/leagues/leaguelogo/${this.state.leagueID}`,
             {responseType: 'arraybuffer'}
             ).then(res => {
                 const base64 = btoa(
@@ -44,27 +47,46 @@ export default class MyLeague extends Component{
               });
     }
 
-    /*
-    */
+    
+    
     renderLeagueMembers(){
-        return this.state.members.map(member =>(
-            <div key={member._id} className="my-league-member-wrapper">
-                <div className="member-img">
-                    
-                </div>
-
-                <div className="member-info">
-                    {member.name}<br/>
-                    {member.email}
-                    {/*member.record*/}
-                    {/*member.totalScore*/}
-                </div>
-                <div className="my-league-member-score">
-                    Team Score: 
-                </div>
+        if(this.state.members === undefined)
+        {
+            return(<div className="my-league-member-wrapper">
+            <div className="member-img">
+                
             </div>
-        ));
+
+            <div className="member-info">
+         
+            </div>
+            <div className="my-league-member-score">
+               
+            </div>
+        </div>);
+        }
+        else{
+            return this.state.members.map(member =>(
+                <div key={member._id} className="my-league-member-wrapper">
+                    <div className="member-img">
+                        
+                    </div>
+    
+                    <div className="member-info">
+                        {member.name}<br/>
+                        {member.email}
+                        {member.record}
+                        {member.totalScore}
+                    </div>
+                    <div className="my-league-member-score">
+                        Team Score: 
+                    </div>
+                </div>
+            ));
+        }
+
     }
+    
 
     render(){
         return(

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 import classnames from "classnames";
-
+import axios from 'axios'
 
 class Login extends Component {
     constructor(){
@@ -19,24 +19,51 @@ class Login extends Component {
         //this.onSubmit = this.onSubmit.bind(this)
     }
 
-    componentDidMount() {
-      // If logged in and user navigates to Login page, should redirect them to dashboard
+
+    async componentDidMount() {
+      // If logged in and user navigates to Register page, should redirect them to dashboard
       if (this.props.auth.isAuthenticated) {
-        this.props.history.push("/home");
+                  //getting all leagues that user is apart of
+                  await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
+      .then((res) =>{
+           this.setState({
+              length: res.data.length,
+              leaguesJoinedArray: res.data
+          })             
+          window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;
+      })
+      .catch((err) =>{
+          console.log(err)
+          window.location = '/getstarted'
+      })
+    }
+  }
+    
+    async componentWillReceiveProps(nextProps) {
+      if (nextProps.auth.isAuthenticated) {
+      //getting all leagues that user is apart of
+      await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
+      .then((res) =>{
+           this.setState({
+              length: res.data.length,
+              leaguesJoinedArray: res.data
+          })
+           window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;        
+      })
+      .catch((err) =>{
+          console.log(err)
+          window.location = '/getstarted'
+      })
+         
+      }
+      
+      if (nextProps.errors) {
+        this.setState({
+          errors: nextProps.errors
+        });
       }
     }
-    
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-          this.props.history.push("/home"); // push user to homepage when they login
-        }
-        
-        if (nextProps.errors) {
-          this.setState({
-            errors: nextProps.errors
-          });
-        }
-      }
+
 
     onChange = e =>{
         this.setState({[e.target.id]: e.target.value})

@@ -21,6 +21,12 @@ const StatsSchema = new Schema({
   assists: {
     type: String,
   },
+  ultimates_earn: {
+    type: String,
+  },
+  deaths: {
+    type: String,
+  },
   healing: {
     type: String,
   },

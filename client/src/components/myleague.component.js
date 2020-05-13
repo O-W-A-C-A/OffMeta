@@ -104,5 +104,17 @@ export default class MyLeague extends Component{
                 </div>
             </div>
         );
-    }
+        this.setState({ file: 'data:;base64,' + base64 });
+        console.log(this.state.file);
+      });
+  }
+  render() {
+    return (
+      <div className='my-league-panel'>
+        <div className='settings-section form-section'>
+          <div className='my-league-header'>League Members</div>
+        </div>
+      </div>
+    );
+  }
 }

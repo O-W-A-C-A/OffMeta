@@ -8,7 +8,7 @@ const Stats = require('../../models/Stats.model');
 const DIR = './backend/uploads/league-logos';
 
 //@route GET api/stats/
-//@desc Return a list of all leagues created
+//@desc Return all of the players with their respective stats
 //@access Public
 router.get('/', (req, res) => {
   Stats.find()
@@ -16,13 +16,13 @@ router.get('/', (req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-//@route GET api/leagues/id
-//@desc Find league by ID
+//@route GET api/stats/getStats
+//@desc Find player stats by name
 //@access Public
 router.get('/getStats', (req, res) => {
   const player_name = req.body.player_name;
   Stats.findOne({ player_name })
-    .then((league) => res.json(league))
+    .then((stats) => res.json(stats))
     .catch((err) => res.status(400).json('Error:' + err));
 });
 

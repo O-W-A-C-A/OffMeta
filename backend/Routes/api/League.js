@@ -14,6 +14,8 @@ const League = require('../../models/League.model');
 //Load User Model
 const User = require('../../models/User.model');
 
+const Stats = require('../../models/Stats.model');
+
 const DIR = './backend/uploads/league-logos';
 
 //Nodemailer transporter
@@ -336,23 +338,39 @@ router.post('/addplayer/:id', (req, res) => {
       if (!league) {
         return res.status(404).json({ leaguenotfound: 'league not found' });
       } else {
-        League.updateOne(
-          { _id: req.params.id },
-          {
-            $push: {
-              leaguePlayers: {
-                playerID: req.body.playerID,
-                playerName: req.body.playerName,
-                playerImg: req.body.playerImg,
-                teamName: req.body.teamName,
-                ownerID: req.body.ownerID,
-                role: req.body.role
-              },
-            },
+        const player_name = req.body.playerName;
+        Stats.findOne({ player_name }).then((stat) => {
+          if (!stat) {
+            return res.status(404).json({ statnotfound: 'stat not found' });
+          } else {
+            res.json(stat);
+            League.updateOne(
+              { _id: req.params.id },
+              {
+                $push: {
+                  leaguePlayers: {
+                    playerID: req.body.playerID,
+                    playerName: req.body.playerName,
+                    playerImg: req.body.playerImg,
+                    teamName: req.body.teamName,
+                    ownerID: req.body.ownerID,
+                    role: req.body.role,
+                    eliminations: stat.eliminations,
+                    damage_done: stat.damage_done,
+                    obj_time: stat.obj_time,
+                    damage_absorbed: stat.damage_absorbed,
+                    assists: stat.assists,
+                    ultimates_earn: stat.ultimates_earn,
+                    deaths: stat.deaths,
+                    healing: stat.healing,
+                  },
+                },
+              }
+            )
+              .then(() => res.json('User added new Player'))
+              .catch((err) => res.status(400).json('Error: ' + err));
           }
-        )
-          .then(() => res.json('User added new Player'))
-          .catch((err) => res.status(400).json('Error: ' + err));
+        });
       }
     })
     .catch((err) => res.status(400).json('Error: ' + err));
@@ -401,40 +419,40 @@ router.post('/dropplayer/:id', (req, res) => {
 //@route GET api/leagues/getuserteam/:id
 //@desc gets the players for a specific user
 //@access Public
-router.get("/getuserteam/:id", (req, res) =>{
-    League.findById(req.params.id)
-        .then(league =>{
-            if(!league){
-                return res.status(404).json({leaguenotfound: "league not found"});
-            }
-            else{
-                League.aggregate([
-                    { $unwind: '$leaguePlayers'}, //unwide leaguePlayers array
-                    { $match: {'leaguePlayers.ownerID': req.query.ownerID}},//find subdocuments that match ownerID
-                    { $group: {_id: '$_id', leaguePlayers: {$push: '$leaguePlayers'}}}//group them by league ID and push leaguePlayer objects in array
-                ])
-                    .then(function(players){
-                        return res.status(200).json(players)
-                    })
-            }
-        })
+router.get('/getuserteam/:id', (req, res) => {
+  League.findById(req.params.id).then((league) => {
+    if (!league) {
+      return res.status(404).json({ leaguenotfound: 'league not found' });
+    } else {
+      League.aggregate([
+        { $unwind: '$leaguePlayers' }, //unwide leaguePlayers array
+        { $match: { 'leaguePlayers.ownerID': req.query.ownerID } }, //find subdocuments that match ownerID
+        { $group: { _id: '$_id', leaguePlayers: { $push: '$leaguePlayers' } } }, //group them by league ID and push leaguePlayer objects in array
+      ]).then(function (players) {
+        return res.status(200).json(players);
+      });
+    }
+  });
 });
 
 //@route POST api/leagues/tradeplayers/:id
 //@desc Trade players between each user ONLY supporting 2 player trades
 //@access Public
-router.post("/tradeplayers/:id", (req, res) =>{
-  League.findById(req.params.id)
-    .then(league => {
-      if(!league){
-        return res.status(404).json({leaguenotfound: "league not found"});
-      }
-      else{
-        league.updateOne({},{$set:{"leaguePlayers.$.ownerID":req.body.ownerID2}},
-        {arrayFilters: [{"leaguePlayers.playerID": req.body.playerID1}]})          .then(() => res.json('User dropped new Player'))
+router.post('/tradeplayers/:id', (req, res) => {
+  League.findById(req.params.id).then((league) => {
+    if (!league) {
+      return res.status(404).json({ leaguenotfound: 'league not found' });
+    } else {
+      league
+        .updateOne(
+          {},
+          { $set: { 'leaguePlayers.$.ownerID': req.body.ownerID2 } },
+          { arrayFilters: [{ 'leaguePlayers.playerID': req.body.playerID1 }] }
+        )
+        .then(() => res.json('User dropped new Player'))
         .catch((err) => res.status(400).json('Error: ' + err));
-      }
-    })
+    }
+  });
 });
 
 module.exports = router;

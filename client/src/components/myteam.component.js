@@ -41,7 +41,7 @@ class MyTeam extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
       .then((res) => {
@@ -74,7 +74,7 @@ class MyTeam extends Component {
       })
       .then((res) =>{
         this.setState({myTeam: res.data[0].leaguePlayers})
-        console.log(this.state.myTeam)//prints out team to console
+        //console.log(this.state.myTeam)//prints out team to console
       }).catch((err) =>{
         console.log(err)
       })
@@ -201,7 +201,7 @@ getPlayerByName = async (search) => {
   }
   axios.post(`http://localhost:5000/api/leagues/dropplayer/${this.state.leagueID}`, dropPlayer)
   .then(res => {
-    console.log(res.data)
+    //console.log(res.data)
     window.location.reload(false)
   });
 }

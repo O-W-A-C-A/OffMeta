@@ -181,7 +181,7 @@ router.put('/uploadlogo/:id', upload.single('logo'), (req, res, next) => {
 // @route POST api/leagues/invite
 // @desc Send an invite to league email to user in database
 // @access Public
-router.post('/invite/', (req, res) => {
+router.post('/invite/:id', (req, res) => {
   const { errors, isValid } = validateInviteInput(req.body);
 
   // Check validation
@@ -192,8 +192,6 @@ router.post('/invite/', (req, res) => {
   //these are to be passed into function
   //league variables should be gathered from props
   const email = req.body.email;
-  //console.log(email)
-  const leagueId = req.body.id;
   //console.log(leagueId)
   const leagueName = req.body.leagueName;
 
@@ -207,7 +205,7 @@ router.post('/invite/', (req, res) => {
       //if they exist
       else {
         //check if league exists
-        League.findById(req.body.id).then((league) => {
+        League.findById(req.params.id).then((league) => {
           //if it doesnt
           if (!league) {
             return res.status(409).json({ leaguenotfound: 'League not found' });
@@ -219,6 +217,12 @@ router.post('/invite/', (req, res) => {
             var isInArray = league.members.some((member) => {
               return member.equals(user.id);
             });
+
+            if(league.members.length === parseInt(league.leagueSize)){
+              return res
+              .status(200)
+              .json({ leaguefull: 'league is full' });
+            }
 
             //check if user already exists in member list of league
             if (isInArray) {
@@ -236,7 +240,7 @@ router.post('/invite/', (req, res) => {
                 subject: `OffMeta you have been invited to join ${leagueName}`,
                 text:
                   `To join ${leagueName} click on the following link: \n\n` +
-                  `http://localhost:3000/acceptinvite/${leagueId}\n\n` +
+                  `http://localhost:3000/acceptinvite/${req.params.id}\n\n` +
                   'Please ignore if you dont want to accept.',
               };
 
@@ -336,8 +340,9 @@ router.post('/addplayer/:id', (req, res) => {
       if (!league) {
         return res.status(404).json({ leaguenotfound: 'league not found' });
       } else {
+        
         League.updateOne(
-          { _id: req.params.id },
+          { _id: req.params.id , "leaguePlayers.playerID": {$nin:[req.body.playerID]}},//will not allow for duplicates
           {
             $push: {
               leaguePlayers: {
@@ -346,7 +351,8 @@ router.post('/addplayer/:id', (req, res) => {
                 playerImg: req.body.playerImg,
                 teamName: req.body.teamName,
                 ownerID: req.body.ownerID,
-                role: req.body.role
+                role: req.body.role,
+                leagueID: req.params.id
               },
             },
           }
@@ -408,10 +414,14 @@ router.get("/getuserteam/:id", (req, res) =>{
                 return res.status(404).json({leaguenotfound: "league not found"});
             }
             else{
-                League.aggregate([
+              League.aggregate([
                     { $unwind: '$leaguePlayers'}, //unwide leaguePlayers array
+                    { $match: {'leaguePlayers.leagueID':req.params.id}},
                     { $match: {'leaguePlayers.ownerID': req.query.ownerID}},//find subdocuments that match ownerID
-                    { $group: {_id: '$_id', leaguePlayers: {$push: '$leaguePlayers'}}}//group them by league ID and push leaguePlayer objects in array
+                    { $group: {_id: '$_id',leaguePlayers: {$push: '$leaguePlayers'}}}//group them by league ID and push leaguePlayer objects in array
+                    ,{ $project: {
+                        leaguePlayers: { $slice: [ "$leaguePlayers", 6 ] }
+                    }}
                 ])
                     .then(function(players){
                         return res.status(200).json(players)

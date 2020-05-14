@@ -28,7 +28,10 @@ class ChatApp extends Component{
             console.log(err);
         });
 
-        var room = this.state.leagueID
+        var path = window.location.pathname
+        var sub = path.substring(6)
+
+        var room = sub
         console.log('chat app ',room)
         socket.on('connect', function(){
             socket.emit('room', room);
@@ -81,7 +84,6 @@ class ChatApp extends Component{
             <div className="chat-container">
                 <div className="chat-header">
                     <div className="chat-title">League Chat</div>
-                    <div className="last-message">Last Message sent</div>
                 </div>
                 <div className="chat-body">
                 <div>{this.renderChat()}</div>

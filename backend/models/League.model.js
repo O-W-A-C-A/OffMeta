@@ -36,7 +36,8 @@ const LeagueSchema= new Schema({
         playerImg:{type: String, trim: true},
         ownerID: {type: String, trim: true},
         teamName:{type: String, trim: true},
-        role:{type: String, trim: true}
+        role:{type: String, trim: true},
+        leagueID:{type: String, trim: true}
     },
     createdBy:{
         type:String

@@ -26,8 +26,8 @@ export default class MyLeague extends Component{
             .then((res) =>{
                 this.setState({leagueName: res.data.leagueName, leagueSize: res.data.leagueSize,
                 scoringFormat: res.data.scoringFormat, members: res.data.members})
-                console.log('my league get league', res.data)
-                console.log('asdasdasd ',this.state.members)
+                //console.log('my league get league', res.data)
+                //console.log('asdasdasd ',this.state.members)
             }).catch((err) =>{
                 console.log(err)
             })

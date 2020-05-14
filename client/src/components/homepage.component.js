@@ -26,8 +26,10 @@ class HomePage extends Component{
         var path = window.location.pathname
         var sub = path.substring(6)
 
-         await this.setState({leagueSelectedID: sub})
-        console.log(this.state.leagueSelectedID)
+        await this.setState({leagueSelectedID: sub})
+        //console.log(this.state.leagueSelectedID)
+
+
     }
     
     onTabClick = (e) => {

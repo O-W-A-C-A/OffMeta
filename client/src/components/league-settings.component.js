@@ -38,7 +38,7 @@ export default class LeagueSettings extends Component{
                 console.log(err)
             })
 
-            await axios.get(`http://localhost:5000/api/leagues/leaguelogo/${this.state.leagueID}`,
+        await axios.get(`http://localhost:5000/api/leagues/leaguelogo/${this.state.leagueID}`,
         {responseType: 'arraybuffer'}
         ).then(res => {
             const base64 = btoa(
@@ -48,7 +48,7 @@ export default class LeagueSettings extends Component{
               ),
             );
             this.setState({ file: "data:;base64," + base64 });
-            console.log(this.state.file)
+            //console.log(this.state.file)
           });
     }
 
@@ -116,7 +116,7 @@ export default class LeagueSettings extends Component{
         
         const formData = new FormData();
         formData.append('logo', this.state.file);
-        console.log(this.state.file)
+        //console.log(this.state.file)
         const updateLeague = {
             leagueName: this.state.leagueName,
             scoringFormat: this.state.scoringFormat,

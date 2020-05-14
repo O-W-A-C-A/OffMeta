@@ -44,7 +44,7 @@ class MyTeam extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
       .then((res) => {

@@ -39,30 +39,30 @@ const LeagueSchema = new Schema(
       teamName: { type: String, trim: true },
       role: { type: String, trim: true },
       eliminations: {
-        type: String,
+        type: Number,
       },
       damage_done: {
-        type: String,
+        type: Number,
       },
       obj_time: {
-        type: String,
+        type: Number,
       },
       damage_absorbed: {
-        type: String,
+        type: Number,
       },
       assists: {
-        type: String,
+        type: Number,
       },
       ultimates_earn: {
-        type: String,
+        type: Number,
       },
       deaths: {
-        type: String,
+        type: Number,
       },
       healing: {
-        type: String,
+        type: Number,
       },
-      leagueID:{type: String, trim: true},
+      leagueID: { type: String, trim: true },
     },
     createdBy: {
       type: String,

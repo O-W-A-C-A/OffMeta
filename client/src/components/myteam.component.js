@@ -258,27 +258,7 @@ Returns@ if player found returns their headshot, id, and name
     ));
   }
 
-  totalscore(name) {
-    axios
-      .get(`http://localhost:5000/api/Stats/getStats`, {
-        params: {
-          player_name: name,
-        },
-      })
-      .then((res) => {
-        var total =
-          parseInt(res.data.eliminations) +
-          parseInt(res.data.damage_done) +
-          parseInt(res.data.obj_time) +
-          parseInt(res.data.damage_absorbed) +
-          parseInt(res.data.assists) +
-          parseInt(res.data.ultimates_earn) +
-          parseInt(res.data.healing) -
-          parseInt(res.data.deaths) * 2;
-        myArr.push(total);
-        console.log(myArr[myArr.length - 1]);
-      });
-  }
+  totalscore(name) {}
   /*
    **********END DROP PLAYER*************
    */
@@ -304,10 +284,18 @@ Returns@ if player found returns their headshot, id, and name
           Team: {player.teamName}
           <br />
           Role: {player.role}
-          <br />
-          Something: {player.eliminations}
         </div>
-        <div className='my-team-player-points'>Points Earned:{player.role}</div>
+        <div className='my-team-player-points'>
+          Points Earned:
+          {player.eliminations +
+            player.healing / 1000 +
+            player.damage_done +
+            player.assists -
+            2 * player.deaths +
+            player.obj_time +
+            player.ultimates_earn +
+            player.damage_absorbed}
+        </div>
       </div>
     ));
   }

@@ -64,7 +64,7 @@ router.get('/', (req, res) => {
 //@route POST api/leagues/create
 //@desc Create League
 //@access Public
-router.post('/create', upload.single('logo'), (req, res) => {
+router.post('/create', upload.single('logo'), (req, res, next) => {
   //creating a unique 6 character code which will allow user's to join a league when creating an account
   const token = crypto.randomBytes(3).toString('hex');
 
@@ -74,7 +74,6 @@ router.post('/create', upload.single('logo'), (req, res) => {
     leagueSize: Number(req.body.leagueSize),
     scoringFormat: req.body.scoringFormat,
     createdBy: req.body.createdBy, //user id of creator
-    logo: req.file.filename, //logo
     joinCode: token,
     createdBy: req.body.createdBy,
     leaguePlayers: [], //by default create empty array

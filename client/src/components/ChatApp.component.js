@@ -6,32 +6,30 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 const socket = io.connect("http://localhost:5000");
 class ChatApp extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             message:'',
             chat:[],
             name:'',
-            leagueID: '',//testing
+            leagueID: this.props.leagueIDFromParent,//testing
         }
     }
 
     componentDidMount() {
-        var room;
         axios.get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
         .then((res) => {
             //console.log(res.data); for testing if data is actually receive
-            this.setState({name:res.data.name, leagueID: res.data.leaguesJoined[0]._id})
+            this.setState({name:res.data.name})
             //LATER ON THIS VALUE SHOULD BE UPDATED WHEN A USER CREATES A NEW LEAGUE OR SWITCHES TO 
             //ANOTHER OF THEIR LEAGUES
-            room = this.state.leagueID; //setting room to leagueID 
         })
         .catch((err) =>{
             console.log(err);
         });
 
-        
-
+        var room = this.state.leagueID
+        console.log('chat app ',room)
         socket.on('connect', function(){
             socket.emit('room', room);
         });

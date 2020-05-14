@@ -5,8 +5,8 @@ import axios from 'axios'
 import defaultimg from "../public/upload.png"
 
 export default class LeagueSettings extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         //onSubmit function delcaration will handle submitting of form to the server
         this.onSubmit = this.onSubmit.bind(this);
 
@@ -24,11 +24,12 @@ export default class LeagueSettings extends Component{
             leagueSize: 4,
             file: defaultimg,
             imagePreviewUrl: '',
+            leagueID: this.props.leagueIDFromParent
         }
     }
 
-    componentDidMount(){
-        axios.get(`http://localhost:5000/api/leagues/5eb8965bcb33cb61f47cf384`)
+    async componentDidMount(){
+        await axios.get(`http://localhost:5000/api/leagues/${this.state.leagueID}`)
             .then((res) =>{
                 this.setState({leagueName:res.data.leagueName, scoringFormat: res.data.scoringFormat,
                 leagueSize: res.data.leagueSize, joinCode: res.data.joinCode})
@@ -37,7 +38,7 @@ export default class LeagueSettings extends Component{
                 console.log(err)
             })
 
-        axios.get(`http://localhost:5000/api/leagues/leaguelogo/5eb8965bcb33cb61f47cf384`,
+            await axios.get(`http://localhost:5000/api/leagues/leaguelogo/${this.state.leagueID}`,
         {responseType: 'arraybuffer'}
         ).then(res => {
             const base64 = btoa(
@@ -125,14 +126,14 @@ export default class LeagueSettings extends Component{
 
 
         //hardcoded for now hehe
-        axios.post(`http://localhost:5000/api/leagues/update/5eb8965bcb33cb61f47cf384`, updateLeague)
+        axios.post(`http://localhost:5000/api/leagues/update/${this.state.leagueID}`, updateLeague)
             .then((res) =>{
                 console.log(res)
             }).catch((err) =>{
                 console.log(err)
             });
 
-        axios.put(`http://localhost:5000/api/leagues/uploadlogo/5eb8965bcb33cb61f47cf384`, formData)
+        axios.put(`http://localhost:5000/api/leagues/uploadlogo/${this.state.leagueID}`, formData)
             .then(res => console.log(res))
             .catch((err) =>{
                 console.log(err)

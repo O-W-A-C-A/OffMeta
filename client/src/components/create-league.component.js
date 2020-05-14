@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from 'axios';
 //components
 import NavBar from './navbar.component';
-import defaultimg from "../public/upload.png"
 //auth
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -17,15 +16,12 @@ class CreateLeague extends Component{
         this.onChangeLeagueName = this.onChangeLeagueName.bind(this);
         this.onChangeScoringFormat = this.onChangeScoringFormat.bind(this);
         this.onChangeLeagueSize = this.onChangeLeagueSize.bind(this);
-        this.onFileChange = this.onFileChange.bind(this);
 
         //setting default state of all variables
         this.state = {
             leagueName:'',
             scoringFormat: 'STD',
             leagueSize: 4,
-            logo: defaultimg,
-            imagePreviewUrl: '',
             createdBy:'',
             playerdatabase:''
         };
@@ -54,7 +50,7 @@ class CreateLeague extends Component{
         axios.post('http://localhost:5000/api/leagues/create', league)
             .then(res => {
                 console.log(res.data)
-                window.location = '/home' //after submission brings user to the home page
+                window.location = '/' //after submission brings user to the home page
             });
     }
     //handles the state for when user enters a league name
@@ -81,24 +77,7 @@ class CreateLeague extends Component{
         //for testing
         //console.log(e.target.value)
     }
-    //handles the the state for when the user uploads a league image
-    //this image is optional
-    //handles state change for images
-    onFileChange(e) {
-        e.preventDefault();
 
-        let reader = new FileReader();
-        let file = e.target.files[0];
-    
-        reader.onloadend = () => {
-          this.setState({
-            logo: file,
-            imagePreviewUrl: reader.result
-          });
-        }
-    
-        reader.readAsDataURL(file)
-    }
     //Below is the methods to add the player database into the league:
     player2db() {
         let qb = [];
@@ -115,15 +94,6 @@ class CreateLeague extends Component{
           return qb;
       }
     render(){
-        //magic
-        let {imagePreviewUrl} = this.state;
-        let $imagePreview = null;
-        if (imagePreviewUrl) {
-            $imagePreview = (<img className="btn-upload-img" src={imagePreviewUrl} alt="League Logo"/>);
-        }
-        else{
-            $imagePreview = (<img className="btn-upload-img" src={this.state.logo} alt="League Logo"/>);
-        }
 
         return(
             
@@ -141,11 +111,11 @@ class CreateLeague extends Component{
                             <input type="text" className="league-name-text" placeholder="Enter the name of your league" value={this.state.leagueName} onChange={this.onChangeLeagueName}/>                        
                         </div>
                         <div className="league-logo">
-                            <label>Optional Logo</label>
+                            
                             <div className="logo-img">
-                            {$imagePreview}
+                         
                             <div style={{paddingBottom:'10px', paddingTop: '10px'}}>
-                            <input type="file" onChange={this.onFileChange} style={{color: 'white'}} />
+       
                             </div>
                               
                         </div>

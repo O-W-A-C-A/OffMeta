@@ -10,30 +10,40 @@ import ChatApp from "./ChatApp.component"
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
-
 class HomePage extends Component{
     constructor(props){
         super(props);
         this.state = {
-            showComponent: 0
+            showComponent: 0,
+            leagues:[],
+            leagueSelectedID:'',
+            currentLeague:''
         };
         this.onTabClick = this.onTabClick.bind(this);
     }
 
+     async componentDidMount(){
+        var path = window.location.pathname
+        var sub = path.substring(6)
+
+         await this.setState({leagueSelectedID: sub})
+        console.log(this.state.leagueSelectedID)
+    }
+    
     onTabClick = (e) => {
         this.setState({showComponent: e.target.value});
-        console.log(e.target.value);
+        //console.log(e.target.value);
     }
 
     render(){
-        
+        const selection = this.state.leagueSelectedID
         const renderComponent = () =>{
             //console.log(this.state.showComponent) for testing
             switch(this.state.showComponent){
-                case '1': return <MyLeague/>;
-                case '2': return <MyTeam/>;
-                case '3': return <LeagueSettings/>;
-                default: return <MyLeague/>;
+                case '1': return <MyLeague leagueIDFromParent={selection}/>;
+                case '2': return <MyTeam leagueIDFromParent={selection}/>;
+                case '3': return <LeagueSettings leagueIDFromParent={selection}/>;
+                default: return <MyLeague  leagueIDFromParent={selection}/>;
             }
         }
         return(
@@ -56,7 +66,7 @@ class HomePage extends Component{
                 </div>
 
                     <div className="side-chat">
-                        <ChatApp/>
+                        <ChatApp leagueIDFromParent={selection}/>
                     </div>
                 </div>
             </div>
@@ -67,7 +77,9 @@ class HomePage extends Component{
 HomePage.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
-  };const mapStateToProps = state => ({
+  };
+  
+  const mapStateToProps = state => ({
     auth: state.auth
   });
   

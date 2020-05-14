@@ -12,12 +12,25 @@ export default class PreDraft extends Component {
       leagueName: '',
       leagueID: '',
       leagueSize: 0,
+      message: '',
     };
   }
 
   componentDidMount() {
     this.getLeagueInfo();
     this.getListOfMembers();
+    var room;
+
+    socket.on('connect', function () {
+      socket.emit('room', room);
+    });
+
+    socket.on('chat message', ({ leagueName, message }) => {
+      // Add new messages to existing messages in "chat"
+      this.setState({
+        chat: [...this.state.draftRoom, { leagueName, message }],
+      });
+    });
   }
 
   getListOfMembers() {

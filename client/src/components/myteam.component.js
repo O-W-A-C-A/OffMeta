@@ -36,11 +36,12 @@ class MyTeam extends Component {
       //array to hold user's team
       myTeam:[],
       droppedPlayerID:'',
-      leagueName: ''
+      leagueName: '',
+      leagueID: this.props.leagueIDFromParent
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     axios
       .get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
       .then((res) => {
@@ -66,7 +67,7 @@ class MyTeam extends Component {
         this.setState({ file: 'data:;base64,' + base64 });
       });
 
-      axios.get(`http://localhost:5000/api/leagues/getuserteam/5eb6d50c81fbe72244a3bb54`,{
+      axios.get(`http://localhost:5000/api/leagues/getuserteam/${this.state.leagueID}`,{
         params:{
           'ownerID': this.props.auth.user.id
         }
@@ -78,7 +79,7 @@ class MyTeam extends Component {
         console.log(err)
       })
 
-      axios.get(`http://localhost:5000/api/leagues/5eb8965bcb33cb61f47cf384`)
+      axios.get(`http://localhost:5000/api/leagues/${this.state.leagueID}`)
       .then((res) =>{
           this.setState({leagueName:res.data.leagueName})
       })
@@ -128,7 +129,7 @@ Purpose: Get Request To The Players Endpoint
 
  console.log(addNewPlayer)
 
- axios.post(`http://localhost:5000/api/leagues/addplayer/5eb6d50c81fbe72244a3bb54`, addNewPlayer)
+ axios.post(`http://localhost:5000/api/leagues/addplayer/${this.state.leagueID}`, addNewPlayer)
  .then(res => {
    console.log(res.data)
    window.location.reload(false)
@@ -199,7 +200,7 @@ getPlayerByName = async (search) => {
   const dropPlayer ={
     dropPlayerID: dropPlayerID
   }
-  axios.post(`http://localhost:5000/api/leagues/dropplayer/5eb6d50c81fbe72244a3bb54`, dropPlayer)
+  axios.post(`http://localhost:5000/api/leagues/dropplayer/${this.state.leagueID}`, dropPlayer)
   .then(res => {
     console.log(res.data)
     window.location.reload(false)

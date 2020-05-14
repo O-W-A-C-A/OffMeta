@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 //@desc Find player stats by name
 //@access Public
 router.get('/getStats', (req, res) => {
-  const player_name = req.body.player_name;
+  const player_name = req.query.player_name;
   Stats.findOne({ player_name })
     .then((stats) => res.json(stats))
     .catch((err) => res.status(400).json('Error:' + err));

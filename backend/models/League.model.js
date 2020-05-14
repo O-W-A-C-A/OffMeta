@@ -62,6 +62,7 @@ const LeagueSchema = new Schema(
       healing: {
         type: String,
       },
+      leagueID:{type: String, trim: true},
     },
     createdBy: {
       type: String,

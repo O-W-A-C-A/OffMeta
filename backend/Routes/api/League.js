@@ -347,7 +347,7 @@ router.post('/addplayer/:id', (req, res) => {
           } else {
             res.json(stat);
             League.updateOne(
-              { _id: req.params.id },
+              { _id: req.params.id,"leaguePlayers.playerID": {$nin:[req.body.playerID]}},//will not allow for duplicates,
               {
                 $push: {
                   leaguePlayers: {
@@ -365,6 +365,7 @@ router.post('/addplayer/:id', (req, res) => {
                     ultimates_earn: stat.ultimates_earn,
                     deaths: stat.deaths,
                     healing: stat.healing,
+                    leagueID: req.params.id
                   },
                 },
               }
@@ -425,14 +426,19 @@ router.get('/getuserteam/:id', (req, res) => {
   League.findById(req.params.id).then((league) => {
     if (!league) {
       return res.status(404).json({ leaguenotfound: 'league not found' });
-    } else {
+    }  else{
       League.aggregate([
-        { $unwind: '$leaguePlayers' }, //unwide leaguePlayers array
-        { $match: { 'leaguePlayers.ownerID': req.query.ownerID } }, //find subdocuments that match ownerID
-        { $group: { _id: '$_id', leaguePlayers: { $push: '$leaguePlayers' } } }, //group them by league ID and push leaguePlayer objects in array
-      ]).then(function (players) {
-        return res.status(200).json(players);
-      });
+            { $unwind: '$leaguePlayers'}, //unwide leaguePlayers array
+            { $match: {'leaguePlayers.leagueID':req.params.id}},
+            { $match: {'leaguePlayers.ownerID': req.query.ownerID}},//find subdocuments that match ownerID
+            { $group: {_id: '$_id',leaguePlayers: {$push: '$leaguePlayers'}}}//group them by league ID and push leaguePlayer objects in array
+            ,{ $project: {
+                leaguePlayers: { $slice: [ "$leaguePlayers", 6 ] }
+            }}
+        ])
+            .then(function(players){
+                return res.status(200).json(players)
+            })
     }
   });
 });

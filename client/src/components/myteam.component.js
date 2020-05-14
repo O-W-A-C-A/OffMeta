@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {PersonAdd, SwapHorizontalCircle, Delete} from '@material-ui/icons'
+import {PersonAdd, SwapHorizontalCircle, Delete, ContactsOutlined} from '@material-ui/icons'
 import axios from 'axios'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -124,6 +124,7 @@ Purpose: Get Request To The Players Endpoint
     playerImg: this.state.playerImg,
     teamName: this.state.teamName,
     role: this.state.role,
+    stat: this.state.stat,
    }
 
  console.log(addNewPlayer)
@@ -231,6 +232,20 @@ renderDropPlayers(){
 **********END DROP PLAYER*************
 */
 
+/***
+ * Retrieve stats for players by name
+ */
+totalscore(name){
+   axios.get(`http://localhost:5000/api/Stats/getStats`, {
+    params:{
+      'player_name': name
+    }
+    })
+  .then(res => {
+    var total = parseInt(res.data.eliminations) + parseInt(res.data.damage_done) +parseInt(res.data.obj_time) +parseInt(res.data.damage_absorbed) +parseInt(res.data.assists) +parseInt(res.data.ultimates_earn) +parseInt(res.data.healing)-(parseInt(res.data.deaths)*2); 
+    return total;
+  });
+}
 
 /****
  * MY TEAM START
@@ -249,7 +264,7 @@ renderMyTeam(){
       Role: {player.role}
      </div>
      <div className="my-team-player-points">
-       Points Earned: 
+       Points Earned: {this.totalscore(player.playerName)}
      </div>
     </div>
   ));

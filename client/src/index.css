@@ -1496,13 +1496,12 @@ Chat App CSS
   width: 50%;
   float: left;
   margin-top: 5%;
-  
 }
 .my-league-member-score{
   width: 25%;
   float: left;
   padding-bottom: 10%;
-  margin-top:5.7%;
+  padding-top:5%;
 }
 
 .render-img{

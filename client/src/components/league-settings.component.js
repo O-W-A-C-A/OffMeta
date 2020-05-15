@@ -3,8 +3,11 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import defaultimg from "../public/upload.png"
+//auth
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-export default class LeagueSettings extends Component{
+class LeagueSettings extends Component{
     constructor(props){
         super(props);
         //onSubmit function delcaration will handle submitting of form to the server
@@ -16,6 +19,7 @@ export default class LeagueSettings extends Component{
         this.onChangeLeagueSize = this.onChangeLeagueSize.bind(this);
         this.onChangeJoinCode = this.onChangeJoinCode.bind(this);
         this.onFileChange = this.onFileChange.bind(this);
+        this.leaveLeague = this.leaveLeague.bind(this);
 
         this.state = {
             show: false,
@@ -124,8 +128,6 @@ export default class LeagueSettings extends Component{
             joinCode: this.state.joinCode,
         }
 
-
-        //hardcoded for now hehe
         axios.post(`http://localhost:5000/api/leagues/update/${this.state.leagueID}`, updateLeague)
             .then((res) =>{
                 console.log(res)
@@ -139,7 +141,23 @@ export default class LeagueSettings extends Component{
                 console.log(err)
             });
 
-       // window.location.reload(false)
+       window.location.reload(false)
+    }
+
+    leaveLeague(e){
+        e.preventDefault()
+        const leave = {
+            userID: this.props.auth.user.id,
+            leagueID: this.state.leagueID
+        }
+
+        axios.post("http://localhost:5000/api/users/leaveleague/", leave)
+            .then(res =>{
+                console.log(res)
+            }).catch(err =>{
+                console.log(err)
+            })
+            window.location = '/'
     }
 
     render(){
@@ -252,44 +270,69 @@ export default class LeagueSettings extends Component{
                     <div className="settings-row">
                         <div className="settings-name2">Eliminations</div>
                         <div className="settings-value2">
-                            <span className="plus">test</span>
+                            <span className="plus">1</span>
                         </div>
                     </div><br/>
                     <div className="settings-row">
                         <div className="settings-name2">Assists</div>
                         <div className="settings-value2">
-                            <span className="plus">test</span>
+                        <span className="plus">{this.state.scoringFormat}</span>
                         </div>
                     </div>
                     <div className="grouping-header">TNK</div>
                     <div className="settings-row">
                         <div className="settings-name2">Damage Absorbed</div>
                         <div className="settings-value2">
-                            <span className="plus">test</span>
+                            <span className="plus">0.00001</span>
                         </div>
                     </div>
                     <div className="grouping-header">SPT</div>
                     <div className="settings-row">
                         <div className="settings-name2">Healing Done</div>
                         <div className="settings-value2">
-                            <span className="plus">test</span>
+                            <span className="plus">0.001</span>
                         </div>
                     </div>
                     <div className="grouping-header">MISC</div>
                     <div className="settings-row">
                         <div className="settings-name2">Objective Time</div>
                         <div className="settings-value2">
-                            <span className="plus">test</span>
+                            <span className="plus">0.1</span>
                         </div>
                     </div><br/>
                     <div className="settings-row">
                         <div className="settings-name2">Ultimates Earned</div>
                         <div className="settings-value2">
-                            <span className="plus">test</span>
+                            <span className="plus">4</span>
+                        </div>
+                    </div><br/>
+                    
+                    <div className="settings-row">
+                        <div className="settings-name2">Deaths</div>
+                        <div className="settings-value2">
+                            <span className="plus">-2</span>
                         </div>
                     </div>
+                </div>
+
+
+                
+                
+                <div className="settings-section form-section">
+                    <div className="settings-header">Leave League</div>
+                    <button type="submit" onClick={this.leaveLeague} className="leave-league">Leave League</button>
                 </div>
             </div>
         );
     }
 }
+
+LeagueSettings.propTypes = {
+    auth: PropTypes.object.isRequired
+  };
+  
+  const mapStateToProps = state => ({
+    auth: state.auth
+  });
+  
+  export default connect(mapStateToProps)(LeagueSettings);

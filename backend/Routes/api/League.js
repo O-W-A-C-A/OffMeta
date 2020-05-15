@@ -345,7 +345,6 @@ router.post('/addplayer/:id', (req, res) => {
           if (!stat) {
             return res.status(404).json({ statnotfound: 'stat not found' });
           } else {
-            res.json(stat);
             League.updateOne(
               { _id: req.params.id,"leaguePlayers.playerID": {$nin:[req.body.playerID]}},//will not allow for duplicates,
               {
@@ -373,7 +372,7 @@ router.post('/addplayer/:id', (req, res) => {
               .then(() => res.json('User added new Player'))
               .catch((err) => res.status(400).json('Error: ' + err));
           }
-        });
+        }).catch((err) => res.status(400).json('Error: ' + err));
       }
     })
     .catch((err) => res.status(400).json('Error: ' + err));
@@ -451,13 +450,13 @@ router.post('/tradeplayers/:id', (req, res) => {
     if (!league) {
       return res.status(404).json({ leaguenotfound: 'league not found' });
     } else {
-      league
-        .updateOne(
-          {},
-          { $set: { 'leaguePlayers.$.ownerID': req.body.ownerID2 } },
-          { arrayFilters: [{ 'leaguePlayers.playerID': req.body.playerID1 }] }
+      League
+        .findOneAndUpdate(
+          { _id: req.params.id,"leaguePlayers.playerID": req.body.playerID},
+          { $push: { ownerID: req.body.ownerID } },
+          { upsert: true }
         )
-        .then(() => res.json('User dropped new Player'))
+        .then(() => res.json('User traded a player'))
         .catch((err) => res.status(400).json('Error: ' + err));
     }
   });

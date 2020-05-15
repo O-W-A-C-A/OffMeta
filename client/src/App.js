@@ -19,7 +19,7 @@ import CreateLeague from './components/create-league.component';
 import Verify from './components/verify.component';
 import CreateOrJoinLeague from './components/create-or-joinleague.component';
 import PreDraft from './components/pre-draft.component';
-
+import AcceptInvite from './components/accept-invite.component';
 import store from './store';
 
 import PrivateRoute from './components/private-route/PrivateRoute';
@@ -51,6 +51,7 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/forgotpassword' component={ForgotPassword} />
             <Route path='/reset/:token' component={ResetPassword} />
+            <Route path='/acceptinvite/:token' component={AcceptInvite} />
             <Switch>
               <PrivateRoute exact path='/home/:id' component={HomePage} />
               <PrivateRoute exact path='/profile' component={Profile} />

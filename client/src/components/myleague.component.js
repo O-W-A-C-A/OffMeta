@@ -4,9 +4,10 @@ import defaultimg from "../public/upload.png"
 import profilesimg from "../public/default-img.png"
 export default class MyLeague extends Component{
 
-  
     constructor(props){
         super(props);
+        this.onInviteChange = this.onInviteChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             leagueName:'',
             leagueSize:'',
@@ -16,7 +17,8 @@ export default class MyLeague extends Component{
             members:[],
             img:'',
             imgs:[],
-            leagueID: this.props.leagueIDFromParent
+            leagueID: this.props.leagueIDFromParent,
+            email:'',
         }
     }
     
@@ -69,7 +71,6 @@ export default class MyLeague extends Component{
             return this.state.members.map(member =>(
                 <div key={member._id} className="my-league-member-wrapper">
                     <div className="member-img">
-                        
                     </div>
     
                     <div className="member-info">
@@ -85,6 +86,30 @@ export default class MyLeague extends Component{
             ));
         }
 
+    }
+
+
+    onSubmit(e){
+        e.preventDefault();
+        console.log(this.state.email)
+        console.log(this.state.leagueName)
+        const invite ={
+            email: this.state.email,
+            leagueName: this.state.leagueName
+        }
+        
+        axios.post(`http://localhost:5000/api/leagues/invite/${this.state.leagueID}`, invite)
+        .then((res) =>{
+            console.log(res)
+        }).catch((err) =>{
+            console.log(err)
+        })
+    }
+
+    onInviteChange(e){
+        this.setState({
+            email: e.target.value
+        })
     }
     
 
@@ -115,6 +140,23 @@ export default class MyLeague extends Component{
                             </div>
                          </div>
                     </div><br/><br/>
+                </div>
+
+                {/*League Member Information*/}
+                    <div className="my-league-wrapper">
+                    <div className="my-league-header">Invite Friends</div>
+                        <div className="my-league-body">
+                            <form onSubmit={this.onSubmit}>
+                                <div className="my-league-joincode-wrapper">
+                                    <div className="my-league-joincode-input">
+                                        <input type="text" className="ml-jc" placeholder="Email" value={this.state.email} onChange={this.onInviteChange}/>
+                                    </div>
+                                    <div className="my-league-joincode-button">
+                                        <button type="submit" className="ml-btn">Invite</button>
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
                 </div>
 
                 {/*League Member Information*/}

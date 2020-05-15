@@ -492,7 +492,7 @@ Create League CSS
     background: #283245;
     padding: 20px;
     color: white;
-    height: 50%;
+    height: 60vh;
 }
 
 .clContent{
@@ -1337,6 +1337,15 @@ Chat App CSS
   overflow-y: auto;
 }
 
+.leave-league{
+  background-color: orange;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
 .settings-header{
   color: #929599;
   border-bottom: 1px solid white;
@@ -1499,6 +1508,32 @@ Chat App CSS
   height:80px;
 }
 
+.my-league-joincode-wrapper{
+  padding-top: 10px;
+}
+
+.my-league-joincode-input{
+  float: left;
+}
+
+.my-league-joincode-button{
+  float: left;
+  padding-left: 10px;
+}
+
+.ml-jc{
+  border-radius: 5px;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.ml-btn{
+  border-radius: 5px;
+  height: 30px;
+  background-color: #1DA1F2;
+  border: none;
+  color: white;
+}
 
 /* GET STARTED PAGE CSS*/
 .mid-or{

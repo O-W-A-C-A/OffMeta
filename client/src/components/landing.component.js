@@ -30,7 +30,6 @@ class Landing extends Component {
         await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
         .then((res) =>{
              this.setState({
-                length: res.data.length,
                 leaguesJoinedArray: res.data
             })
             console.log(this.state.leaguesJoinedArray[0])        
@@ -39,10 +38,7 @@ class Landing extends Component {
         .catch((err) =>{
             window.location = '/getstarted'
             console.log(err)
-        })
-
-        
-            
+        })    
         }
         
         if (nextProps.errors) {
@@ -59,7 +55,6 @@ class Landing extends Component {
                     await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
         .then((res) =>{
              this.setState({
-                length: res.data.length,
                 leaguesJoinedArray: res.data
             })      
             window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;       

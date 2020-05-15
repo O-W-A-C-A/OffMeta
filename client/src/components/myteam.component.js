@@ -43,7 +43,6 @@ class MyTeam extends Component {
       total: 0,
     };
   }
-
   componentDidMount() {
     axios
       .get(`http://localhost:5000/api/users/${this.props.auth.user.id}`)
@@ -124,7 +123,7 @@ Purpose: Get Request To The Players Endpoint
   this object is associates an ownerID (user id) and player information
   to keep track who owns who
   */
-  onSubmitAddedPlayer(e) {
+ async onSubmitAddedPlayer(e) {
     e.preventDefault();
     const addNewPlayer = {
       playerID: this.state.playerID,
@@ -135,17 +134,18 @@ Purpose: Get Request To The Players Endpoint
       role: this.state.role,
     };
 
-    console.log(addNewPlayer);
-
-    axios
-      .post(
-        `http://localhost:5000/api/leagues/addplayer/${this.state.leagueID}`,
-        addNewPlayer
+    axios.post(
+        `http://localhost:5000/api/leagues/addplayer/${this.state.leagueID}`,addNewPlayer
       )
       .then((res) => {
         console.log(res.data);
         window.location.reload(false);
-      });
+     
+      }).catch((err)=>{
+        console.log(err)
+      })
+
+      
   }
 
   /******ADD PLAYER DONE */
@@ -286,7 +286,7 @@ Returns@ if player found returns their headshot, id, and name
           Role: {player.role}
         </div>
         <div className='my-team-player-points'>
-          Points Earned:
+          Points: &nbsp;
           {player.eliminations +
             player.healing / 1000 +
             player.damage_done +

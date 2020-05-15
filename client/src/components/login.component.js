@@ -22,21 +22,9 @@ class Login extends Component {
 
     async componentDidMount() {
       // If logged in and user navigates to Register page, should redirect them to dashboard
-      if (this.props.auth.isAuthenticated) {
-                  //getting all leagues that user is apart of
-                  await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
-      .then((res) =>{
-           this.setState({
-              length: res.data.length,
-              leaguesJoinedArray: res.data
-          })             
+      if (this.props.auth.isAuthenticated) {         
           window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;
-      })
-      .catch((err) =>{
-          console.log(err)
-          window.location = '/getstarted'
-      })
-    }
+      }
   }
     
     async componentWillReceiveProps(nextProps) {
@@ -79,26 +67,6 @@ class Login extends Component {
 
         this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
-    
-   /* componentDidMount(){
-    if (this.captchaDemo) {
-        console.log("started, just a second...")
-        this.captchaDemo.reset();
-        this.captchaDemo.execute();
-        }
-    }
-
-    onLoadRecaptcha() {
-        if (this.captchaDemo) {
-            this.captchaDemo.reset();
-            this.captchaDemo.execute();
-        }
-    }
-
-    verifyCallback(recaptchaToken) {
-        // Here you will get the final recaptchaToken!!!  
-        console.log(recaptchaToken, "6LejgdkUAAAAAJMgutul8FsAuNug0JbTYyAToDpo")
-      }*/
 
     render() 
     {

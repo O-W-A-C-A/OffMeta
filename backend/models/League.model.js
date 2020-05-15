@@ -73,6 +73,10 @@ const LeagueSchema = new Schema(
         id: { type: mongoose.Types.ObjectId },
         name: { type: String, trim: true },
         email: { type: String, trim: true },
+        file:{
+          type: String,
+          default: 'none'
+      },
       },
     ],
     joinCode: {

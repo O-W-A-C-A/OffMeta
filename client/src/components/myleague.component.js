@@ -92,7 +92,7 @@ export default class MyLeague extends Component{
                         User: {member.name}<br/>
                         {member.email}
                         
-                    </div><br/>
+                    </div>
                     <div className="my-league-member-score">
                         
                     </div>

@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/O-W-A-C-A/OffMeta/issues"
   },
-  "homepage": "https://github.com/O-W-A-C-A/OffMeta#readme"
+  "homepage": "https://github.com/O-W-A-C-A/OffMeta#readme",
+  "dependencies": {
+    "react-scripts": "^3.4.1"
+  }
 }

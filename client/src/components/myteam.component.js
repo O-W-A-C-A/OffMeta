@@ -372,7 +372,7 @@ Returns@ if player found returns their headshot, id, and name
                 </div>
                 <div className='show-results'>
                   <div className='player-img'>
-                    <img
+                    <img className='player-img-2'
                       src={this.state.playerImg}
                       style={{ borderRadius: '5px' }}
                       width='100'

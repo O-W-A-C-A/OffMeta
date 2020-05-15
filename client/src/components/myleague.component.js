@@ -79,9 +79,10 @@ export default class MyLeague extends Component{
                     <div className="member-img">
                     <img className="member-img-file"
                             src={this.renderImage(member.file)}
-                            width='100'
-                            height='100'
+                            width='80px'
+                            height='80px'
                             className='drop-img'
+                            style={{borderRadius: '5px'}}
                         />
                     </div>
     
@@ -89,9 +90,9 @@ export default class MyLeague extends Component{
                         User: {member.name}<br/>
                         {member.email}
                         
-                    </div>
+                    </div><br/>
                     <div className="my-league-member-score">
-                        {/*Team Score: {member.totalScore}*/}
+                        
                     </div>
                 </div>
             ));

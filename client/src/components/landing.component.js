@@ -8,6 +8,7 @@ import { registerUser } from "../actions/authActions";
 import classnames from "classnames";
 import NavBarLanding from './navbar-landing.component'
 import Image from '../public/filler_picture.png'
+import axios from 'axios'
 
 class Landing extends Component {
     constructor(){
@@ -18,13 +19,26 @@ class Landing extends Component {
             password: "",
             password2: "",
             errors: {},
-            show: false
+            show: false,
+            leaguesJoinedArray:[]
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+   async componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
-          this.props.history.push("/home"); // push user to homepage when they login
+        //getting all leagues that user is apart of
+        await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
+        .then((res) =>{
+             this.setState({
+                leaguesJoinedArray: res.data
+            })
+            console.log(this.state.leaguesJoinedArray[0])        
+            window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;     
+        })
+        .catch((err) =>{
+            window.location = '/getstarted'
+            console.log(err)
+        })    
         }
         
         if (nextProps.errors) {
@@ -34,10 +48,22 @@ class Landing extends Component {
         }
       }
 
-    componentDidMount() {
+      async componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/home");
+                    //getting all leagues that user is apart of
+                    await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
+        .then((res) =>{
+             this.setState({
+                leaguesJoinedArray: res.data
+            })      
+            window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;       
+        })
+        .catch((err) =>{
+            console.log(err)
+            window.location = '/getstarted'
+        })
+         
         }
       }
 

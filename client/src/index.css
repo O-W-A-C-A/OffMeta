@@ -492,6 +492,7 @@ Create League CSS
     background: #283245;
     padding: 20px;
     color: white;
+    height: 60vh;
 }
 
 .clContent{
@@ -762,9 +763,9 @@ My Team Panel CSS
 }
 
 .my-team-user-img-2{
-  border-radius: 50px;
+  border-radius: 5px;
   width: 100%;
-  height: 75px;
+  height: 80px;
   
 }
 .my-team-username-info{
@@ -1336,6 +1337,15 @@ Chat App CSS
   overflow-y: auto;
 }
 
+.leave-league{
+  background-color: orange;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
 .settings-header{
   color: #929599;
   border-bottom: 1px solid white;
@@ -1423,81 +1433,108 @@ Chat App CSS
   overflow-y: auto;
 }
 
+.my-league-wrapper{
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.my-league-content{
+  margin: 0 auto;
+}
+
 .my-league-header{
   color: #929599;
   border-bottom: 1px solid white;
-  margin: 0px 10px 0px 10px;
   padding-top: 40px;
   font-weight: bold;
 }
 
-.my-league-points-for{
-  float: right;
-  width: 10%;
+.my-league-logo{
+  width:80px;
+  height:80px;
+  border-radius: 5px;
+  float: left;
+}
+.my-league-logo-wrapper{
+  width:20%
 }
 
-.my-league-points-allowed{
-  float: right;
-  width: 10%;
+.my-league-info-wrapper{
+  float:left;
+  width:80%;
+  margin-left: 10px;
 }
 
-.my-league-waiver{
-  float: right;
-  width: 10%;
+.my-league-quick-info{
+  margin-top: 2.5%;
 }
 
-.my-league-div{
-
+.my-league-info-content{
+  white-space: pre-wrap;
+  font-size: 13px;
+  color: #9cb0d3;
+  
 }
 
-.league-standing-row{
-  margin: 0px 10px 0px 10px;
-  display: flex;
+.my-league-name{
+  font-size: 20px;
+  font-weight: bold;
+  width:auto;
 }
 
-.rank{
-  width: 5%;
+.my-league-member-wrapper{
+ 
 }
 
-.team-container{
-  width: 65%;
+.member-img{
+  width: 25%;
+  float: left;
 }
 
-.team-owner-name{
+.member-info{
+  width: 50%;
+  float: left;
+  margin-top: 5%;
+  
+}
+.my-league-member-score{
+  width: 25%;
+  float: left;
+  padding-bottom: 10%;
+  margin-top:5.7%;
 }
 
-.team-owner-desc{
-  font-size: 11px;
+.render-img{
+  width: 80px;
+  height:80px;
 }
 
-.points-for{
-  width: 10%;
+.my-league-joincode-wrapper{
+  padding-top: 10px;
 }
 
-.points-allowed{
-  width: 10%;
+.my-league-joincode-input{
+  float: left;
 }
 
-.waiver{
-  width: 10%;
-  text-align: center;
+.my-league-joincode-button{
+  float: left;
+  padding-left: 10px;
 }
 
-.league-transaction-item{
-  margin: 0px 10px 0px 10px;
-  display: flex;
+.ml-jc{
+  border-radius: 5px;
+  height: 30px;
+  padding-left: 10px;
 }
 
-.team-owner-with-desc{
-  width: 40%;
-}
-
-.av{
-  width: 10%
-}
-
-.trans-timestamp, .player-pos{
-  font-size: 11px;
+.ml-btn{
+  border-radius: 5px;
+  height: 30px;
+  background-color: #1DA1F2;
+  border: none;
+  color: white;
 }
 
 /* GET STARTED PAGE CSS*/
@@ -1518,6 +1555,7 @@ Chat App CSS
   color: white;
   background-color: #1DA1F2;
   border: none;
+  border-radius: 5px;
   height: 50px;
   width: 200px;
   font-size: 20px;
@@ -1525,6 +1563,11 @@ Chat App CSS
   margin-top: 5%;
   margin-left: 100px;
 }
+
+.btn-joinleague:hover{
+  background-color: #0d8bd9;
+}
+
 
 .clWrapper-Or{
   width: 46.3%;
@@ -1648,4 +1691,25 @@ ADD PLAYER CSS
   color: white;
   border: none;
   border-radius: 5px;
+}
+
+.please-wait{
+  margin: 40%;
+}
+.loadinggif{
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+}
+
+.member-img{
+  
+}
+
+.member-img-file{
+  
+}
+
+.my-league-member-wrapper{
+  padding-top: 10px;
 }

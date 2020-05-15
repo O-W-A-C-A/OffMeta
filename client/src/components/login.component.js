@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom"
 import BasicNavBar from './basic-navbar.component'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
 import classnames from "classnames";
-
+import axios from 'axios'
 
 class Login extends Component {
     constructor(){
@@ -19,24 +20,39 @@ class Login extends Component {
         //this.onSubmit = this.onSubmit.bind(this)
     }
 
-    componentDidMount() {
-      // If logged in and user navigates to Login page, should redirect them to dashboard
-      if (this.props.auth.isAuthenticated) {
-        this.props.history.push("/home");
+
+    async componentDidMount() {
+      // If logged in and user navigates to Register page, should redirect them to dashboard
+      if (this.props.auth.isAuthenticated) {         
+          window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;
+      }
+  }
+    
+    async componentWillReceiveProps(nextProps) {
+      if (nextProps.auth.isAuthenticated) {
+      //getting all leagues that user is apart of
+      await axios.get(`http://localhost:5000/api/users/getleagues/${this.props.auth.user.id}`)
+      .then((res) =>{
+           this.setState({
+              length: res.data.length,
+              leaguesJoinedArray: res.data
+          })
+           window.location = `/home/${this.state.leaguesJoinedArray[0]._id}`;        
+      })
+      .catch((err) =>{
+          console.log(err)
+          window.location = '/getstarted'
+      })
+         
+      }
+      
+      if (nextProps.errors) {
+        this.setState({
+          errors: nextProps.errors
+        });
       }
     }
-    
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-          this.props.history.push("/home"); // push user to homepage when they login
-        }
-        
-        if (nextProps.errors) {
-          this.setState({
-            errors: nextProps.errors
-          });
-        }
-      }
+
 
     onChange = e =>{
         this.setState({[e.target.id]: e.target.value})
@@ -52,26 +68,6 @@ class Login extends Component {
 
         this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
-    
-   /* componentDidMount(){
-    if (this.captchaDemo) {
-        console.log("started, just a second...")
-        this.captchaDemo.reset();
-        this.captchaDemo.execute();
-        }
-    }
-
-    onLoadRecaptcha() {
-        if (this.captchaDemo) {
-            this.captchaDemo.reset();
-            this.captchaDemo.execute();
-        }
-    }
-
-    verifyCallback(recaptchaToken) {
-        // Here you will get the final recaptchaToken!!!  
-        console.log(recaptchaToken, "6LejgdkUAAAAAJMgutul8FsAuNug0JbTYyAToDpo")
-      }*/
 
     render() 
     {
@@ -118,6 +114,9 @@ class Login extends Component {
                         </div>
 
                         <button type="submit" className="btn btn-primary btn-block">Login</button>
+                        <p className="forgot-password text-right">
+                            <Link to={"/forgotpassword"}>Forgot password?</Link>
+                        </p>
                         </form>
                 </div>
             </div>

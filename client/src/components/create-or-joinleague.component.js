@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 //components
-import NavBar from './navbar.component';
-import defaultimg from "../public/upload.png"
+import NavBar from './basic-navbar.component';
 //auth
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -19,38 +18,46 @@ class CreateOrJoinLeague extends Component{
         this.onChangeLeagueName = this.onChangeLeagueName.bind(this);
         this.onChangeScoringFormat = this.onChangeScoringFormat.bind(this);
         this.onChangeLeagueSize = this.onChangeLeagueSize.bind(this);
-        this.onFileChange = this.onFileChange.bind(this);
         this.onCodeChange = this.onCodeChange.bind(this);
 
         this.state = {
             leagueName:'',
             scoringFormat: 'STD',
             leagueSize: 4,
-            logo: defaultimg,
-            imagePreviewUrl: '',
             createdBy:'',
-            joinCode:''
+            joinCode:'',
+            playerdatabase:''
         }
+    }
+
+    componentDidMount(){
+        let playerDB = this.player2db();
+        this.setState({
+            playerdatabase: playerDB
+        })
     }
 
     onSubmit(e){
         //prevents autoload of page
         e.preventDefault();
-
+        //this.state.playerdatabase = playerDB
         const league = new FormData();
-        league.append('logo', this.state.logo);
         league.append('leagueName', this.state.leagueName);
         league.append('scoringFormat', this.state.scoringFormat);
         league.append('leagueSize', this.state.leagueSize);
         league.append('createdBy', this.props.auth.user.id);
+        league.append('playerdatabase', this.state.playerdatabase);
         //prints to console league information
         console.log(league);
-        //crud method post new league to database
+        console.log(this.state.playerdatabase);
+        //crud method post to database
         axios.post('http://localhost:5000/api/leagues/create', league)
             .then(res => {
                 console.log(res.data)
-                window.location = '/home' //after submission brings user to the home page
-            });
+                window.location = '/' //after submission brings user to the home page
+            }).catch((err) =>{
+                console.log(err)
+            })
     }
     //handles submit code method that allows user to join of a league join code
     onSubmitCode(e){
@@ -63,7 +70,7 @@ class CreateOrJoinLeague extends Component{
         axios.post(`http://localhost:5000/api/users/joinleague/${this.props.auth.user.id}`, code)
             .then(res => {
                 console.log(res.data)
-               // window.location = '/home' //after submission brings user to the home page
+               window.location = '/' //after submission brings user to the home page
             });
     }
     //handles the state for when user enters a league name
@@ -90,43 +97,30 @@ class CreateOrJoinLeague extends Component{
         //for testing
         //console.log(e.target.value)
     }
-    //handles the the state for when the user uploads a league image
-    //this image is optional
-    //handles state change for images
-    onFileChange(e) {
-        e.preventDefault();
-
-        let reader = new FileReader();
-        let file = e.target.files[0];
-    
-        reader.onloadend = () => {
-          this.setState({
-            logo: file,
-            imagePreviewUrl: reader.result
-          });
-        }
-    
-        reader.readAsDataURL(file)
-    }
     //handles changing of states for join code input
     onCodeChange(e){
         this.setState({
             joinCode: e.target.value
         });
-        console.log(this.state.joinCode)
     }
 
-    render(){
-        //magic
-        let {imagePreviewUrl} = this.state;
-        let $imagePreview = null;
-        if (imagePreviewUrl) {
-            $imagePreview = (<img className="btn-upload-img" src={imagePreviewUrl} alt="League Logo"/>);
-        }
-        else{
-            $imagePreview = (<img className="btn-upload-img" src={this.state.logo} alt="League Logo"/>);
-        }
+        //Below is the methods to add the player database into the league:
+        player2db() {
+            let qb = [];
+            axios
+              .get('https://api.overwatchleague.com/stats/players')
+              .then((res) => {
+                qb.push(JSON.stringify(res.data.data))
+            
+                //console.log(qb); testing
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+              return qb;
+          }
 
+    render(){
         return(
             <div className="homePage-getstarted">
                  <NavBar></NavBar>
@@ -142,11 +136,8 @@ class CreateOrJoinLeague extends Component{
                             <input type="text" className="league-name-text" placeholder="Enter the name of your league" value={this.state.leagueName} onChange={this.onChangeLeagueName}/>                        
                         </div>
                         <div className="league-logo">
-                            <label>Optional Logo</label>
                             <div className="logo-img">
-                            {$imagePreview}
                             <div style={{paddingBottom:'10px', paddingTop: '10px'}}>
-                            <input type="file" onChange={this.onFileChange} style={{color: 'white'}} />
                             </div>
                               
                         </div>
@@ -210,7 +201,9 @@ class CreateOrJoinLeague extends Component{
 }
 CreateOrJoinLeague.propTypes = {
     auth: PropTypes.object.isRequired
-  };const mapStateToProps = state => ({
+  };
+  
+  const mapStateToProps = state => ({
     auth: state.auth
   });
   

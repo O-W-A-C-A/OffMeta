@@ -11,10 +11,20 @@ class NavBarHome extends Component{
     constructor(props){
         super(props);
 
+        this.handleLeagueSelection = this.handleLeagueSelection.bind(this);
+
         this.state = {
             length: '',//keeps track of the length state ==> amount of leagues user has joined
-            leaguesJoinedArray:[]
+            leaguesJoinedArray:[],
+            leagueSelected:''
         }
+    }
+
+   async handleLeagueSelection(leagueID, callback){
+        
+        await this.setState({leagueSelected: leagueID}, callback)
+        window.location = `/home/${this.state.leagueSelected}`
+        //console.log(this.state.leagueSelected)
     }
 
     //function to log out user
@@ -52,7 +62,9 @@ class NavBarHome extends Component{
                    
                     {/*Dynamically display leagues joined into bootstrap dropdown item*/}
                     {leaguesJoined.map(leagues =>(
-                                            <NavDropdown.Item key={leagues} >
+                                            <NavDropdown.Item key={leagues._id} onClick={() => this.handleLeagueSelection(leagues._id, ()=>{
+                                                console.log("league selected: ", this.state.leagueSelected)
+                                            })}>
                                             {leagues.leagueName}
                                         </NavDropdown.Item>
                     ))}

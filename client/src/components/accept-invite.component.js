@@ -58,7 +58,7 @@ export default class AcceptInvite extends Component {
         axios.put('http://localhost:5000/api/leagues/acceptinvite', accept)
             .then(res =>{
                 console.log(res)
-                window.location = '/home'
+                window.location = '/'
             })
             .catch((err) =>{
                 console.log(err)

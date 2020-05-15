@@ -91,7 +91,7 @@ export default class MyLeague extends Component{
                         
                     </div>
                     <div className="my-league-member-score">
-                        Team Score: {member.totalScore}
+                        {/*Team Score: {member.totalScore}*/}
                     </div>
                 </div>
             ));

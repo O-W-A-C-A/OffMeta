@@ -38,6 +38,7 @@ const LeagueSchema = new Schema(
       ownerID: { type: String, trim: true },
       teamName: { type: String, trim: true },
       role: { type: String, trim: true },
+      total: { type: String, trim: true },
       eliminations: {
         type: Number,
       },
@@ -73,10 +74,7 @@ const LeagueSchema = new Schema(
         id: { type: mongoose.Types.ObjectId },
         name: { type: String, trim: true },
         email: { type: String, trim: true },
-        file:{
-          type: String,
-          default: 'none'
-      },
+        total: { type: Number },
       },
     ],
     joinCode: {

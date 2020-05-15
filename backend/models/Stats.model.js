@@ -30,6 +30,9 @@ const StatsSchema = new Schema({
   healing: {
     type: String,
   },
+  total: {
+    type: String,
+  },
 });
 
 const Stats = mongoose.model('Stats', StatsSchema);

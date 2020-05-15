@@ -364,7 +364,8 @@ router.post('/addplayer/:id', (req, res) => {
                     ultimates_earn: stat.ultimates_earn,
                     deaths: stat.deaths,
                     healing: stat.healing,
-                    leagueID: req.params.id
+                    leagueID: req.params.id,
+                    total: stat.total
                   },
                 },
               }
@@ -458,6 +459,36 @@ router.post('/tradeplayers/:id', (req, res) => {
         )
         .then(() => res.json('User traded a player'))
         .catch((err) => res.status(400).json('Error: ' + err));
+    }
+  });
+});
+
+//@route GET api/leagues/gettotalscore/:id
+//@desc gets the score for players for a specific user
+//@access Public
+router.get('/gettotalscore/:id', (req, res) => {
+  League.findById(req.params.id).then((league) => {
+    if (!league) {
+      return res.status(404).json({ leaguenotfound: 'league not found' });
+    } else {
+      League.aggregate([
+        { $unwind: '$leaguePlayers' }, //unwide leaguePlayers array
+        { $match: { 'leaguePlayers.leagueID': req.params.id } },
+        { $match: { 'leaguePlayers.ownerID': req.query.ownerID } }, //find subdocuments that match ownerID
+        {
+          $group: {
+            _id: '$_id',
+            leaguePlayers: { $push: { total: '$leaguePlayers.total' } },
+          },
+        }, //group them by league ID and push leaguePlayer objects in array
+        {
+          $project: {
+            leaguePlayers: { $slice: ['$leaguePlayers', 6] },
+          },
+        },
+      ]).then(function (players) {
+        return res.status(200).json(players);
+      });
     }
   });
 });

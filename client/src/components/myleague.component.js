@@ -37,6 +37,7 @@ export default class MyLeague extends Component{
             await axios.get(`http://localhost:5000/api/leagues/leaguelogo/${this.state.leagueID}`,
             {responseType: 'arraybuffer'}
             ).then(res => {
+                console.log(res.data)
                 const base64 = btoa(
                   new Uint8Array(res.data).reduce(
                     (data, byte) => data + String.fromCharCode(byte),
@@ -49,6 +50,7 @@ export default class MyLeague extends Component{
     }
 
     renderImage(img){
+        console.log(img)
         if(img == 'none'){
             return profilesimg;
         }

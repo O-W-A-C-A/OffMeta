@@ -40,7 +40,8 @@ class MyTeam extends Component {
       droppedPlayerID: '',
       leagueName: '',
       leagueID: this.props.leagueIDFromParent,
-      total: 0,
+      total: 0.1,
+      scores: [],
     };
   }
   componentDidMount() {
@@ -90,6 +91,27 @@ class MyTeam extends Component {
       .get(`http://localhost:5000/api/leagues/${this.state.leagueID}`)
       .then((res) => {
         this.setState({ leagueName: res.data.leagueName });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios
+      .get(
+        `http://localhost:5000/api/leagues/gettotalscore/${this.state.leagueID}`,
+        {
+          params: {
+            ownerID: this.props.auth.user.id,
+          },
+        }
+      )
+      .then((res) => {
+        this.setState({ scores: res.data[0].leaguePlayers });
+        console.log(this.state.scores); //prints out team to console
+        this.state.scores.forEach((element) => {
+        this.state.total = this.state.total + JSON.parse(element.total);
+        });
+        console.log(this.state.total);
       })
       .catch((err) => {
         console.log(err);
@@ -293,15 +315,8 @@ Returns@ if player found returns their headshot, id, and name
           Role: {player.role}
         </div>
         <div className='my-team-player-points'>
-          Points: &nbsp;
-          {player.eliminations +
-            player.healing / 1000 +
-            player.damage_done +
-            player.assists -
-            2 * player.deaths +
-            player.obj_time +
-            player.ultimates_earn +
-            player.damage_absorbed}
+          Points Earned:
+          {(parseFloat(player.total)).toFixed(2)}
         </div>
       </div>
     ));
@@ -501,6 +516,7 @@ Returns@ if player found returns their headshot, id, and name
             <div className='my-team-username-info'>
               <div>{this.state.name}</div>
               <div>League: {this.state.leagueName}</div>
+              <div>Team Score: {(parseFloat(this.state.total)).toFixed(2)}</div>
             </div>
           </div>
         </div>

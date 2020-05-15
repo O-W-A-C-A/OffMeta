@@ -141,7 +141,7 @@ class LeagueSettings extends Component{
                 console.log(err)
             });
 
-       window.location.reload(false)
+      // window.location.reload(false)
     }
 
     leaveLeague(e){

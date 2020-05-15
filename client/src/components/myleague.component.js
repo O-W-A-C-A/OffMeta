@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import defaultimg from "../public/upload.png"
 import profilesimg from "../public/default-img.png"
+import loading from "../public/loading.gif"
 export default class MyLeague extends Component{
 
     constructor(props){
@@ -15,8 +16,6 @@ export default class MyLeague extends Component{
             imagePreviewUrl: '',
             scoringFormat:'',
             members:[],
-            img:'',
-            imgs:[],
             leagueID: this.props.leagueIDFromParent,
             email:'',
         }
@@ -49,38 +48,50 @@ export default class MyLeague extends Component{
               });
     }
 
+    renderImage(img){
+        if(img == 'none'){
+            return profilesimg;
+        }
+        else{
+        const base64 = btoa(
+            new Uint8Array(img).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              '',
+            ),
+          );
+            
+            return profilesimg;
+        }
+    }
+
     
     
     renderLeagueMembers(){
         if(this.state.members === undefined)
-        {
-            return(<div className="my-league-member-wrapper">
-            <div className="member-img">
-                
-            </div>
-
-            <div className="member-info">
-         
-            </div>
-            <div className="my-league-member-score">
-               
-            </div>
-        </div>);
+        {   return(
+            <div className="please-wait">
+                <img className ="loadinggif"src={loading} alt="loading..." />
+            </div>);
         }
         else{
             return this.state.members.map(member =>(
                 <div key={member._id} className="my-league-member-wrapper">
                     <div className="member-img">
+                    <img className="member-img-file"
+                            src={this.renderImage(member.file)}
+                            width='100'
+                            height='100'
+                            className='drop-img'
+                        />
                     </div>
     
                     <div className="member-info">
-                        {member.name}<br/>
+                        User: {member.name}<br/>
                         {member.email}
-                        {member.record}
-                        {member.totalScore}
+                        
                     </div>
                     <div className="my-league-member-score">
-                        Team Score: 
+                        Team Score: {member.totalScore}
                     </div>
                 </div>
             ));

@@ -1690,3 +1690,25 @@ ADD PLAYER CSS
   border: none;
   border-radius: 5px;
 }
+
+.please-wait{
+  margin: 40%;
+}
+.loadinggif{
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+}
+
+.member-img{
+  border-radius: 5px;
+}
+
+.member-img-file{
+  border-radius: 5px;
+  
+}
+
+.my-league-member-wrapper{
+  padding-top: 10px;
+}

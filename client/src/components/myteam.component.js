@@ -3,7 +3,7 @@ import { PersonAdd, SwapHorizontalCircle, Delete } from '@material-ui/icons';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-
+import loading from "../public/loading.gif"
 //auth
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -268,6 +268,13 @@ Returns@ if player found returns their headshot, id, and name
    */
 
   renderMyTeam() {
+    if(this.state.myTeam === undefined)
+    {   return(
+        <div className="please-wait">
+            <img className ="loadinggif" src={loading} alt="loading..." />
+        </div>);
+    }
+    else{
     return this.state.myTeam.map((player) => (
       <div key={player.playerID} className='myteam-player-wrapper'>
         <div className='myteam-player-img'>
@@ -298,12 +305,14 @@ Returns@ if player found returns their headshot, id, and name
         </div>
       </div>
     ));
+          }
   }
 
   /****
    * MY TEAM END
    */
   render() {
+    
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
